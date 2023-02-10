@@ -115,7 +115,14 @@ button {
             flex-direction: row;
         }
     }
+    .buttons {
+        gap: 15px;
+    }
+    .notebook li {
+        width: 125px;
+        height: 125px;
+    }
     input[type="text"] {
-        width: 100%;
+        width: 90%;
     }
 }
