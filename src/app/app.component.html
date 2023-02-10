@@ -1,6 +1,9 @@
 <div class="app" [ngStyle]="{backgroundImage:'url(./assets/pigeon-bg.jpg)'}">
-  <div class="wrapper">
+  <header>
     <h1>Pigeon Pad</h1>
+    <h2>Just a space for your thoughts</h2>
+  </header>
+  <main class="wrapper">
     <div class="notepad">
       <input type="text" [(ngModel)]="textareaValue" placeholder="Add a note" (keydown.enter)="save()">
       <div class="buttons">
@@ -17,7 +20,10 @@
     <div *ngIf="notes.length > 0" class="buttons">
       <button class="removeAll" (click)="removeAll()">Remove all notes</button>
     </div>
-  </div>
+  </main>
+  <footer>
+    <p>This app was built by <a href="https://danateagle.com">Dana Teagle</a> in 2023 using Angular and Typescript.</p>
+  </footer>
 </div>
 
 <router-outlet></router-outlet>
