@@ -25,10 +25,12 @@ export class AppComponent {
 
   save() {
     let updateNotes: string[] = this.notes;
-    updateNotes.push(this.textareaValue);
+    if (this.textareaValue) {
+      updateNotes.push(this.textareaValue);
+    }
     this.notes = updateNotes;
     localStorage.setItem('notes', JSON.stringify(updateNotes));
-    this.textareaValue = "";
+    this.textareaValue = '';
   }
 
   remove(index: number) {
