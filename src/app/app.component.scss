@@ -1,33 +1,64 @@
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-size: 500px;
+    min-width: 100vw;
+    min-height: 100vh;
+}
 .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    border: solid #000 5px;
+    border-radius: 15px;
     width: 100%;
     max-width: 750px;
-    margin: 0 auto;
+    margin: 25px auto;
+    padding: 15px;
+}
+.notepad {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 0px;
+    .buttons {
+        padding-left: 15px;
+    }
 }
 
 h1 {
+    margin: 0;
+    padding: 15px;
     text-align: center;
     text-transform: uppercase;
 }
 
-textarea {
+input[type="text"] {
     padding: 15px;
     margin: 5px 0px;
-    width: 60vw;
-    height: 75px;
-    border: solid #000 2px;
+    width: 500px;
+    height: 50px;
+    border: solid #000 3px;
     border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 button {
     width: 150px;
     height: 30px;
-    margin: 15px 0;
+    margin: 5px 0;
     background-color: #fff;
     border: solid #000 2px;
     border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
     &:hover {
         cursor: pointer;
-        background-color: #eee;
+        background-color: #446488;
+        color: #fff;
     }
     &.remove {
         font-size: 10px;
@@ -43,22 +74,23 @@ button {
 }
 .buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    gap: 50px;
+    gap: 5px;
 }
 .notebook {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 15px 0px;
+    margin: 0;
     li {
         margin: 5px;
         display: flex;
         flex-direction: column;
-        background-color: rgb(219, 199, 239);
-        border: solid #000 2px;
+        background-color: #fff;
+        border: solid #5A81B1 5px;
         border-radius: 5px;
         color: #000;
         text-align: center;

@@ -1,20 +1,22 @@
-<h1>Pigeon Pad</h1>
-<div class="wrapper">
-  <textarea [(ngModel)]="textareaValue" placeholder="Add a note"></textarea>
-  <div class="buttons">
-    <button (click)="clear()">Clear</button>
-    <button (click)="save()">Save</button>
-  </div>
-</div>
-<div class="wrapper">
-  <ul class="notebook">
-    <li *ngFor="let note of notes; index as i">
-      <button class="remove" (click)="remove(i)">X</button>
-      <p>{{note}}</p>
-    </li>
-  </ul>
-  <div *ngIf="notes.length > 0" class="buttons">
-    <button class="removeAll" (click)="removeAll()">Remove all notes</button>
+<div class="app" [ngStyle]="{backgroundImage:'url(./assets/pigeon-bg.jpg)'}">
+  <div class="wrapper">
+    <h1>Pigeon Pad</h1>
+    <div class="notepad">
+      <input type="text" [(ngModel)]="textareaValue" placeholder="Add a note" (keydown.enter)="save()">
+      <div class="buttons">
+        <button (click)="save()">Save</button>
+        <button (click)="clear()">Clear</button>
+      </div>
+    </div>
+    <ul class="notebook">
+      <li *ngFor="let note of notes; index as i">
+        <button class="remove" (click)="remove(i)">X</button>
+        <p>{{note}}</p>
+      </li>
+    </ul>
+    <div *ngIf="notes.length > 0" class="buttons">
+      <button class="removeAll" (click)="removeAll()">Remove all notes</button>
+    </div>
   </div>
 </div>
 
