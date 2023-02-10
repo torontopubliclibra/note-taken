@@ -15,7 +15,7 @@
     background-color: aliceblue;
     border: solid #000 5px;
     border-radius: 15px;
-    width: 100%;
+    width: 80%;
     max-width: 750px;
     margin: 25px auto;
     padding: 15px;
@@ -40,7 +40,7 @@ h1 {
 input[type="text"] {
     padding: 15px;
     margin: 5px 0px;
-    width: 500px;
+    width: 300px;
     height: 50px;
     border: solid #000 3px;
     border-radius: 5px;
@@ -101,5 +101,21 @@ button {
             margin: 10px;
             overflow-wrap: break-word;
         }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        width: 80vw;
+    }
+    .notepad {
+        flex-direction: column;
+        .buttons {
+            padding-left: 0;
+            padding-top: 10px;
+            flex-direction: row;
+        }
+    }
+    input[type="text"] {
+        width: 100%;
     }
 }
