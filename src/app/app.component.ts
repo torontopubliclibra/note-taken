@@ -22,7 +22,6 @@ export class AppComponent {
     'the difference between pigeons and doves is that pigeons don\'t get invited to weddings',
     'ignore the signs; feed the pigeons',
     'pigeon puns fly right over my head',
-    'a psychic bird can also be called an omen pigeon',
     'see a flock of pigeons hanging out? call that squab goals'
   ]
 
@@ -118,8 +117,8 @@ export class AppComponent {
     // create copy of notes
     let updateNotes: string[] = this.notes;
 
-    // remove item from notes array copy at index
-    updateNotes.splice(index, 1);
+    // remove item from notes array copy at reverse index
+    updateNotes.splice((updateNotes.length - 1 - index), 1);
 
     // set notes to updated notes copy
     this.notes = updateNotes;
@@ -158,7 +157,7 @@ export class AppComponent {
   noteColor(index: number) {
 
     // if note position is divisible by 2
-    if ((index + 1) % 2 === 0) {
+    if ((this.notes.length - index) % 2 === 0) {
 
       // return note color class
       return "noteColor-2"
