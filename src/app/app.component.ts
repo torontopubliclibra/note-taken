@@ -31,6 +31,8 @@ export class AppComponent {
 
     // get local storage value
     let savedNotes: any = localStorage.getItem('notes');
+
+    let savedMode: any = localStorage.getItem('mode');
    
     // if savedNotes isn't null
     if (savedNotes) {
@@ -42,6 +44,10 @@ export class AppComponent {
 
       // else set notes to an empty array
       this.notes = [];
+    }
+
+    if (savedMode === 'dark') {
+      this.darkMode = true;
     }
   }
 
@@ -106,6 +112,15 @@ export class AppComponent {
       return "noteColor-2"
     } else {
       return ""
+    }
+  }
+
+  turnOnDark() {
+    this.darkMode = !this.darkMode;
+    if (this.darkMode) {
+      localStorage.setItem('mode', 'dark');
+    } else {
+      localStorage.setItem('mode', 'light');
     }
   }
 
