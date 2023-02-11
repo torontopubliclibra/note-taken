@@ -124,7 +124,7 @@ input[type="text"] {
     background-color: #fff;
     padding: 15px;
     margin: 5px 0px;
-    width: 300px;
+    width: 450px;
     height: 50px;
     border: solid #000 3px;
     border-radius: 5px;
@@ -200,6 +200,7 @@ button {
 }
 @media only screen and (max-width: 768px) {
     .notepad {
+        width: calc(100% - 45px);
         flex-direction: column;
         .buttons {
             padding: 0;
