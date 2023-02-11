@@ -101,4 +101,12 @@ export class AppComponent {
     this.textareaValue = "";
   }
 
+  noteColor(index: number) {
+    if ((index + 1) % 2 === 0) {
+      return "noteColor-2"
+    } else {
+      return ""
+    }
+  }
+
 }

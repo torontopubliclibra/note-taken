@@ -15,7 +15,7 @@
 
     <!-- notepad -->
     <div class="notepad">
-      <input type="text" [(ngModel)]="textareaValue" placeholder="Add a note" (keydown.enter)="save()">
+      <input type="text" [(ngModel)]="textareaValue" maxlength="90" placeholder="Add a note" (keydown.enter)="save()">
       <div class="buttons">
         <button (click)="save()">Save</button>
         <button (click)="clear()">Clear</button>
@@ -26,7 +26,8 @@
     <ul class="notebook">
 
       <!-- loop through notes array and render list item for each-->
-      <li *ngFor="let note of notes; index as i">
+      <li
+        *ngFor="let note of notes; index as i" class="{{noteColor(i)}}">
         <button class="remove" (click)="remove(i)">X</button>
         <p>{{note}}</p>
       </li>

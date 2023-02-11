@@ -50,8 +50,12 @@
             color: #fff;
         }
         .notebook li {
-            background-color: #446488;
-            border: solid aliceblue 5px;
+            color: #fff;
+            background-color: rgba($color: rgb(104, 70, 104), $alpha: 0.7);;
+            border: solid aliceblue 3px;
+            &.noteColor-2 {
+                background-color: rgba($color: rgb(156, 79, 92), $alpha: 0.7);
+            }
         }
     }
 }
@@ -143,6 +147,9 @@ button {
         color: #fff;
     }
     &.remove {
+        position: absolute;
+        right: 0;
+        top: 0;
         font-size: 10px;
         font-weight: 600;
         width: 25px;
@@ -170,19 +177,24 @@ button {
     li {
         margin: 5px;
         display: flex;
+        justify-content: center;
+        position: relative;
         flex-direction: column;
-        background-color: #fff;
-        border: solid #5A81B1 5px;
+        background-color: rgba($color: rgb(197, 149, 197), $alpha: 0.7);
+        border: solid #000 3px;
         border-radius: 5px;
         color: #000;
         text-align: center;
-        width: 150px;
-        height: 125px;
+        width: 200px;
+        height: 175px;
         list-style-type: none;
         p {
             font-size: 15px;
             margin: 10px;
             overflow-wrap: break-word;
+        }
+        &.noteColor-2 {
+            background-color: rgba($color: pink, $alpha: 0.7);
         }
     }
 }
@@ -197,9 +209,12 @@ button {
     .buttons {
         gap: 15px;
     }
-    .notebook li {
-        width: 125px;
-        height: 115px;
+    .notebook {
+        width: 100%;
+        li {
+            width: 100%;
+            height: 115px;
+        }
     }
     input[type="text"] {
         width: 100%;
