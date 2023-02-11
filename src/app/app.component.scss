@@ -1,4 +1,4 @@
-// app div styles
+// global app styles
 .app {
     display: flex;
     flex-direction: column;
@@ -10,11 +10,15 @@
 
     // dark mode colours
     &.dark {
+
+        // wrapper dark mode
         .wrapper {
             background-color: rgba($color: #000, $alpha: 0.9);
             color: aliceblue;
             border: solid #fff 5px;
         }
+
+        // header and footer dark mode
         header, footer{
             background-color: rgba($color: #000, $alpha: 0.9);
             color: aliceblue;
@@ -24,6 +28,8 @@
         }
         footer {
             border-top: solid aliceblue 5px;
+
+            // footer link dark mode
             a {
                 color: aliceblue;
                 &:hover {
@@ -31,34 +37,48 @@
                 }
             }
         }
+
+        // button dark mode
         button {
             background-color: #446488;
             color: aliceblue;
             border: solid aliceblue 2px;
+
+            // button on hover dark mode
             &:hover {
                 background-color: aliceblue;
                 border: solid #446488 2px;
                 color: #000;
             }
+
+            // remove button on hover dark mode
             &.remove:hover {
                 border: solid #000 2px;
             }
         }
+
+        // textbox dark mode
         input[type="text"] {
             background-color: #446488;
             border: solid aliceblue 3px;
             color: #fff;
         }
+
+        // note dark mode
         .notebook li {
             color: #fff;
             background-color: rgba($color: rgb(104, 70, 104), $alpha: 0.7);;
             border: solid aliceblue 3px;
+
+            // alternate note colour dark mode
             &.noteColor-2 {
                 background-color: rgba($color: rgb(156, 79, 92), $alpha: 0.7);
             }
         }
     }
 }
+
+// wrapper styles
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -74,9 +94,13 @@
     padding: 15px;
     padding-bottom: 10px;
 }
+
+// header and footer styles
 header, footer {
     width: 100vw;
     background-color: rgba($color: aliceblue, $alpha: 0.9);
+
+    // header and footer text styles
     h1, h2, p {
         text-align: center;
         padding: 0 25px;
@@ -89,12 +113,16 @@ header {
     height: 200px;
     align-items: center;
     justify-content: center;
+
+    // main heading styles
     h1 {
         font-size: 55px;
         margin: 5px 0;
         padding: 0;
         text-transform: uppercase;
     }
+
+    // subheading styles
     h2 {
         font-size: 20px;
         margin: 5px 0;
@@ -104,6 +132,8 @@ header {
 }
 footer {
     border-top: solid #000 5px;
+
+    // footer link styles
     a {
         color: #446488;
         &:hover {
@@ -111,15 +141,24 @@ footer {
         }
     }
 }
+
+// notepad section styles
 .notepad {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    // buttons container styles
     .buttons {
         padding-left: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
     }
 }
 
+// textbox styles
 input[type="text"] {
     background-color: #fff;
     padding: 15px;
@@ -132,6 +171,7 @@ input[type="text"] {
     font-size: 15px;
 }
 
+// button styles
 button {
     width: 100px;
     height: 30px;
@@ -141,11 +181,15 @@ button {
     border-radius: 5px;
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
+
+    // button on hover
     &:hover {
         cursor: pointer;
         background-color: #446488;
         color: #fff;
     }
+
+    // remove button
     &.remove {
         position: absolute;
         right: 0;
@@ -157,16 +201,14 @@ button {
         margin: 5px;
         border-radius: 50%;
     }
+
+    // remove all button
     &.removeAll {
         width: 175px;
     }
 }
-.buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-}
+
+// notebook section styles
 .notebook {
     display: flex;
     flex-flow: row wrap;
@@ -174,6 +216,8 @@ button {
     justify-content: center;
     padding: 5px 0px;
     margin: 0;
+
+    // note styles
     li {
         margin: 5px;
         display: flex;
@@ -188,36 +232,55 @@ button {
         width: 200px;
         height: 175px;
         list-style-type: none;
+
+        // note text styles
         p {
             font-size: 15px;
             margin: 10px;
             overflow-wrap: break-word;
         }
+
+        // alternate note colour
         &.noteColor-2 {
             background-color: rgba($color: pink, $alpha: 0.7);
         }
     }
 }
+
+// responsive styles for tablet and smaller
 @media only screen and (max-width: 768px) {
+
+    // notepad section styles
     .notepad {
         width: calc(100% - 45px);
         flex-direction: column;
+
+        // textbox styles
+        input[type="text"] {
+            width: 100%;
+        }
+
+        // buttons container styles
         .buttons {
+            gap: 15px;
             padding: 0;
             flex-direction: row;
+
+            // button styles
+            button {
+                margin-bottom: 0;
+            }
         }
     }
-    .buttons {
-        gap: 15px;
-    }
+
+    // notebook section styles
     .notebook {
         width: 100%;
+
+        // note styles
         li {
             width: 100%;
             height: 115px;
         }
-    }
-    input[type="text"] {
-        width: 100%;
     }
 }

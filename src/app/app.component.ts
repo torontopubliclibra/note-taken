@@ -97,7 +97,7 @@ export class AppComponent {
     this.notes = [];
 
     // clear the local storage
-    localStorage.clear();
+    localStorage.removeItem('notes');
   }
 
   // clear function
@@ -107,19 +107,35 @@ export class AppComponent {
     this.textareaValue = "";
   }
 
+  // note colour function (takes array index)
   noteColor(index: number) {
+
+    // if note position is divisible by 2
     if ((index + 1) % 2 === 0) {
+
+      // return note color class
       return "noteColor-2"
     } else {
+
+      // else return empty string
       return ""
     }
   }
 
+  // turn on dark mode function
   turnOnDark() {
+
+    // switch on/off dark mode
     this.darkMode = !this.darkMode;
+
+    // if darkMode is true
     if (this.darkMode) {
+
+      // save dark mode to local storage
       localStorage.setItem('mode', 'dark');
     } else {
+
+      // else save light mode to local storage
       localStorage.setItem('mode', 'light');
     }
   }
