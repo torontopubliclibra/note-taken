@@ -37,6 +37,9 @@
                 border: solid #446488 2px;
                 color: #000;
             }
+            &.remove:hover {
+                border: solid #000 2px;
+            }
         }
         input[type="text"] {
             background-color: #446488;
