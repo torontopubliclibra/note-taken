@@ -49,9 +49,4 @@ export class AppComponent {
     this.textareaValue = "";
   }
 
-  blur(event: any) {
-    let target = event.target;
-    target.blur();
-  }
-
 }

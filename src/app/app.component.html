@@ -7,8 +7,8 @@
     <div class="notepad">
       <input type="text" [(ngModel)]="textareaValue" placeholder="Add a note" (keydown.enter)="save()">
       <div class="buttons">
-        <button (click)="save()" (click)="blur($event)">Save</button>
-        <button (click)="clear()" (click)="blur($event)">Clear</button>
+        <button (click)="save()">Save</button>
+        <button (click)="clear()">Clear</button>
       </div>
     </div>
     <ul class="notebook">
