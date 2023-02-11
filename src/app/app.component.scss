@@ -1,3 +1,4 @@
+// app div styles
 .app {
     display: flex;
     flex-direction: column;
@@ -6,6 +7,8 @@
     background-size: 175px;
     min-width: 100vw;
     min-height: 100vh;
+
+    // dark mode colours
     &.dark {
         .wrapper {
             background-color: rgba($color: #000, $alpha: 0.9);

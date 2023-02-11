@@ -1,10 +1,19 @@
+<!-- app div with dynamic class and backgroundImage dependent on darkMode value -->
 <div class="app {{darkMode ? 'dark' : 'light'}}" [ngStyle]="{'backgroundImage': !darkMode ? 'url(./assets/pigeon-bg.jpg)' : 'url(./assets/pigeon-bg-dark.jpg)'}">
+
+  <!-- header -->
   <header>
     <h1>Pigeon Pad</h1>
     <h2>Just a space for your thoughts</h2>
+
+    <!-- dark mode button -->
     <button (click)="darkMode = !darkMode">{{darkMode ? 'Light' : 'Dark'}} Mode</button>
   </header>
+
+  <!-- main -->
   <main class="wrapper">
+
+    <!-- notepad -->
     <div class="notepad">
       <input type="text" [(ngModel)]="textareaValue" placeholder="Add a note" (keydown.enter)="save()">
       <div class="buttons">
@@ -12,19 +21,30 @@
         <button (click)="clear()">Clear</button>
       </div>
     </div>
+
+    <!-- notebook -->
     <ul class="notebook">
+
+      <!-- loop through notes array and render list item for each-->
       <li *ngFor="let note of notes; index as i">
         <button class="remove" (click)="remove(i)">X</button>
         <p>{{note}}</p>
       </li>
+
     </ul>
+
+    <!-- render removeAll button if notes has content -->
     <div *ngIf="notes.length > 0" class="buttons">
       <button class="removeAll" (click)="removeAll()">Remove all notes</button>
     </div>
+    
   </main>
+
+  <!-- footer -->
   <footer>
     <p>This app was built by <a href="https://danateagle.com">Dana Teagle</a> in 2023 using Angular and Typescript.</p>
   </footer>
-</div>
+
+</div> <!-- end of app div -->
 
 <router-outlet></router-outlet>
