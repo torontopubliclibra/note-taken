@@ -17,8 +17,10 @@
     border-radius: 15px;
     width: 80%;
     max-width: 750px;
+    min-height: 150px;
     margin: 25px auto;
     padding: 15px;
+    padding-bottom: 10px;
 }
 header, footer {
     width: 100vw;
@@ -36,7 +38,7 @@ header {
     align-items: center;
     justify-content: center;
     h1 {
-        font-size: 50px;
+        font-size: 55px;
         margin: 5px 0;
         padding: 0;
         text-transform: uppercase;
@@ -50,12 +52,17 @@ header {
 }
 footer {
     border-top: solid #000 5px;
+    a {
+        color: #446488;
+        &:hover {
+            color: #000;
+        }
+    }
 }
 .notepad {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 15px 0px;
     .buttons {
         padding-left: 15px;
     }
@@ -69,16 +76,18 @@ input[type="text"] {
     border: solid #000 3px;
     border-radius: 5px;
     font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
 }
 
 button {
-    width: 150px;
+    width: 100px;
     height: 30px;
     margin: 5px 0;
     background-color: #fff;
     border: solid #000 2px;
     border-radius: 5px;
     font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
     &:hover {
         cursor: pointer;
         background-color: #446488;
@@ -119,23 +128,20 @@ button {
         color: #000;
         text-align: center;
         width: 150px;
-        height: 150px;
+        height: 125px;
         list-style-type: none;
         p {
+            font-size: 15px;
             margin: 10px;
             overflow-wrap: break-word;
         }
     }
 }
 @media only screen and (max-width: 768px) {
-    .wrapper {
-        width: 80vw;
-    }
     .notepad {
         flex-direction: column;
         .buttons {
-            padding-left: 0;
-            padding-top: 10px;
+            padding: 0;
             flex-direction: row;
         }
     }
@@ -144,9 +150,9 @@ button {
     }
     .notebook li {
         width: 125px;
-        height: 125px;
+        height: 115px;
     }
     input[type="text"] {
-        width: 90%;
+        width: 100%;
     }
 }
