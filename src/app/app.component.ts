@@ -15,9 +15,23 @@ export class AppComponent {
   // default textbox value
   textareaValue: string = '';
 
+  // prompts array
+  prompts: string[] = [
+    'you ever just look at a pigeon and think',
+    'don\'t pigeonhole me',
+    'the difference between pigeons and doves is that pigeons don\'t get invited to weddings',
+    'ignore the signs; feed the pigeons',
+    'pigeon puns fly right over my head',
+    'a psychic bird can also be called an omen pigeon',
+    'see a flock of pigeons hanging out? call that squab goals'
+  ]
+
+  // default placeholder text
+  placeholder: string = "Add a note"
+
   // default background image
   background = {
-    backgroundImage: 'url(./assets/pigeon-bg.jpg'
+    backgroundImage: 'url(./assets/pigeon-bg.jpg)'
   }
   
   // empty notes array
@@ -36,12 +50,10 @@ export class AppComponent {
    
     // if savedNotes isn't null
     if (savedNotes) {
-
       // set notes to parsed array
       this.notes = JSON.parse(savedNotes);
 
     } else {
-
       // else set notes to an empty array
       this.notes = [];
     }
@@ -51,15 +63,41 @@ export class AppComponent {
     }
   }
 
+  // change placeholder text function (takes new placeholder as argument)
+  changePlaceholderText = (newPlaceholder: string) => {
+
+    // set placeholder to new placeholder
+    this.placeholder = newPlaceholder;
+
+    // after 1 second, reset the placeholder
+    setTimeout(() => {
+      this.placeholder = "Add a note"
+    }, 1000)
+  }
+
   // save function
   save() {
 
     // create copy of notes
     let updateNotes: string[] = this.notes;
 
-    // if textbox value isn't empty
-    if (this.textareaValue) {
+    // if the notebook has 12 or more notes
+    if (updateNotes.length >= 12) {
+      // display limit text
+      this.changePlaceholderText("Notes limit exceeded");
 
+    // if note is already in notebook
+    } else if (updateNotes.includes(this.textareaValue)) {
+      // display duplicate text
+      this.changePlaceholderText("Already in notes");
+    
+    // if note is blank
+    } else if (!this.textareaValue) {
+      // display empty note text
+      this.changePlaceholderText("Note can't be blank");
+
+    // otherwise
+    } else {
       // push textbox value to notes copy
       updateNotes.push(this.textareaValue);
     }
@@ -98,6 +136,15 @@ export class AppComponent {
 
     // clear the local storage
     localStorage.removeItem('notes');
+  }
+
+  prompt() {
+    let prompt: string = this.prompts[(Math.floor(Math.random() * (this.prompts.length)))];
+    // set textbox value to a prompt
+    while (this.textareaValue === prompt) {
+      prompt = this.prompts[(Math.floor(Math.random() * (this.prompts.length)))];
+    }
+    this.textareaValue = prompt;
   }
 
   // clear function
