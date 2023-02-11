@@ -1,5 +1,6 @@
 // font import
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Righteous&display=swap');
+
 
 // global body styles
 body {
@@ -9,4 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Open Sans', sans-serif;
+    h1 {
+        font-family: 'Righteous', cursive;
+    }
 }
