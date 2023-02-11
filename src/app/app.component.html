@@ -1,7 +1,8 @@
-<div class="app" [ngStyle]="{backgroundImage:'url(./assets/pigeon-bg.jpg)'}">
+<div class="app {{darkMode ? 'dark' : 'light'}}" [ngStyle]="{'backgroundImage': !darkMode ? 'url(./assets/pigeon-bg.jpg)' : 'url(./assets/pigeon-bg-dark.jpg)'}">
   <header>
     <h1>Pigeon Pad</h1>
     <h2>Just a space for your thoughts</h2>
+    <button (click)="darkMode = !darkMode">{{darkMode ? 'Light' : 'Dark'}} Mode</button>
   </header>
   <main class="wrapper">
     <div class="notepad">

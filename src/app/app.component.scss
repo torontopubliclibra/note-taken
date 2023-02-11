@@ -6,13 +6,55 @@
     background-size: 175px;
     min-width: 100vw;
     min-height: 100vh;
+    &.dark {
+        .wrapper {
+            background-color: rgba($color: #000, $alpha: 0.9);
+            color: aliceblue;
+            border: solid #fff 5px;
+        }
+        header, footer{
+            background-color: #000;
+            color: aliceblue;
+        }
+        header {
+            border-bottom: solid aliceblue 5px;
+        }
+        footer {
+            border-top: solid aliceblue 5px;
+            a {
+                color: aliceblue;
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+        button {
+            background-color: #446488;
+            color: aliceblue;
+            border: solid aliceblue 2px;
+            &:hover {
+                background-color: aliceblue;
+                border: solid #446488 2px;
+                color: #000;
+            }
+        }
+        input[type="text"] {
+            background-color: #446488;
+            border: solid aliceblue 3px;
+            color: #fff;
+        }
+        .notebook li {
+            background-color: #446488;
+            border: solid aliceblue 5px;
+        }
+    }
 }
 .wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: aliceblue;
+    background-color: rgba($color: aliceblue, $alpha: 0.9);
     border: solid #000 5px;
     border-radius: 15px;
     width: 80%;
@@ -34,7 +76,7 @@ header {
     display: flex;
     flex-direction: column;
     border-bottom: solid #000 5px;
-    height: 150px;
+    height: 200px;
     align-items: center;
     justify-content: center;
     h1 {
@@ -69,6 +111,7 @@ footer {
 }
 
 input[type="text"] {
+    background-color: #fff;
     padding: 15px;
     margin: 5px 0px;
     width: 300px;

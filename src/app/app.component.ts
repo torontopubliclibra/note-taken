@@ -11,11 +11,18 @@ export class AppComponent {
   title = 'pigeon-pad';
 
   textareaValue: string = '';
+
+  background = {
+    backgroundImage: 'url(./assets/pigeon-bg.jpg'
+  }
   
   notes: string[] = [];
 
+  darkMode: boolean = false;
+
   constructor() {
     let savedNotes: any = localStorage.getItem('notes');
+    
     if (savedNotes) {
       this.notes = JSON.parse(savedNotes);
     } else {
