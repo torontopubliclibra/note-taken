@@ -31,7 +31,6 @@ export class AppComponent {
     this.notes = updateNotes;
     localStorage.setItem('notes', JSON.stringify(updateNotes));
     this.textareaValue = '';
-    blur();
   }
 
   remove(index: number) {
@@ -44,12 +43,15 @@ export class AppComponent {
   removeAll() {
     this.notes = [];
     localStorage.clear();
-    blur();
   }
 
   clear() {
     this.textareaValue = "";
-    blur();
+  }
+
+  blur(event: any) {
+    let target = event.target;
+    target.blur();
   }
 
 }
