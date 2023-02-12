@@ -13,13 +13,11 @@
 
         // wrapper dark mode
         .wrapper {
-            background-color: rgba($color: #000, $alpha: 0.9);
-            color: aliceblue;
             border: solid #fff 5px;
         }
 
         // header and footer dark mode
-        header, footer{
+        header, footer, .wrapper {
             background-color: rgba($color: #000, $alpha: 0.9);
             color: aliceblue;
         }
