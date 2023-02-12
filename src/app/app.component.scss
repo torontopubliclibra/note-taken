@@ -1,3 +1,6 @@
+// partials imports
+@use './src/partials/variables.scss' as *;
+
 // global app styles
 .app {
     display: flex;
@@ -13,72 +16,76 @@
 
         // wrapper dark mode
         .wrapper {
-            border: solid #fff 5px;
+            border: solid $white 5px;
         }
 
         // header and footer dark mode
         header, footer, .wrapper {
-            background-color: rgba($color: #000, $alpha: 0.9);
-            color: aliceblue;
+            background-color: rgba($color: $black, $alpha: 0.9);
+            color: $lightblue;
         }
         header {
-            border-bottom: solid aliceblue 5px;
+            border-bottom: solid $lightblue 5px;
         }
         footer {
-            border-top: solid aliceblue 5px;
+            border-top: solid $lightblue 5px;
 
             // footer link dark mode
             a {
-                color: aliceblue;
+                color: $lightblue;
                 &:hover {
-                    color: #fff;
+                    color: $white;
                 }
             }
         }
 
         // button dark mode
         button {
-            background-color: #446488;
-            color: aliceblue;
-            border: solid aliceblue 2px;
+            background-color: $darkblue;
+            color: $lightblue;
+            border: solid $lightblue 2px;
 
             // button on hover dark mode
             &:hover {
-                background-color: aliceblue;
-                border: solid #446488 2px;
-                color: #000;
+                background-color: $lightblue;
+                border: solid $darkblue 2px;
+                color: $black;
             }
 
             // remove button on hover dark mode
             &.remove:hover {
-                border: solid #000 2px;
+                border: solid $black 2px;
             }
         }
 
         // textbox dark mode
         input[type="text"], fieldset {
-            background-color: #446488;
-            border: solid aliceblue 3px;
-            color: #fff;
+            background-color: $darkblue;
+            border: solid $lightblue 3px;
+            color: $white;
+        }
+
+        .notepad fieldset .radioField input[type="radio"] {
+            accent-color: $black;
         }
 
         // note dark mode
         .notebook li {
-            color: #fff;
-            border: solid aliceblue 3px;
+            color: $white;
+            border: solid $lightblue 3px;
 
             // alternate note colors dark mode
             &.purple {
-                background-color: rgba($color: rgb(104, 70, 104), $alpha: 0.7);
+                background-color: rgba($color: $darkpurple, $alpha: 0.7);
             }
             &.yellow {
-                background-color: rgba($color: rgb(142, 142, 74), $alpha: 0.7);
+                background-color: rgba($color: $darkyellow, $alpha: 0.7);
             }
             &.green {
-                background-color: rgba($color: rgb(67, 93, 67), $alpha: 0.7);
+                background-color: rgba($color: $darkgreen, $alpha: 0.7);
             }
             &.pink {
-                background-color: rgba($color: rgb(163, 77, 90), $alpha: 0.7);
+                background-color: rgba($color: $darkpink, $alpha: 0.7);
             }
         }
     }
@@ -90,8 +97,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba($color: aliceblue, $alpha: 0.9);
-    border: solid #000 5px;
+    background-color: rgba($color: $lightblue, $alpha: 0.9);
+    border: solid $black 5px;
     border-radius: 15px;
     width: 80%;
     max-width: 650px;
@@ -104,7 +111,7 @@
 // header and footer styles
 header, footer {
     width: 100vw;
-    background-color: rgba($color: aliceblue, $alpha: 0.9);
+    background-color: rgba($color: $lightblue, $alpha: 0.9);
 
     // header and footer text styles
     h1, h2, p {
@@ -115,13 +122,14 @@ header, footer {
 header {
     display: flex;
     flex-direction: column;
-    border-bottom: solid #000 5px;
+    border-bottom: solid $black 5px;
     height: 200px;
     align-items: center;
     justify-content: center;
 
     // main heading styles
     h1 {
+        font-family: $title;
         font-size: 60px;
         margin: 5px 0;
         padding: 0;
@@ -140,13 +148,13 @@ header {
     }
 }
 footer {
-    border-top: solid #000 5px;
+    border-top: solid $black 5px;
 
     // footer link styles
     a {
-        color: #446488;
+        color: $darkblue;
         &:hover {
-            color: #000;
+            color: $black;
         }
     }
 }
@@ -158,13 +166,13 @@ footer {
     align-items: center;
 
     fieldset {
-        background-color: aliceblue;
+        background-color: $lightblue;
         display: flex;
         flex-flow: row wrap;
         margin: 5px 0px;
         margin-bottom: 10px;
         justify-content: space-evenly;
-        border: solid #000 3px;
+        border: solid $black 3px;
         border-radius: 5px;
         .radioField {
             display: flex;
@@ -177,7 +185,7 @@ footer {
                 height: 1.2rem;
                 width: 1.2rem;
                 margin-right: 0.5rem;
-                accent-color: #000;
+                accent-color: $darkblue;
                 &:hover {
                     cursor: pointer;
                 }
@@ -190,14 +198,14 @@ footer {
 
     // textbox styles
     input[type="text"] {
-        background-color: #fff;
+        background-color: $white;
         padding: 15px;
         margin: 5px 0px;
         width: 450px;
         height: 50px;
-        border: solid #000 3px;
+        border: solid $black 3px;
         border-radius: 5px;
-        font-family: 'Open Sans', sans-serif;
+        font-family: $sans-serif;
         font-size: 15px;
     }
 
@@ -216,17 +224,17 @@ button {
     width: 90px;
     height: 30px;
     margin: 5px 0;
-    background-color: #fff;
-    border: solid #000 2px;
+    background-color: $white;
+    border: solid $black 2px;
     border-radius: 5px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: $sans-serif;
     font-size: 15px;
 
     // button on hover
     &:hover {
         cursor: pointer;
-        background-color: #446488;
-        color: #fff;
+        background-color: $darkblue;
+        color: $white;
     }
 
     // remove button
@@ -268,9 +276,9 @@ button {
         justify-content: center;
         position: relative;
         flex-direction: column;
-        border: solid #000 3px;
+        border: solid $black 3px;
         border-radius: 5px;
-        color: #000;
+        color: $black;
         text-align: center;
         width: 200px;
         height: 175px;
@@ -285,16 +293,16 @@ button {
 
         // alternate note colors
         &.purple {
-            background-color: rgba($color: rgb(197, 149, 197), $alpha: 0.7);
+            background-color: rgba($color: $lightpurple, $alpha: 0.7);
         }
         &.yellow {
-            background-color: rgba($color: rgb(222, 222, 123), $alpha: 0.7);
+            background-color: rgba($color: $lightyellow, $alpha: 0.7);
         }
         &.green {
-            background-color: rgba($color: rgb(116, 158, 116), $alpha: 0.7);
+            background-color: rgba($color: $lightgreen, $alpha: 0.7);
         }
         &.pink {
-            background-color: rgba($color: pink, $alpha: 0.7);
+            background-color: rgba($color: $lightpink, $alpha: 0.7);
         }
     }
 }

@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
   // app title
-  title = 'pigeon-pad';
+  title: string = 'pigeon-pad';
 
   // default textbox value
   textareaValue: string = '';
@@ -20,14 +20,9 @@ export class AppComponent {
 
   // default placeholder text
   placeholder: string = "Add a note"
-
-  // default background image
-  background = {
-    backgroundImage: 'url(./assets/pigeon-bg.jpg)'
-  }
   
   // empty notes array
-  notes: any[] = [];
+  notes: {text: string, color: string}[] = [];
 
   // default darkMode value
   darkMode: boolean = false;
@@ -74,7 +69,7 @@ export class AppComponent {
   save() {
 
     // create copy of notes
-    let updateNotes: any[] = this.notes;
+    let updateNotes: {text: string, color: string}[] = this.notes;
 
     // if the notebook has 12 or more notes
     if (updateNotes.length >= 12) {
@@ -116,7 +111,7 @@ export class AppComponent {
   remove(index: number) {
 
     // create copy of notes
-    let updateNotes: any[] = this.notes;
+    let updateNotes: {text: string, color: string}[] = this.notes;
 
     // remove item from notes array copy at reverse index
     updateNotes.splice(((updateNotes.length - 1) - index), 1);

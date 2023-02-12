@@ -1,15 +1,15 @@
+// partials imports
+@use './src/partials/variables.scss' as *;
+
 // font import
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Righteous&display=swap');
 
 // global body styles
 body {
     margin: 0 auto;
-    background-color: aliceblue;
+    background-color: $lightblue;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Open Sans', sans-serif;
-    h1 {
-        font-family: 'Righteous', cursive;
-    }
+    font-family: $sans-serif;
 }
