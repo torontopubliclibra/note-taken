@@ -16,7 +16,7 @@ export class AppComponent {
   textareaValue: string = '';
 
   // default note color
-  noteColor: string = 'yellow';
+  noteColor: string = 'pink';
 
   // default placeholder text
   placeholder: string = "Add a note"

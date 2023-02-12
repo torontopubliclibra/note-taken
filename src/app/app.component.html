@@ -23,10 +23,6 @@
         <!-- note color radio input -->
         <fieldset>
           <span class="radioField">
-            <input type="radio" value="yellow" id="yellow" name="noteColor" [(ngModel)]="noteColor" >
-            <label for="yellow">Yellow</label>
-          </span>
-          <span class="radioField">
             <input type="radio" value="pink" id="pink" name="noteColor" [(ngModel)]="noteColor" >
             <label for="pink">Pink</label>
           </span>
@@ -37,6 +33,10 @@
           <span class="radioField">
             <input type="radio" value="green" id="green" name="noteColor" [(ngModel)]="noteColor" >
             <label for="green">Green</label>
+          </span>
+          <span class="radioField">
+            <input type="radio" value="yellow" id="yellow" name="noteColor" [(ngModel)]="noteColor" >
+            <label for="yellow">Yellow</label>
           </span>
         </fieldset>
       </div>
@@ -50,7 +50,7 @@
     </div>
 
     <!-- notebook section -->
-    <ul class="notebook">
+    <ul class="notebook" *ngIf="notes.length > 0">
 
       <!-- loop through notes array in reverse and render list item for each with remove button-->
       <li
@@ -62,7 +62,7 @@
     </ul>
 
     <!-- render removeAll button if notes has content -->
-    <div *ngIf="notes.length > 0" class="buttons">
+    <div *ngIf="notes.length > 1" class="buttons">
       <button class="removeAll" (click)="removeAll()">Remove all notes</button>
     </div>
     
