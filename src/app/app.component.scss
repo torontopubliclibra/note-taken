@@ -321,24 +321,16 @@ button {
             width: calc(100% - 40px);
         }
 
-        // textbox styles
-        input[type="text"] {
-            width: calc(100% - 6px);
-            margin: 5px;
-        }
-
-        // radio fieldset styles
         fieldset {
             width: 100%;
             margin: 5px;
             margin-top: 10px;
-            justify-content: center;
+        }
 
-            // radio field styles
-            .radioField {
-                width: 50%;
-                justify-content: left;
-            }
+        // textbox styles
+        input[type="text"] {
+            width: calc(100% - 6px);
+            margin: 5px;
         }
 
         // buttons container styles
@@ -366,6 +358,19 @@ button {
             p {
                 padding: 0 20px;
             }
+        }
+    }
+}
+
+// responsive styles for mobile and smaller
+@media only screen and (max-width: 460px) {
+    .notepad fieldset {
+        justify-content: center;
+
+        // radio field styles
+        .radioField {
+            width: 50%;
+            justify-content: left;
         }
     }
 }
