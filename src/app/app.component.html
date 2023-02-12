@@ -16,13 +16,34 @@
     <!-- notepad section -->
     <div class="notepad">
 
-      <!-- text box with max length of 85 characters and value of textareaValue (saves on enter)-->
-      <input type="text" [(ngModel)]="textareaValue" maxlength="85" placeholder={{placeholder}} (keydown.enter)="save()">
+      <div class="input">
+        <!-- text box with max length of 85 characters and value of textareaValue (saves on enter)-->
+        <input type="text" [(ngModel)]="textareaValue" maxlength="85" placeholder={{placeholder}} (keydown.enter)="save()">
+
+        <!-- note color radio input -->
+        <fieldset>
+          <span class="radioField">
+            <input type="radio" value="yellow" id="yellow" name="noteColor" [(ngModel)]="noteColor" >
+            <label for="yellow">Yellow</label>
+          </span>
+          <span class="radioField">
+            <input type="radio" value="pink" id="pink" name="noteColor" [(ngModel)]="noteColor" >
+            <label for="pink">Pink</label>
+          </span>
+          <span class="radioField">
+            <input type="radio" value="purple" id="purple" name="noteColor" [(ngModel)]="noteColor" >
+            <label for="purple">Purple</label>
+          </span>
+          <span class="radioField">
+            <input type="radio" value="green" id="green" name="noteColor" [(ngModel)]="noteColor" >
+            <label for="green">Green</label>
+          </span>
+        </fieldset>
+      </div>
 
       <!-- save and clear function buttons -->
       <div class="buttons">
         <button (click)="save()">Save</button>
-        <button (click)="prompt()">Prompt</button>
         <button (click)="clear()">Clear</button>
       </div>
 
@@ -33,9 +54,9 @@
 
       <!-- loop through notes array in reverse and render list item for each with remove button-->
       <li
-        *ngFor="let note of notes.slice().reverse(); index as i" class="{{noteColor(i)}}">
+        *ngFor="let note of notes.slice().reverse(); index as i" class="{{note.color}}">
         <button class="remove" (click)="remove(i)">X</button>
-        <p>{{note}}</p>
+        <p>{{note.text}}</p>
       </li>
 
     </ul>

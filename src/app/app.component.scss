@@ -58,7 +58,7 @@
         }
 
         // textbox dark mode
-        input[type="text"] {
+        input[type="text"], fieldset {
             background-color: #446488;
             border: solid aliceblue 3px;
             color: #fff;
@@ -67,12 +67,20 @@
         // note dark mode
         .notebook li {
             color: #fff;
-            background-color: rgba($color: rgb(104, 70, 104), $alpha: 0.7);;
             border: solid aliceblue 3px;
 
-            // alternate note colour dark mode
-            &.noteColor-2 {
-                background-color: rgba($color: rgb(156, 79, 92), $alpha: 0.7);
+            // alternate note colors dark mode
+            &.purple {
+                background-color: rgba($color: rgb(104, 70, 104), $alpha: 0.7);
+            }
+            &.yellow {
+                background-color: rgba($color: rgb(142, 142, 74), $alpha: 0.7);
+            }
+            &.green {
+                background-color: rgba($color: rgb(67, 93, 67), $alpha: 0.7);
+            }
+            &.pink {
+                background-color: rgba($color: rgb(163, 77, 90), $alpha: 0.7);
             }
         }
     }
@@ -148,8 +156,44 @@ footer {
 // notepad section styles
 .notepad {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     align-items: center;
+
+    fieldset {
+        background-color: aliceblue;
+        display: flex;
+        flex-flow: row wrap;
+        margin: 0;
+        justify-content: space-evenly;
+        border: solid #000 3px;
+        border-radius: 5px;
+        .radioField {
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            input[type="radio"] {
+                height: 1.2rem;
+                width: 1.2rem;
+                margin-right: 0.5rem;
+                accent-color: #000;
+            }
+        }
+    }
+
+    // textbox styles
+    input[type="text"] {
+        background-color: #fff;
+        padding: 15px;
+        margin: 5px 0px;
+        width: 450px;
+        height: 50px;
+        border: solid #000 3px;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 15px;
+    }
 
     // buttons container styles
     .buttons {
@@ -159,19 +203,6 @@ footer {
         justify-content: center;
         gap: 5px;
     }
-}
-
-// textbox styles
-input[type="text"] {
-    background-color: #fff;
-    padding: 15px;
-    margin: 5px 0px;
-    width: 450px;
-    height: 50px;
-    border: solid #000 3px;
-    border-radius: 5px;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
 }
 
 // button styles
@@ -227,7 +258,6 @@ button {
         justify-content: center;
         position: relative;
         flex-direction: column;
-        background-color: rgba($color: rgb(197, 149, 197), $alpha: 0.7);
         border: solid #000 3px;
         border-radius: 5px;
         color: #000;
@@ -243,8 +273,17 @@ button {
             overflow-wrap: break-word;
         }
 
-        // alternate note colour
-        &.noteColor-2 {
+        // alternate note colors
+        &.purple {
+            background-color: rgba($color: rgb(197, 149, 197), $alpha: 0.7);
+        }
+        &.yellow {
+            background-color: rgba($color: rgb(222, 222, 123), $alpha: 0.7);
+        }
+        &.green {
+            background-color: rgba($color: rgb(116, 158, 116), $alpha: 0.7);
+        }
+        &.pink {
             background-color: rgba($color: pink, $alpha: 0.7);
         }
     }
@@ -260,7 +299,16 @@ button {
 
         // textbox styles
         input[type="text"] {
-            width: 100%;
+            width: 90%;
+        }
+
+        fieldset {
+            width: 92%;
+            justify-content: center;
+            .radioField {
+                width: 50%;
+                justify-content: left;
+            }
         }
 
         // buttons container styles

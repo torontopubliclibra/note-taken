@@ -15,15 +15,8 @@ export class AppComponent {
   // default textbox value
   textareaValue: string = '';
 
-  // prompts array
-  prompts: string[] = [
-    'you ever just look at a pigeon and think',
-    'don\'t pigeonhole me',
-    'the difference between pigeons and doves is that pigeons don\'t get invited to weddings',
-    'ignore the signs; feed the pigeons',
-    'pigeon puns fly right over my head',
-    'see a flock of pigeons hanging out? call that squab goals'
-  ]
+  // default note color
+  noteColor: string = 'yellow';
 
   // default placeholder text
   placeholder: string = "Add a note"
@@ -34,7 +27,7 @@ export class AppComponent {
   }
   
   // empty notes array
-  notes: string[] = [];
+  notes: any[] = [];
 
   // default darkMode value
   darkMode: boolean = false;
@@ -78,7 +71,7 @@ export class AppComponent {
   save() {
 
     // create copy of notes
-    let updateNotes: string[] = this.notes;
+    let updateNotes: any[] = this.notes;
 
     // if the notebook has 12 or more notes
     if (updateNotes.length >= 12) {
@@ -91,14 +84,19 @@ export class AppComponent {
       this.changePlaceholderText("Already in notes");
     
     // if note is blank
-    } else if (!this.textareaValue) {
+    } else if (!this.textareaValue || this.textareaValue === " ") {
       // display empty note text
       this.changePlaceholderText("Note can't be blank");
 
     // otherwise
     } else {
       // push textbox value to notes copy
-      updateNotes.push(this.textareaValue);
+      updateNotes.push(
+        {
+          text: this.textareaValue,
+          color: this.noteColor,
+        });
+      this.placeholder = "Add a note"
     }
 
     // set notes to updated notes copy
@@ -115,7 +113,7 @@ export class AppComponent {
   remove(index: number) {
 
     // create copy of notes
-    let updateNotes: string[] = this.notes;
+    let updateNotes: any[] = this.notes;
 
     // remove item from notes array copy at reverse index
     updateNotes.splice((updateNotes.length - 1 - index), 1);
@@ -137,35 +135,11 @@ export class AppComponent {
     localStorage.removeItem('notes');
   }
 
-  prompt() {
-    let prompt: string = this.prompts[(Math.floor(Math.random() * (this.prompts.length)))];
-    // set textbox value to a prompt
-    while (this.textareaValue === prompt) {
-      prompt = this.prompts[(Math.floor(Math.random() * (this.prompts.length)))];
-    }
-    this.textareaValue = prompt;
-  }
-
   // clear function
   clear() {
 
     // set textbox value to an empty string
     this.textareaValue = "";
-  }
-
-  // note colour function (takes array index)
-  noteColor(index: number) {
-
-    // if note position is divisible by 2
-    if ((this.notes.length - index) % 2 === 0) {
-
-      // return note color class
-      return "noteColor-2"
-    } else {
-
-      // else return empty string
-      return ""
-    }
   }
 
   // turn on dark mode function
