@@ -1,27 +1,21 @@
-# PigeonPad
+# Pigeon Pad
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
+## About
 
-## Development server
+[Pigeon Pad](https://pigeon-pad.netlify.app) is a notes app built by [Dana Teagle](https://danateagle.com). The site is written using the Typescript framework Angular with SCSS for style.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This site allows the user to save up to 12 notes between 1-85 characters in length, in their choice of colours (pink, purple, green, or yellow). It uses the Angular local storage API to store the notes client-side in the browser so the notes are saved until the user's cache is cleared. Also stored in local storage is the user's preference for the built-in dark mode/light mode.
 
-## Code scaffolding
+Some basic error handling includes displaying new placeholder text in the textbox when the user attempts to submit an empty textbox, an empty space, a note identical to one already stored, or they have reached the 12 note limit.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Development
 
-## Build
+This was my first Angular app and my first app written in Typescript. I wrote it over a weekend in February 2023.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Attributions
 
-## Running unit tests
+- Open Sans and Righteous fonts from [Google Fonts](https://fonts.google.com/)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Developer
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[Dana Teagle](https://danateagle.com) (they/she) is a web developer from Tkaronto, Ontario. You can find them on Twitter at [@teagleistyping](https://twitter.com/teagleistyping) and on GitHub at [torontopubliclibra](https://github.com/torontopubliclibra).
