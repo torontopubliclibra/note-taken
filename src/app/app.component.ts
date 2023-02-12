@@ -79,7 +79,7 @@ export class AppComponent {
       this.changePlaceholderText("Notes limit exceeded");
 
     // if note is already in notebook
-    } else if (updateNotes.includes(this.textareaValue)) {
+    } else if (updateNotes.some(note => note.text === this.textareaValue)) {
       // display duplicate text
       this.changePlaceholderText("Already in notes");
     
