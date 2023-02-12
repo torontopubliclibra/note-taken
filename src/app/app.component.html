@@ -20,24 +20,24 @@
         <!-- text box with max length of 85 characters and value of textareaValue (saves on enter)-->
         <input type="text" [(ngModel)]="textareaValue" maxlength="85" placeholder={{placeholder}} (keydown.enter)="save()">
 
-        <!-- note color radio input -->
+        <!-- note color radio inputs -->
         <fieldset>
-          <span class="radioField">
+          <label class="radioField" for="pink">
             <input type="radio" value="pink" id="pink" name="noteColor" [(ngModel)]="noteColor" >
-            <label for="pink">Pink</label>
-          </span>
-          <span class="radioField">
+            Pink
+          </label>
+          <label class="radioField" for="purple">
             <input type="radio" value="purple" id="purple" name="noteColor" [(ngModel)]="noteColor" >
-            <label for="purple">Purple</label>
-          </span>
-          <span class="radioField">
+            Purple
+          </label>
+          <label class="radioField" for="green">
             <input type="radio" value="green" id="green" name="noteColor" [(ngModel)]="noteColor" >
-            <label for="green">Green</label>
-          </span>
-          <span class="radioField">
+            Green
+          </label>
+          <label class="radioField" for="yellow">
             <input type="radio" value="yellow" id="yellow" name="noteColor" [(ngModel)]="noteColor" >
-            <label for="yellow">Yellow</label>
-          </span>
+            Yellow
+          </label>
         </fieldset>
       </div>
 

@@ -35,9 +35,10 @@ export class AppComponent {
   // component class constructor
   constructor() {
 
-    // get local storage value
+    // get local storage notes value
     let savedNotes: any = localStorage.getItem('notes');
 
+    // get local storage mode value
     let savedMode: any = localStorage.getItem('mode');
    
     // if savedNotes isn't null
@@ -50,7 +51,9 @@ export class AppComponent {
       this.notes = [];
     }
 
+    // if savedMode is dark
     if (savedMode === 'dark') {
+      // turn on dark mode
       this.darkMode = true;
     }
   }
@@ -116,7 +119,7 @@ export class AppComponent {
     let updateNotes: any[] = this.notes;
 
     // remove item from notes array copy at reverse index
-    updateNotes.splice((updateNotes.length - 1 - index), 1);
+    updateNotes.splice(((updateNotes.length - 1) - index), 1);
 
     // set notes to updated notes copy
     this.notes = updateNotes;

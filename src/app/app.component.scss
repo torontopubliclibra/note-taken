@@ -180,6 +180,12 @@ footer {
                 width: 1.2rem;
                 margin-right: 0.5rem;
                 accent-color: #000;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            &:hover {
+                cursor: pointer;
             }
         }
     }
@@ -304,6 +310,7 @@ button {
         flex-direction: column;
         align-items: flex-start;
 
+        // input section styles
         .input {
             width: calc(100% - 40px);
         }
@@ -314,11 +321,14 @@ button {
             margin: 5px;
         }
 
+        // radio fieldset styles
         fieldset {
             width: 100%;
             margin: 5px;
             margin-top: 10px;
             justify-content: center;
+
+            // radio field styles
             .radioField {
                 width: 50%;
                 justify-content: left;
