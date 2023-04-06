@@ -18,4 +18,4 @@ This was my first Angular app and my first app written in Typescript. I wrote it
 
 ## Developer
 
-[Dana Teagle](https://danateagle.com) (they/she) is a web developer from Tkaronto, Ontario. You can find them on Twitter at [@teagleistyping](https://twitter.com/teagleistyping) and on GitHub at [torontopubliclibra](https://github.com/torontopubliclibra).
+[Dana Teagle](https://danateagle.com) (she/her) is a web developer from Tkaronto, Ontario.
