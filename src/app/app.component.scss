@@ -413,6 +413,7 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            flex-direction: row-reverse;
             justify-content: center;
             gap: 20px;
             height: 87px;
