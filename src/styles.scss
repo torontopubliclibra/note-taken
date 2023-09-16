@@ -2,14 +2,15 @@
 @use './src/partials/variables.scss' as *;
 
 // font import
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Caveat&display=swap');
 
 // global body styles
 body {
+    background-color: $color2;
     margin: 0 auto;
-    background-color: $lightblue;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: $sans-serif;
+    text-transform: lowercase;
 }
