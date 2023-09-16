@@ -21,14 +21,14 @@ nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: $color2;
+        background-color: $color1;
         border-top: solid $black 3px;
         margin-top: 0;
         width: 100%;
 
         .mobile-nav-link {
             height: 60px;
-            width: 50%;
+            width: 65%;
             padding: 0;
             margin: 0;
             font-size: 16px;
@@ -36,10 +36,11 @@ nav {
             border: none;
             border-radius: 0;
             &.about {
-                border-right: solid $black 3px;
+                width: 35%;
+                border-left: solid $black 3px;
                 &.open {
                     width: 100%;
-                    border-right: none;
+                    border-left: none;
                 }
             }
         }
@@ -71,7 +72,8 @@ header {
     }
 }
 footer {
-    width: 91%;
+    width: 90%;
+    max-width: 900px;
     font-size: 14px;
     line-height: 1.75;
     padding: 20px;
@@ -153,7 +155,6 @@ main {
             display: none;
         }
 
-        min-height: 400px;
         height: calc(100vh - 210px);
         width: 100%;
         max-width: 100%;
@@ -179,8 +180,11 @@ main {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            border-top: solid $black 3px;
+            border-bottom: none;
             height: 90px;
             flex-direction: column;
+            order: 2;
             gap: 0;
             font-size: 16px;
             padding: 10px;
@@ -199,10 +203,13 @@ main {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            border-top: none;
             width: calc(100% - 20px);
             justify-content: center;
             padding: 10px;
+            padding-top: 0;
             gap: 20px;
+            order: 3;
         }
     }
     &.green {
@@ -245,9 +252,9 @@ textarea {
     }
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        width: calc(100% - 80px);
+        width: calc(100% - 40px);
         font-size: 33px;
-        padding: 30px 40px;
+        padding: 20px;
     }
 }
 
@@ -282,7 +289,7 @@ select {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        width: 380px;
+        width: 250px;
         height: 40px;
         font-size: 16px;
         font-style: italic;
@@ -328,11 +335,11 @@ button {
         }
     }
 
-    &.remove, &.edit {
+    &.delete, &.edit {
         position: absolute;
         top: 0;
         font-size: 12px;
-        line-height: 1.5;
+        line-height: 1.4;
         width: 25px;
         height: 25px;
         margin: 5px;
@@ -340,13 +347,17 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
-            background-color: $color2;
+            background-color: $color1;
             z-index: 20;
+            font-size: 16px;
+            line-height: 1.75;
             top: 4px;
+            width: 35px;
+            height: 35px;
         }
     }
 
-    &.remove {
+    &.delete {
         right: 0;
     }
 
@@ -375,7 +386,7 @@ button {
         }
 
         background-color: $color2;
-        min-height: 415px;
+        min-height: 400px;
         height: calc(100vh - 210px);
         min-width: 100%;
         width: 100%;
@@ -412,8 +423,12 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            border-top: solid $black 3px;
+            border-bottom: none;
             flex-direction: row-reverse;
             justify-content: center;
+            padding-bottom: 0;
+            order: 2;
             gap: 20px;
             height: 87px;
         }
@@ -426,19 +441,29 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            border-top: none;
             flex-direction: row;
             justify-content: center;
             height: 75px;
             gap: 20px;
+            order: 3;
             font-size: 16px;
             p {
                 margin: 0;
             }
         }
-    }
-    
-    .notes-remaining {
-        gap: 10px;
+        .notes-remaining {
+            justify-content: right;
+            gap: 15px;
+        }
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            .notes-remaining, button {
+                width: 50%;
+            }
+        }
+
     }
 
     .colorFilter, .timeSort {
@@ -449,7 +474,7 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
-            width: 50%;
+            width: 100%;
             flex-direction: column;
             gap: 0;
             font-size: 16px;
@@ -534,8 +559,7 @@ button {
                     border-top: none;
                 }
                 &:first-of-type:last-of-type {
-                    border-top: solid $black 3px;
-                    border-bottom: solid $black 3px;
+                    height: 100%;
                 }
             }
 
@@ -568,7 +592,7 @@ button {
 
                 // responsive to tablet
                 @media only screen and (max-width: $tablet) {
-                    background-color: $white;
+                    padding: 15px 0;
                     bottom: unset;
                     top: 0;
                     border-top: none;

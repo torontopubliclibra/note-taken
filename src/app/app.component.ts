@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +11,15 @@ export class AppComponent {
 
   // initial variables
   title: string = `note-taken`;
-  theme: string = `light`;
-  storedTheme: any = localStorage.getItem(`theme`);
+  placeholder: string = `Type your note here`;
+  noteColor: string = `green`;
+  colorFilter: string = `all`;
+  timeSort: string = `newest`;
+  noteColors: string[] = [];
+  inputtedText: string = ``;
+  mobileView: string = `notepad`;
+
+  // note data objects
   localNotes: any = localStorage.getItem(`notes`);
   allNotes: {
     text: string,
@@ -31,77 +37,89 @@ export class AppComponent {
       date: string,
     }
   }[] = [];
-  placeholder: string = `Type your note here`;
-  noteColor: string = `green`;
-  colorFilter: string = `all`;
-  timeSort: string = `desc`;
-  noteColors: string[] = [];
-  inputtedText: string = ``;
-  mobileView: string = `notepad`;
 
   // component class constructor
   constructor() {
    
-    // if there are notes stored, set the notes to the parsed array
+    // if there are local notes stored, parse the data and set the notes array
     if (this.localNotes) {
       this.allNotes = JSON.parse(this.localNotes);
 
-    // otherwise set the notes to an empty array
+    // otherwise, set the notes array to empty
     } else {
       this.allNotes = [];
     }
 
-    // if the stored theme is dark, turn on the dark theme
-    if (this.storedTheme === `dark`) {
-      this.theme = `dark`;
-    }
-
+    // set the filtered notes to the notes array
     this.filteredNotes = this.allNotes;
 
+    // update the note colours
     this.updateNoteColors();
+
   }
 
+  // toggle the mobile view function
   toggleMobileView = (view: string) => {
 
-    if (view === "notebook") {
-      this.mobileView = "notebook";
-    } else if (view === "notepad") {
-      this.mobileView = "notepad"
-    } else if (view === "info") {
-      this.mobileView = "info"
+    // set the mobile view variable to the parameter taken by the function
+    if (view === `notebook`) {
+      this.mobileView = `notebook`;
+    } else if (view === `notepad`) {
+      this.mobileView = `notepad`
+    } else if (view === `info`) {
+      this.mobileView = `info`
     }
 
   }
 
+  // update placeholder text function
   updatePlaceholder = (newPlaceholder: string) => {
 
+    // set the placeholder variable to the parameter taken by the function
     this.placeholder = newPlaceholder;
 
+    // after 1 second, set it back
     setTimeout(() => {
-      this.placeholder = 'Type your note here';
+      this.placeholder = `Type your note here`;
     }, 1000)
   }
 
+  // update note colours function
   updateNoteColors = () => {
+
+    // establish an empty array for the new note colours
     let newNoteColors: string[] = [];
 
+    // for each note in the notes array
     this.allNotes.forEach((note) => {
+
+      // if the colour isn't already in the note colours
       if (!newNoteColors.includes(note.color)) {
+
+        // add it
         newNoteColors.push(note.color);
       }
     })
 
+    // if the new note colours doesn't include the selected colour filter
     if (!newNoteColors.includes(this.colorFilter)) {
+
+      // reset the colour filter
       this.colorFilter = `all`;
+
+      // refilter the colours
       this.filterNotesByColor();
     }
 
+    // set the note colours variable to the new note colours
     this.noteColors = newNoteColors;
 
   }
 
+  // filter notes by colour function
   filterNotesByColor = () => {
 
+    // establish an empty array for the new filtered notes
     let updatedNotes: {
       text: string,
       color: string,
@@ -111,10 +129,14 @@ export class AppComponent {
       }
     }[] = this.allNotes;
 
+    // if the colour filter is anything other than 'all'
     if (this.colorFilter !== `all`) {
+
+      // filter the notes by the selected colour filter
       updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
     }
 
+    // set the filtered notes variables to the new filtered notes
     this.filteredNotes = updatedNotes;
 
   }
@@ -122,10 +144,14 @@ export class AppComponent {
   // save note function
   saveNote(event: any) {
 
+    // if the key pressed is enter
     if (event.keyCode == 13) {
+      
+      // prevent the default action
       event.preventDefault();
     }
 
+    // get the date and time info and format it
     let today = new Date();
     let day = today.getDate();
     let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
@@ -142,6 +168,7 @@ export class AppComponent {
     }
     let minute = String(today.getMinutes()).padStart(2, '0');
     
+    // compile the date and time strings
     let noteTime: string = `${hour}:${minute} ${meridiem}`
     let noteDate: string = `${month} ${day}, ${year}`
 
@@ -188,17 +215,20 @@ export class AppComponent {
 
     }
 
-    console.log(updateNotes);
-
-    // set the notes to the updated notes
+    // set the notes array to the updated notes
     this.allNotes = updateNotes;
 
+    // update the note colours
     this.updateNoteColors();
 
+    // if the selected colour filter isn't the colour of the note just added
     if (this.colorFilter !== this.noteColor) {
+
+      // reset the colour filter
       this.colorFilter = `all`;
     }
 
+    // filter the notes by colour
     this.filterNotesByColor();
 
     // set the local storage notes to the stringified array
@@ -210,55 +240,66 @@ export class AppComponent {
   }
 
   // edit note function
-
   editNote(index: number) {
 
+    // save the note to edit as a variable
     let editedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
 
+    // set the input text and colour to that of the edited note
     this.inputtedText = editedNote.text;
     this.noteColor = editedNote.color;
 
-    this.removeNote(index);
+    // delete the note
+    this.deleteNote(index);
 
+    // toggle the mobile view back to the notepad
     this.toggleMobileView("notepad");
 
   }
 
-  // remove note function
-  removeNote(index: number) {
+  // delete note function
+  deleteNote(index: number) {
 
+    // save the note to delete as a variable
     let removedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
 
-    this.filteredNotes = this.filteredNotes.filter(note => note.text !== removedNote.text);
-
+    // delete the note from the notes array
     this.allNotes = this.allNotes.filter(note => note.text !== removedNote.text);
 
-    this.localNotes = this.allNotes;
+    // delete the note from the filtered notes array
+    this.filteredNotes = this.filteredNotes.filter(note => note.text !== removedNote.text);
 
+    // update the note colours
     this.updateNoteColors();
 
-    // set the local storage notes to the stringified array 
-    localStorage.setItem(`notes`, JSON.stringify(this.localNotes));
+    // set the local storage notes to the stringified array
+    localStorage.setItem(`notes`, JSON.stringify(this.allNotes));
 
+    // update the local notes variable to delete any trace of the note
+    this.localNotes = localStorage.getItem(`notes`);
+
+    // if the notebook is empty, set the mobile view to the notepad
     if (this.allNotes.length === 0) {
       this.toggleMobileView("notepad");
     }
 
   }
 
-  // remove all notes function
-  removeAll() {
+  // delete all notes function
+  deleteAll() {
 
     // empty all the notes arrays
     this.allNotes = [];
     this.filteredNotes = [];
     this.localNotes = [];
     
+    // update the note colours
     this.updateNoteColors();
 
-    // clear the local storage
+    // clear the local storage note
     localStorage.removeItem(`notes`);
 
+    // toggle the mobile view to the notepad
     this.toggleMobileView("notepad");
 
   }
@@ -269,26 +310,6 @@ export class AppComponent {
     // set textbox value to an empty string
     this.inputtedText = ``;
 
-  }
-
-  // update theme function
-  updateTheme() {
-
-    // if theme is dark
-    if (this.theme === `dark`) {
-
-      // update theme to light and send to local storage
-      this.theme = `light`
-      localStorage.setItem(`theme`, `light`);
-
-    // if theme is light
-    } else {
-
-      // update theme to dark and send to local storage
-      this.theme = `dark`;
-      localStorage.setItem(`theme`, `dark`);
-
-    }
   }
 
 }
