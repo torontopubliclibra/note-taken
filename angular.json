@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pigeon-pad": {
+    "note-taken": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pigeon-pad",
+            "outputPath": "dist/note-taken",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "pigeon-pad:build:production"
+              "browserTarget": "note-taken:build:production"
             },
             "development": {
-              "browserTarget": "pigeon-pad:build:development"
+              "browserTarget": "note-taken:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pigeon-pad:build"
+            "browserTarget": "note-taken:build"
           }
         },
         "test": {
