@@ -243,14 +243,32 @@ export class AppComponent {
   editNote(index: number) {
 
     // save the note to edit as a variable
-    let editedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
+    let editedNote = {
+      text: '',
+      color: '',
+      meta: {
+        time: '',
+        date: '',
+      }
+    };
+
+    // save the note to edit as a variable
+    if (this.timeSort === "newest") {
+      editedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
+    } else {
+      editedNote = this.filteredNotes[(index)];
+    }
 
     // set the input text and colour to that of the edited note
     this.inputtedText = editedNote.text;
     this.noteColor = editedNote.color;
 
     // delete the note
-    this.deleteNote(index);
+    if (this.timeSort === "newest") {
+      this.deleteNote((this.filteredNotes.length - 1) - index);
+    } else {
+      this.deleteNote(index);
+    }
 
     // toggle the mobile view back to the notepad
     this.toggleMobileView("notepad");
@@ -260,14 +278,27 @@ export class AppComponent {
   // delete note function
   deleteNote(index: number) {
 
+    let deletedNote = {
+      text: '',
+      color: '',
+      meta: {
+        time: '',
+        date: '',
+      }
+    };
+
     // save the note to delete as a variable
-    let removedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
+    if (this.timeSort === "newest") {
+      deletedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
+    } else {
+      deletedNote = this.filteredNotes[(index)];
+    }
 
     // delete the note from the notes array
-    this.allNotes = this.allNotes.filter(note => note.text !== removedNote.text);
+    this.allNotes = this.allNotes.filter(note => note.text !== deletedNote.text);
 
     // delete the note from the filtered notes array
-    this.filteredNotes = this.filteredNotes.filter(note => note.text !== removedNote.text);
+    this.filteredNotes = this.filteredNotes.filter(note => note.text !== deletedNote.text);
 
     // update the note colours
     this.updateNoteColors();

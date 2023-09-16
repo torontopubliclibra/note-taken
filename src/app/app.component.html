@@ -18,10 +18,10 @@
       <p>Notepad</p>
     </button>
     <button *ngIf="mobileView !== 'info'" class="mobile-nav-link about" (click)="toggleMobileView('info')">
-      <p>About the site</p>
+      <p>About</p>
     </button>
     <button *ngIf="mobileView === 'info'" class="mobile-nav-link about open" (click)="toggleMobileView('notepad')">
-      <p>Back to the site</p>
+      <p>Back to the app</p>
     </button>
   </nav>
 
@@ -135,7 +135,7 @@
   <!-- footer section -->
   <footer class="{{mobileView !== 'info' ? 'disabled' : ''}}">
     <p>
-      Note Taken was built by <a href="https://danateagle.com">Dana Teagle</a> in 2023 using Angular, Typescript, and SASS. Any user of the app can store up to 20 notes at a time (each up to 100 characters in length). All inputted data is stored locally without being sent to a database. Unless deleted, the notes will remain in your browser until the next time you clear the cache. See the repo for the application <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
+      Note Taken is a client-side notes app written in Typescript and SASS using the Angular framework, built by <a href="https://danateagle.com">Dana Teagle</a> in 2023. Any user of the app can store up to 20 notes at a time (each up to 100 characters in length) in various colours. All inputted data is stored locally without being sent to a database. Unless deleted, the notes will remain in your browser until the next time you clear the cache. The notes can be sorted, filtered, edited, and deleted. See the repo for the application <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
     </p>
   </footer>
 
