@@ -1,16 +1,13 @@
-// partials imports
 @use './src/partials/variables.scss' as *;
 
 p, button, select {
     font-weight: 600;
 }
 
-// header and footer styles
 header, footer {
     width: 100vw;
     background-color: $color2;
 
-    // header and footer text styles
     h1, h2, p {
         text-align: center;
         padding: 0 25px;
@@ -22,7 +19,6 @@ header {
     align-items: center;
     justify-content: center;
 
-    // main heading styles
     h1 {
         font-family: $handwriting;
         font-size: 75px;
@@ -30,7 +26,6 @@ header {
         padding: 0;
     }
 
-    // subheading styles
     h2 {
         font-size: 18px;
         font-style: italic;
@@ -84,7 +79,6 @@ main {
     }
 }
 
-// notepad section styles
 .notepad {
     display: flex;
     flex-direction: column;
@@ -154,7 +148,6 @@ main {
     }
 }
 
-// textbox styles
 textarea {
     display: flex;
     border: none;
@@ -179,7 +172,6 @@ textarea {
     }
 }
 
-// select styles
 select {
     width: 150px;
     height: 40px;
@@ -216,7 +208,6 @@ select {
     }
 }
 
-// button styles
 button {
     width: 90px;
     height: 40px;
@@ -248,7 +239,6 @@ button {
         font-size: 14px;
     }
 
-    // remove button
     &.remove, &.edit {
         position: absolute;
         top: 0;
@@ -268,13 +258,11 @@ button {
         left: 0;
     }
 
-    // remove all button
     &.removeAll {
         width: 150px;
     }
 }
 
-// notebook section styles
 .notebook {
     display: flex;
     flex-direction: column;
@@ -381,7 +369,6 @@ button {
             height: 448px;
         }
 
-        // note styles
         li {
             display: flex;
             justify-content: center;
@@ -402,7 +389,6 @@ button {
                 height: 200px;
             }
 
-            // note text styles
             p {
                 font-family: $handwriting;
                 font-size: 23px;
@@ -425,7 +411,6 @@ button {
                 padding: 10px 0;
             }
 
-            // alternate note colors
             &.green {
                 background-color: rgba($color: $green, $alpha: 0.7);
             }
@@ -447,71 +432,3 @@ button {
         }
     }
 }
-
-// // responsive styles for tablet and smaller
-// @media only screen and (max-width: 820px) {
-
-//     // notepad section styles
-//     .notepad {
-//         width: 100%;
-//         flex-direction: column;
-//         align-items: flex-start;
-
-//         // input section styles
-//         .input {
-//             width: calc(100% - 40px);
-//         }
-
-//         fieldset {
-//             width: 100%;
-//             margin: 5px;
-//             margin-top: 10px;
-//         }
-
-//         // textbox styles
-//         input[type="text"] {
-//             width: calc(100% - 6px);
-//             margin: 5px;
-//         }
-
-//         // buttons container styles
-//         .buttons {
-//             gap: 15px;
-//             padding: 5px 0px;
-//             flex-direction: row;
-//             align-self: center;
-
-//             // button styles
-//             button {
-//                 margin-bottom: 0;
-//             }
-//         }
-//     }
-
-//     // notebook section styles
-//     .notebook {
-//         width: 100%;
-
-//         // note styles
-//         li {
-//             min-width: calc(100% - 15px);
-//             height: 125px;
-//             p {
-//                 padding: 0 20px;
-//             }
-//         }
-//     }
-// }
-
-// // responsive styles for mobile and smaller
-// @media only screen and (max-width: 460px) {
-//     .notepad fieldset {
-//         justify-content: center;
-
-//         // radio field styles
-//         .radioField {
-//             width: 50%;
-//             justify-content: left;
-//         }
-//     }
-// }
