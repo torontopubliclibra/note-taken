@@ -13,4 +13,8 @@ body {
     align-items: center;
     font-family: $sans-serif;
     text-transform: lowercase;
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        background-color: $color1;
+    }
 }

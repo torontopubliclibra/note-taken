@@ -61,22 +61,14 @@ export class AppComponent {
     this.updateNoteColors();
   }
 
-  toggleMobileView = () => {
+  toggleMobileView = (view: string) => {
 
-    if (this.mobileView === "notepad") {
+    if (view === "notebook") {
       this.mobileView = "notebook";
-    } else {
+    } else if (view === "notepad") {
       this.mobileView = "notepad"
-    }
-
-  }
-
-  toggleSiteInfo = () => {
-
-    if (this.mobileView !== "info") {
-      this.mobileView = "info";
-    } else {
-      this.mobileView = "notepad"
+    } else if (view === "info") {
+      this.mobileView = "info"
     }
 
   }
@@ -228,7 +220,7 @@ export class AppComponent {
 
     this.removeNote(index);
 
-    this.toggleMobileView();
+    this.toggleMobileView("notepad");
 
   }
 
@@ -248,6 +240,10 @@ export class AppComponent {
     // set the local storage notes to the stringified array 
     localStorage.setItem(`notes`, JSON.stringify(this.localNotes));
 
+    if (this.allNotes.length === 0) {
+      this.toggleMobileView("notepad");
+    }
+
   }
 
   // remove all notes function
@@ -263,7 +259,7 @@ export class AppComponent {
     // clear the local storage
     localStorage.removeItem(`notes`);
 
-    this.toggleMobileView();
+    this.toggleMobileView("notepad");
 
   }
 
