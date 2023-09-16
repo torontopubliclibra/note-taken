@@ -264,11 +264,7 @@ export class AppComponent {
     this.noteColor = editedNote.color;
 
     // delete the note
-    if (this.timeSort === "newest") {
-      this.deleteNote((this.filteredNotes.length - 1) - index);
-    } else {
-      this.deleteNote(index);
-    }
+    this.deleteNote(index);
 
     // toggle the mobile view back to the notepad
     this.toggleMobileView("notepad");
