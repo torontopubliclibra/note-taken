@@ -99,12 +99,11 @@ footer {
         flex-direction: column;
         justify-content: center;
 
-        width: 95%;
-        max-width: 95vw;
+        width: 100%;
+        max-width: calc(100% - 40px);
 
-        min-height: 175px;
-        height: calc(100vh - 255px);
-        max-height: calc(100vh - 255px);
+        min-height: 300px;
+        height: calc(100vh - 250px);
 
         background-color: $color1;
         border-top: solid $black 3px;
