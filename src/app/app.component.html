@@ -1,5 +1,4 @@
-<!-- app section with dynamic class dependent on darkMode value -->
-<div class="app {{theme === 'dark' ? 'dark' : 'light'}}">
+<div class="app">
 
   <!-- header section -->
   <header>
@@ -10,16 +9,16 @@
   <!-- mobile nav -->
   <nav>
     <button *ngIf="mobileView !== 'info'" class="mobile-nav-link about" (click)="toggleMobileView('info')">
-      <p>About the app</p>
+      <p>About the site</p>
     </button>
     <button *ngIf="mobileView === 'info'" class="mobile-nav-link about open" (click)="toggleMobileView('notepad')">
-      <p>Back to app</p>
+      <p>Back to the site</p>
     </button>
     <button *ngIf="allNotes.length === 0 && mobileView !== 'info'" class="mobile-nav-link" disabled>
-      <p>Notebook (0 / 20)</p>
+      <p>Notebook (0)</p>
     </button>
     <button  *ngIf="allNotes.length > 0 && mobileView === 'notepad'" class="mobile-nav-link" (click)="toggleMobileView('notebook')">
-      <p>Notebook ({{allNotes.length}} / 20)</p>
+      <p>Notebook ({{allNotes.length}})</p>
     </button>
     <button  *ngIf="allNotes.length > 0 && mobileView === 'notebook'" class="mobile-nav-link" (click)="toggleMobileView('notepad')">
       <p>Notepad</p>
@@ -66,15 +65,15 @@
       <div class="notebook-options">
 
         <div class="timeSort">
-          <p>Sort:</p>
+          <p>Sort order:</p>
           <select [(ngModel)]="timeSort" disabled="{{filteredNotes.length <= 1 ? true : false}}">
-            <option value="desc">descending</option>
-            <option value="asc">ascending</option>
+            <option value="newest">newest first</option>
+            <option value="oldest">oldest first</option>
           </select>
         </div>
 
         <div class="colorFilter">
-          <p>Filter by:</p>
+          <p>Filter by colour:</p>
           <select [(ngModel)]="colorFilter" (ngModelChange)="filterNotesByColor()" disabled="{{noteColors.length <= 1 ? 'true' : 'false'}}">
             <option value="all">all</option>
             <option *ngFor="let color of noteColors; index as i" value={{color}}>{{color}}</option>
@@ -84,12 +83,12 @@
       </div>
 
       <!-- notebook list in descending order -->
-      <ul *ngIf="timeSort === 'desc'" class="notes-list">
+      <ul *ngIf="timeSort === 'newest'" class="notes-list">
         <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}} {{mobileView === 'notebook' ? 'active' : ''}}">
           <button class="edit" (click)="editNote(i)">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </button>
-          <button class="remove" (click)="removeNote(i)">
+          <button class="delete" (click)="deleteNote(i)">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
           <p>{{note.text}}</p>
@@ -100,12 +99,12 @@
       </ul>
 
       <!-- notebook list in ascending order -->
-      <ul *ngIf="timeSort === 'asc'" class="notes-list">
+      <ul *ngIf="timeSort === 'oldest'" class="notes-list">
         <li *ngFor="let note of filteredNotes.slice(); index as i" class="{{note.color}}">
           <button class="edit" (click)="editNote(i)">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </button>
-          <button class="remove" (click)="removeNote(i)">
+          <button class="delete" (click)="deleteNote(i)">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
           <p>{{note.text}}</p>
@@ -125,8 +124,8 @@
           </div>
         </div>
 
-        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all'" class="removeAll" (click)="removeAll()">Delete all</button>
-        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all'" class="removeAll" disabled>Delete all</button>
+        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all'" (click)="deleteAll()">Delete all</button>
+        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all'" disabled>Delete all</button>
       </div>
 
     </div>
@@ -136,10 +135,7 @@
   <!-- footer section -->
   <footer class="{{mobileView !== 'info' ? 'disabled' : ''}}">
     <p>
-      All inputted data is stored locally in your browser without being sent to a database. Notes remain until the next time you clear your cache.
-    </p>
-    <p>
-      This application was built by <a href="https://danateagle.com">Dana Teagle</a> using Angular, Typescript, and SASS. See the repo <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
+      Note Taken was built by <a href="https://danateagle.com">Dana Teagle</a> in 2023 using Angular, Typescript, and SASS. Any user of the app can store up to 20 notes at a time (each up to 100 characters in length). All inputted data is stored locally without being sent to a database. Unless deleted, the notes will remain in your browser until the next time you clear the cache. See the repo for the application <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
     </p>
   </footer>
 
