@@ -3,19 +3,30 @@
 
   <!-- header section -->
   <header>
-    <!-- dark mode button -->
-    <!-- <button (click)="updateTheme()">{{theme === 'light' ? 'Dark' : 'Light'}} Mode</button> -->
-
     <h1>Note Taken</h1>
     <h2>Your friendly little local storage notes app</h2>
   </header>
 
+  <!-- mobile nav -->
+  <nav>
+    <button class="notes-link" (click)="toggleSiteInfo()">
+      <p>{{mobileView !== 'info' ? 'View Site Info' : 'Hide Site Info'}}</p>
+    </button>
+    <button *ngIf="allNotes.length === 0" class="notes-link" disabled>
+      <p>View Notebook (0/20)</p>
+    </button>
+    <button  *ngIf="allNotes.length > 0" class="notes-link" (click)="toggleMobileView()">
+      <p>{{mobileView === 'notepad' ? 'View Notebook' + ' (' + allNotes.length + '/20)' : 'View Notepad'}}</p>
+    </button>
+  </nav>
+
   <!-- main section -->
-  <main class="wrapper">
+  <main>
 
     <!-- notepad section -->
-    <div class="notepad" class={{noteColor}}>
+    <div class="notepad" class="{{noteColor}} {{mobileView === 'notebook' || mobileView === 'info' ? 'disabled' : ''}}">
 
+      <!-- notepad colour options -->
       <div class="notepad-options">
         <p>Colour:</p>
         <select [(ngModel)]="noteColor">
@@ -28,11 +39,14 @@
         </select>
       </div>
 
+      <!-- notepad text area -->
       <textarea [(ngModel)]="inputtedText" maxlength="100" wrap="hard" placeholder={{placeholder}} (keydown.enter)="saveNote($event)"></textarea>
 
+      <!-- notepad save and clear buttons -->
       <div class="notepad-buttons">
         <button *ngIf="inputtedText" (click)="saveNote($event)">Save</button>
         <button *ngIf="!inputtedText" disabled>Save</button>
+
         <button *ngIf="inputtedText" (click)="clearText()">Clear</button>
         <button *ngIf="!inputtedText" disabled>Clear</button>
       </div>
@@ -40,45 +54,32 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook">
+    <div class="notebook {{mobileView === 'notepad' || mobileView === 'info' ? 'disabled' : ''}}">
 
+      <!-- notebook sort and filter options -->
       <div class="notebook-options">
 
-        <div class="timeSort" *ngIf="filteredNotes.length > 1">
+        <div class="timeSort">
           <p>Sort:</p>
-          <select [(ngModel)]="timeSort">
+          <select [(ngModel)]="timeSort" disabled="{{filteredNotes.length <= 1 ? true : false}}">
             <option value="desc">descending</option>
             <option value="asc">ascending</option>
           </select>
         </div>
 
-        <div class="timeSort" *ngIf="filteredNotes.length <= 1">
-          <p>Sort:</p>
-          <select [(ngModel)]="timeSort" disabled>
-            <option value="desc">descending</option>
-            <option value="asc">ascending</option>
-          </select>
-        </div>
-
-        <div class="colorFilter" *ngIf="noteColors.length > 1">
+        <div class="colorFilter">
           <p>Filter by:</p>
-          <select [(ngModel)]="colorFilter" (ngModelChange)="filterNotesByColor()">
+          <select [(ngModel)]="colorFilter" (ngModelChange)="filterNotesByColor()" disabled="{{noteColors.length <= 1 ? 'true' : 'false'}}">
             <option value="all">all</option>
             <option *ngFor="let color of noteColors; index as i" value={{color}}>{{color}}</option>
           </select>
         </div>
 
-        <div class="colorFilter" *ngIf="noteColors.length <= 1">
-          <p>Filter by:</p>
-          <select disabled>
-            <option value="all">all</option>
-          </select>
-        </div>
-
       </div>
 
+      <!-- notebook list in descending order -->
       <ul *ngIf="timeSort === 'desc'" class="notes-list">
-        <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}}">
+        <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}} {{mobileView === 'notebook' ? 'active' : ''}}">
           <button class="edit" (click)="editNote(i)">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </button>
@@ -92,6 +93,7 @@
         </li>
       </ul>
 
+      <!-- notebook list in ascending order -->
       <ul *ngIf="timeSort === 'asc'" class="notes-list">
         <li *ngFor="let note of filteredNotes.slice(); index as i" class="{{note.color}}">
           <button class="edit" (click)="editNote(i)">
@@ -107,6 +109,7 @@
         </li>
       </ul>
 
+      <!-- notebook delete all button and note counter -->
       <div class="notebook-buttons">
 
         <div class="notes-remaining">
@@ -125,7 +128,7 @@
   </main>
 
   <!-- footer section -->
-  <footer>
+  <footer class="{{mobileView !== 'info' ? 'disabled' : ''}}">
     <p>
       All inputted data is stored locally in your browser without being sent to a database. Notes remain until the next time you clear your cache.
     </p>

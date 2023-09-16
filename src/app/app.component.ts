@@ -37,6 +37,7 @@ export class AppComponent {
   timeSort: string = `desc`;
   noteColors: string[] = [];
   inputtedText: string = ``;
+  mobileView: string = `notepad`;
 
   // component class constructor
   constructor() {
@@ -58,6 +59,26 @@ export class AppComponent {
     this.filteredNotes = this.allNotes;
 
     this.updateNoteColors();
+  }
+
+  toggleMobileView = () => {
+
+    if (this.mobileView === "notepad") {
+      this.mobileView = "notebook";
+    } else {
+      this.mobileView = "notepad"
+    }
+
+  }
+
+  toggleSiteInfo = () => {
+
+    if (this.mobileView !== "info") {
+      this.mobileView = "info";
+    } else {
+      this.mobileView = "notepad"
+    }
+
   }
 
   updatePlaceholder = (newPlaceholder: string) => {
@@ -207,6 +228,8 @@ export class AppComponent {
 
     this.removeNote(index);
 
+    this.toggleMobileView();
+
   }
 
   // remove note function
@@ -239,6 +262,8 @@ export class AppComponent {
 
     // clear the local storage
     localStorage.removeItem(`notes`);
+
+    this.toggleMobileView();
 
   }
 

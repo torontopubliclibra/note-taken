@@ -13,6 +13,28 @@ header, footer {
         padding: 0 25px;
     }
 }
+nav {
+    display: none;
+
+    .notes-link {
+        height: 40px;
+        width: 175px;
+        padding: 0;
+        margin: 0;
+        line-height: 0.75;
+    }
+
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $color2;
+        height: 60px;
+        width: calc(100% - 30px);
+        padding: 5px 15px;
+    }
+}
 header {
     display: flex;
     flex-direction: column;
@@ -24,6 +46,7 @@ header {
         font-size: 75px;
         margin: 0;
         padding: 0;
+        cursor: default;
     }
 
     h2 {
@@ -32,6 +55,11 @@ header {
         margin: 0;
         padding: 0;
         padding-bottom: 20px;
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            padding-bottom: 0;
+        }
     }
     button {
         width: 120px;
@@ -57,8 +85,25 @@ footer {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        min-height: 175px;
+        height: calc(100vh - 233px);
+
+        background-color: $color1;
+        border-top: solid $black 3px;
+
+        font-size: 16px;
+
         p {
-            padding: 5px 0;
+            padding: 15px 0;
+        }
+
+        &.disabled {
+            display: none;
         }
     }
 }
@@ -73,8 +118,9 @@ main {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        width: 90%;
-        max-width: none;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
         flex-direction: column;
     }
 }
@@ -91,9 +137,18 @@ main {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        width: calc(100% - 5px);
-        max-width: none;
-        height: 325px;
+        &.disabled {
+            display: none;
+        }
+
+        min-height: 415px;
+        height: calc(100vh - 193px);
+        width: 100%;
+        max-width: 100%;
+        border-right: none;
+        border-left: none;
+        border-bottom: none;
+        border-radius: 0;
         margin: 0 auto;
     }
 
@@ -278,10 +333,19 @@ button {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        min-width: calc(100% - 5px);
-        width: calc(100% - 5px);
-        max-width: none;
-        height: 600px;
+        &.disabled {
+            display: none;
+        }
+
+        min-height: 415px;
+        height: calc(100vh - 193px);
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+        border-right: none;
+        border-left: none;
+        border-bottom: none;
+        border-radius: 0;
         margin: 0 auto;
     }
 
