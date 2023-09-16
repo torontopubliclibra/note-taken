@@ -37,10 +37,10 @@ nav {
             border-radius: 0;
             &.about {
                 width: 35%;
-                border-right: solid $black 3px;
+                border-left: solid $black 3px;
                 &.open {
                     width: 100%;
-                    border-right: none;
+                    border-left: none;
                 }
             }
         }
@@ -155,7 +155,6 @@ main {
             display: none;
         }
 
-        min-height: 400px;
         height: calc(100vh - 210px);
         width: 100%;
         max-width: 100%;

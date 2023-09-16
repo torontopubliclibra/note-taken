@@ -8,12 +8,6 @@
 
   <!-- mobile nav -->
   <nav>
-    <button *ngIf="mobileView !== 'info'" class="mobile-nav-link about" (click)="toggleMobileView('info')">
-      <p>About the site</p>
-    </button>
-    <button *ngIf="mobileView === 'info'" class="mobile-nav-link about open" (click)="toggleMobileView('notepad')">
-      <p>Back to the site</p>
-    </button>
     <button *ngIf="allNotes.length === 0 && mobileView !== 'info'" class="mobile-nav-link" disabled>
       <p>Notebook (0)</p>
     </button>
@@ -22,6 +16,12 @@
     </button>
     <button  *ngIf="allNotes.length > 0 && mobileView === 'notebook'" class="mobile-nav-link" (click)="toggleMobileView('notepad')">
       <p>Notepad</p>
+    </button>
+    <button *ngIf="mobileView !== 'info'" class="mobile-nav-link about" (click)="toggleMobileView('info')">
+      <p>About the site</p>
+    </button>
+    <button *ngIf="mobileView === 'info'" class="mobile-nav-link about open" (click)="toggleMobileView('notepad')">
+      <p>Back to the site</p>
     </button>
   </nav>
 
