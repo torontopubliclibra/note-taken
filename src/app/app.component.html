@@ -1,78 +1,139 @@
-<!-- app section with dynamic class and backgroundImage dependent on darkMode value -->
-<div class="app {{darkMode ? 'dark' : 'light'}}" [ngStyle]="{'backgroundImage': !darkMode ? 'url(./assets/pigeon-bg.jpg)' : 'url(./assets/pigeon-bg-dark.jpg)'}">
+<!-- app section with dynamic class dependent on darkMode value -->
+<div class="app {{theme === 'dark' ? 'dark' : 'light'}}">
 
   <!-- header section -->
   <header>
-    <h1>Pigeon Pad</h1>
-    <h2>Just a space for your thoughts</h2>
-
     <!-- dark mode button -->
-    <button (click)="turnOnDark()">{{darkMode ? 'Light' : 'Dark'}} Mode</button>
+    <!-- <button (click)="updateTheme()">{{theme === 'light' ? 'Dark' : 'Light'}} Mode</button> -->
+
+    <h1>Note Taken</h1>
+    <h2>Your friendly little local storage notes app</h2>
   </header>
 
   <!-- main section -->
   <main class="wrapper">
 
     <!-- notepad section -->
-    <div class="notepad">
+    <div class="notepad" class={{noteColor}}>
 
-      <div class="input">
-        <!-- text box with max length of 85 characters and value of textareaValue (saves on enter)-->
-        <input type="text" [(ngModel)]="textareaValue" maxlength="85" placeholder={{placeholder}} (keydown.enter)="save()">
-
-        <!-- note color radio inputs -->
-        <fieldset>
-          <label class="radioField" for="pink">
-            <input type="radio" value="pink" id="pink" name="noteColor" [(ngModel)]="noteColor" >
-            Pink
-          </label>
-          <label class="radioField" for="purple">
-            <input type="radio" value="purple" id="purple" name="noteColor" [(ngModel)]="noteColor" >
-            Purple
-          </label>
-          <label class="radioField" for="green">
-            <input type="radio" value="green" id="green" name="noteColor" [(ngModel)]="noteColor" >
-            Green
-          </label>
-          <label class="radioField" for="yellow">
-            <input type="radio" value="yellow" id="yellow" name="noteColor" [(ngModel)]="noteColor" >
-            Yellow
-          </label>
-        </fieldset>
+      <div class="notepad-options">
+        <p>Colour:</p>
+        <select [(ngModel)]="noteColor">
+          <option value="green">green</option>
+          <option value="blue">blue</option>
+          <option value="red">red</option>
+          <option value="pink">pink</option>
+          <option value="yellow">yellow</option>
+          <option value="orange">orange</option>
+        </select>
       </div>
 
-      <!-- save and clear function buttons -->
-      <div class="buttons">
-        <button (click)="save()">Save</button>
-        <button (click)="clear()">Clear</button>
+      <textarea [(ngModel)]="inputtedText" maxlength="100" wrap="hard" placeholder={{placeholder}} (keydown.enter)="saveNote($event)"></textarea>
+
+      <div class="notepad-buttons">
+        <button *ngIf="inputtedText" (click)="saveNote($event)">Save</button>
+        <button *ngIf="!inputtedText" disabled>Save</button>
+        <button *ngIf="inputtedText" (click)="clearText()">Clear</button>
+        <button *ngIf="!inputtedText" disabled>Clear</button>
       </div>
 
     </div>
 
     <!-- notebook section -->
-    <ul class="notebook" *ngIf="notes.length > 0">
+    <div class="notebook">
 
-      <!-- loop through notes array in reverse and render list item for each with remove button-->
-      <li
-        *ngFor="let note of notes.slice().reverse(); index as i" class="{{note.color}}">
-        <button class="remove" (click)="remove(i)">X</button>
-        <p>{{note.text}}</p>
-      </li>
+      <div class="notebook-options">
 
-    </ul>
+        <div class="timeSort" *ngIf="filteredNotes.length > 1">
+          <p>Sort:</p>
+          <select [(ngModel)]="timeSort">
+            <option value="desc">descending</option>
+            <option value="asc">ascending</option>
+          </select>
+        </div>
 
-    <!-- render removeAll button if notes has content -->
-    <div *ngIf="notes.length > 1" class="buttons">
-      <button class="removeAll" (click)="removeAll()">Remove all notes</button>
+        <div class="timeSort" *ngIf="filteredNotes.length <= 1">
+          <p>Sort:</p>
+          <select [(ngModel)]="timeSort" disabled>
+            <option value="desc">descending</option>
+            <option value="asc">ascending</option>
+          </select>
+        </div>
+
+        <div class="colorFilter" *ngIf="noteColors.length > 1">
+          <p>Filter by:</p>
+          <select [(ngModel)]="colorFilter" (ngModelChange)="filterNotesByColor()">
+            <option value="all">all</option>
+            <option *ngFor="let color of noteColors; index as i" value={{color}}>{{color}}</option>
+          </select>
+        </div>
+
+        <div class="colorFilter" *ngIf="noteColors.length <= 1">
+          <p>Filter by:</p>
+          <select disabled>
+            <option value="all">all</option>
+          </select>
+        </div>
+
+      </div>
+
+      <ul *ngIf="timeSort === 'desc'" class="notes-list">
+        <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}}">
+          <button class="edit" (click)="editNote(i)">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+          <button class="remove" (click)="removeNote(i)">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+          <p>{{note.text}}</p>
+          <p class="metadata">
+            {{note.meta.date}} @ {{note.meta.time}}
+          </p>
+        </li>
+      </ul>
+
+      <ul *ngIf="timeSort === 'asc'" class="notes-list">
+        <li *ngFor="let note of filteredNotes.slice(); index as i" class="{{note.color}}">
+          <button class="edit" (click)="editNote(i)">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+          <button class="remove" (click)="removeNote(i)">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+          <p>{{note.text}}</p>
+          <p class="metadata">
+            {{note.meta.date}} @ {{note.meta.time}}
+          </p>
+        </li>
+      </ul>
+
+      <div class="notebook-buttons">
+
+        <div class="notes-remaining">
+          <p>Notes remaining:</p>
+          <div class="counter">
+            <p>{{20 - allNotes.length}}</p>
+          </div>
+        </div>
+
+        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all'" class="removeAll" (click)="removeAll()">Delete all</button>
+        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all'" class="removeAll" disabled>Delete all</button>
+      </div>
+
     </div>
     
   </main>
 
   <!-- footer section -->
   <footer>
-    <p>This app was built by <a href="https://danateagle.com">Dana Teagle</a> in 2023 using Angular and Typescript.</p>
+    <p>
+      All inputted data is stored locally in the browser without being sent to an external database. Notes will be kept until the next time the cache is cleared.
+    </p>
+    <p>
+      This application was built by <a href="https://danateagle.com">Dana Teagle</a> using Angular, Typescript, and SASS. See the repo <a href="https://danateagle.com">here</a>.
+    </p>
   </footer>
 
-</div> <!-- end of app div -->
+</div>
 
 <router-outlet></router-outlet>

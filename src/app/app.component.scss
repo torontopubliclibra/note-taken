@@ -1,117 +1,14 @@
 // partials imports
 @use './src/partials/variables.scss' as *;
 
-// global app styles
-.app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-size: 175px;
-    min-width: 100vw;
-    min-height: 100vh;
-
-    // dark mode colours
-    &.dark {
-
-        // wrapper dark mode
-        .wrapper {
-            border: solid $white 5px;
-        }
-
-        // header and footer dark mode
-        header, footer, .wrapper {
-            background-color: rgba($color: $black, $alpha: 0.9);
-            color: $lightblue;
-        }
-        header {
-            border-bottom: solid $lightblue 5px;
-        }
-        footer {
-            border-top: solid $lightblue 5px;
-
-            // footer link dark mode
-            a {
-                color: $lightblue;
-                &:hover {
-                    color: $white;
-                }
-            }
-        }
-
-        // button dark mode
-        button {
-            background-color: $darkblue;
-            color: $lightblue;
-            border: solid $lightblue 2px;
-
-            // button on hover dark mode
-            &:hover {
-                background-color: $lightblue;
-                border: solid $darkblue 2px;
-                color: $black;
-            }
-
-            // remove button on hover dark mode
-            &.remove:hover {
-                border: solid $black 2px;
-            }
-        }
-
-        // textbox dark mode
-        input[type="text"], fieldset {
-            background-color: $darkblue;
-            border: solid $lightblue 3px;
-            color: $white;
-        }
-
-        .notepad fieldset .radioField input[type="radio"] {
-            accent-color: $black;
-        }
-
-        // note dark mode
-        .notebook li {
-            color: $white;
-            border: solid $lightblue 3px;
-
-            // alternate note colors dark mode
-            &.purple {
-                background-color: rgba($color: $darkpurple, $alpha: 0.7);
-            }
-            &.yellow {
-                background-color: rgba($color: $darkyellow, $alpha: 0.7);
-            }
-            &.green {
-                background-color: rgba($color: $darkgreen, $alpha: 0.7);
-            }
-            &.pink {
-                background-color: rgba($color: $darkpink, $alpha: 0.7);
-            }
-        }
-    }
-}
-
-// wrapper styles
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba($color: $lightblue, $alpha: 0.9);
-    border: solid $black 5px;
-    border-radius: 15px;
-    width: 80%;
-    max-width: 650px;
-    min-height: 150px;
-    margin: 25px auto;
-    padding: 15px;
-    padding-bottom: 10px;
+p, button, select {
+    font-weight: 600;
 }
 
 // header and footer styles
 header, footer {
     width: 100vw;
-    background-color: rgba($color: $lightblue, $alpha: 0.9);
+    background-color: $color2;
 
     // header and footer text styles
     h1, h2, p {
@@ -122,255 +19,499 @@ header, footer {
 header {
     display: flex;
     flex-direction: column;
-    border-bottom: solid $black 5px;
-    height: 200px;
     align-items: center;
     justify-content: center;
 
     // main heading styles
     h1 {
-        font-family: $title;
-        font-size: 60px;
-        margin: 5px 0;
+        font-family: $handwriting;
+        font-size: 75px;
+        margin: 0;
         padding: 0;
-        text-transform: uppercase;
     }
 
     // subheading styles
     h2 {
-        font-size: 20px;
-        margin: 5px 0;
-        margin-bottom: 10px;
+        font-size: 18px;
+        font-style: italic;
+        margin: 0;
         padding: 0;
+        padding-bottom: 20px;
     }
     button {
         width: 120px;
     }
 }
 footer {
-    border-top: solid $black 5px;
-
-    // footer link styles
+    width: 91%;
+    font-size: 14px;
+    line-height: 1.75;
+    padding: 20px;
+    margin: 0 auto;
+    p {
+        margin: 0;
+        padding: 2px 0;
+    }
     a {
-        color: $darkblue;
+        color: $black;
+        transition: all 0.4s;
         &:hover {
-            color: $black;
+            font-style: italic;
         }
+    }
+
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        p {
+            padding: 5px 0;
+        }
+    }
+}
+main {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        width: 90%;
+        max-width: none;
+        flex-direction: column;
     }
 }
 
 // notepad section styles
 .notepad {
     display: flex;
-    flex-flow: row wrap;
-    align-items: center;
+    flex-direction: column;
+    height: 415px;
+    min-width: 300px;
+    max-width: 340px;
+    margin: 0;
+    border: solid $black 3px;
+    border-radius: 5px;
 
-    fieldset {
-        background-color: $lightblue;
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        width: calc(100% - 5px);
+        max-width: none;
+        height: 325px;
+        margin: 0 auto;
+    }
+
+    .notepad-options, .notepad-buttons {
         display: flex;
-        flex-flow: row wrap;
-        margin: 5px 0px;
-        margin-bottom: 10px;
-        justify-content: space-evenly;
-        border: solid $black 3px;
-        border-radius: 5px;
-        .radioField {
-            display: flex;
-            flex-flow: row;
-            justify-content: center;
-            align-items: center;
-            font-size: 15px;
-            margin: 5px 0px;
-            input[type="radio"] {
-                height: 1.2rem;
-                width: 1.2rem;
-                margin-right: 0.5rem;
-                accent-color: $darkblue;
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-            &:hover {
-                cursor: pointer;
-            }
+        flex-direction: row;
+        align-items: center;
+        height: 55px;
+        padding: 5px 15px;
+        gap: 15px;
+    }
+    .notepad-options {
+        background-color: $color1;
+        border-bottom: solid $black 3px;
+        flex-direction: row;
+        justify-content: center;
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            justify-content: right;
+        }
+    }
+    .notepad-buttons {
+        background-color: $color1;
+        width: calc(100% - 30px);
+        border-top: solid $black 3px;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            justify-content: right;
+        }
+    }
+    &.green {
+        background-color: rgba($color: $green, $alpha: 0.7);
+    }
+    &.blue {
+        background-color: rgba($color: $blue, $alpha: 0.7);
+    }
+    &.red {
+        background-color: rgba($color: $red, $alpha: 0.7);
+    }
+    &.pink {
+        background-color: rgba($color: $pink, $alpha: 0.7);
+    }
+    &.yellow {
+        background-color: rgba($color: $yellow, $alpha: 0.7);
+    }
+    &.orange {
+        background-color: rgba($color: $orange, $alpha: 0.7);
+    }
+}
+
+// textbox styles
+textarea {
+    display: flex;
+    border: none;
+    padding: 30px;
+    margin: 0;
+    width: calc(100% - 60px);
+    height: 100%;
+    font-family: $handwriting;
+    background: none;
+    text-transform: lowercase;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    resize: none;
+    &:focus-visible {
+        outline: none;
+        border-radius: 3px;
+    }
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        padding: 20px;
+    }
+}
+
+// select styles
+select {
+    width: 150px;
+    height: 40px;
+    margin: 5px 0;
+    padding-left: 10px;
+    background-color: $white;
+    border: solid $black 2px;
+    border-radius: 5px;
+    font-family: $sans-serif;
+    text-align: center;
+    text-transform: lowercase;
+    font-size: 15px;
+    cursor: pointer;
+    transition: none;
+
+    &:hover {
+        transition: background-color 0.4s;
+        background-color: rgba($white, 0.75);
+    }
+    &:disabled {
+        color: rgba($black, 0.75);
+        background-color: rgba($color2, 0.5);
+        &:hover {
+            background-color: rgba($color2, 0.5);
+            cursor: default;
         }
     }
 
-    // textbox styles
-    input[type="text"] {
-        background-color: $white;
-        padding: 15px;
-        margin: 5px 0px;
-        width: 500px;
-        height: 50px;
-        border: solid $black 3px;
-        border-radius: 5px;
-        font-family: $sans-serif;
-        font-size: 15px;
-    }
-
-    // buttons container styles
-    .buttons {
-        padding-left: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 5px;
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        width: 175px;
+        height: 35px;
+        font-size: 14px;
     }
 }
 
 // button styles
 button {
     width: 90px;
-    height: 30px;
+    height: 40px;
     margin: 5px 0;
     background-color: $white;
     border: solid $black 2px;
     border-radius: 5px;
     font-family: $sans-serif;
+    text-transform: lowercase;
     font-size: 15px;
-
-    // button on hover
+    cursor: pointer;
+    transition: background-color 0.4s;
     &:hover {
-        cursor: pointer;
-        background-color: $darkblue;
-        color: $white;
+        background-color: rgba($white, 0.75);
+    }
+    &:disabled {
+        color: rgba($black, 0.75);
+        background-color: rgba($color2, 0.5);
+        &:hover {
+            background-color: rgba($color2, 0.5);
+            cursor: default;
+        }
+    }
+
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        width: 80px;
+        height: 35px;
+        font-size: 14px;
     }
 
     // remove button
-    &.remove {
+    &.remove, &.edit {
         position: absolute;
-        right: 0;
         top: 0;
-        font-size: 10px;
-        font-weight: 600;
+        font-size: 12px;
+        line-height: 1.5;
         width: 25px;
         height: 25px;
         margin: 5px;
         border-radius: 50%;
     }
 
+    &.remove {
+        right: 0;
+    }
+
+    &.edit {
+        left: 0;
+    }
+
     // remove all button
     &.removeAll {
-        width: 175px;
-        margin-top: 0;
-        margin-bottom: 10px;
+        width: 150px;
     }
 }
 
 // notebook section styles
 .notebook {
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 0;
-    padding-top: 5px;
-    padding-bottom: 10px;
+    min-width: 500px;
+    width: 100%;
+    max-width: 850px;
+    height: 415px;
     margin: 0;
+    background-color: $white;
+    border: solid $black 3px;
+    border-radius: 5px;
 
-    // note styles
-    li {
-        margin: 5px;
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        min-width: calc(100% - 5px);
+        width: calc(100% - 5px);
+        max-width: none;
+        height: 600px;
+        margin: 0 auto;
+    }
+
+    .notebook-options, .notebook-buttons {
+        background-color: $color1;
+        height: 55px;
+        width: calc(100% - 30px);
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            font-size: 14px;
+        }
+    }
+
+    .notebook-options, .notebook-buttons, .notes-remaining {
         display: flex;
-        justify-content: center;
-        position: relative;
-        flex-direction: column;
-        border: solid $black 3px;
-        border-radius: 5px;
-        color: $black;
-        text-align: center;
-        width: 200px;
-        height: 175px;
-        list-style-type: none;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+    }
 
-        // note text styles
-        p {
-            font-size: 15px;
-            margin: 10px;
-            overflow-wrap: break-word;
-        }
+    .notebook-options {
+        border-bottom: solid $black 3px;
+        padding: 5px 15px;
 
-        // alternate note colors
-        &.purple {
-            background-color: rgba($color: $lightpurple, $alpha: 0.7);
-        }
-        &.yellow {
-            background-color: rgba($color: $lightyellow, $alpha: 0.7);
-        }
-        &.green {
-            background-color: rgba($color: $lightgreen, $alpha: 0.7);
-        }
-        &.pink {
-            background-color: rgba($color: $lightpink, $alpha: 0.7);
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            height: 110px;
+            flex-direction: column;
         }
     }
-}
 
-// responsive styles for tablet and smaller
-@media only screen and (max-width: 820px) {
+    .notebook-buttons {
+        border-top: solid $black 3px;
+        flex-direction: row-reverse;
+        padding: 3px 15px;
+        gap: 15px;
+    }
+    
+    .notes-remaining {
+        gap: 10px;
+    }
 
-    // notepad section styles
-    .notepad {
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
+    .colorFilter, .timeSort {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
 
-        // input section styles
-        .input {
-            width: calc(100% - 40px);
-        }
-
-        fieldset {
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
             width: 100%;
-            margin: 5px;
-            margin-top: 10px;
-        }
-
-        // textbox styles
-        input[type="text"] {
-            width: calc(100% - 6px);
-            margin: 5px;
-        }
-
-        // buttons container styles
-        .buttons {
-            gap: 15px;
-            padding: 5px 0px;
-            flex-direction: row;
-            align-self: center;
-
-            // button styles
-            button {
-                margin-bottom: 0;
-            }
+            justify-content: right;
         }
     }
 
-    // notebook section styles
-    .notebook {
-        width: 100%;
+    .notebook-buttons .counter {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $color2;
+        border: solid $black 2px;
+        border-radius: 50%;
+        height: 35px;
+        width: 35px;
+        padding-right: 1px;
+        cursor: default;
+    }
+
+    .notes-list {
+        display: flex;
+        min-width: 100%;
+        height: 248px;
+        overflow: scroll;
+        flex-flow: row wrap;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+        margin: 0;
+        gap: 20px;
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            height: 448px;
+        }
 
         // note styles
         li {
-            min-width: calc(100% - 15px);
-            height: 125px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            flex-direction: column;
+            border: solid $black 3px;
+            border-radius: 5px;
+            color: $black;
+            text-align: center;
+            width: 240px;
+            height: 223px;
+            list-style-type: none;
+
+            // responsive to tablet
+            @media only screen and (max-width: $tablet) {
+                width: 100%;
+                margin: 0 20px;
+                height: 200px;
+            }
+
+            // note text styles
             p {
-                padding: 0 20px;
+                font-family: $handwriting;
+                font-size: 23px;
+                font-weight: 400;
+                margin: 10px;
+                margin-bottom: 35px;
+                overflow-wrap: break-word;
+            }
+
+            .metadata {
+                background-color: $color2;
+                border-top: solid $black 3px;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                font-family: $sans-serif;
+                font-size: 15px;
+                font-weight: 600;
+                margin: 0;
+                padding: 10px 0;
+            }
+
+            // alternate note colors
+            &.green {
+                background-color: rgba($color: $green, $alpha: 0.7);
+            }
+            &.blue {
+                background-color: rgba($color: $blue, $alpha: 0.7);
+            }
+            &.red {
+                background-color: rgba($color: $red, $alpha: 0.7);
+            }
+            &.pink {
+                background-color: rgba($color: $pink, $alpha: 0.7);
+            }
+            &.yellow {
+                background-color: rgba($color: $yellow, $alpha: 0.7);
+            }
+            &.orange {
+                background-color: rgba($color: $orange, $alpha: 0.7);
             }
         }
     }
 }
 
-// responsive styles for mobile and smaller
-@media only screen and (max-width: 460px) {
-    .notepad fieldset {
-        justify-content: center;
+// // responsive styles for tablet and smaller
+// @media only screen and (max-width: 820px) {
 
-        // radio field styles
-        .radioField {
-            width: 50%;
-            justify-content: left;
-        }
-    }
-}
+//     // notepad section styles
+//     .notepad {
+//         width: 100%;
+//         flex-direction: column;
+//         align-items: flex-start;
+
+//         // input section styles
+//         .input {
+//             width: calc(100% - 40px);
+//         }
+
+//         fieldset {
+//             width: 100%;
+//             margin: 5px;
+//             margin-top: 10px;
+//         }
+
+//         // textbox styles
+//         input[type="text"] {
+//             width: calc(100% - 6px);
+//             margin: 5px;
+//         }
+
+//         // buttons container styles
+//         .buttons {
+//             gap: 15px;
+//             padding: 5px 0px;
+//             flex-direction: row;
+//             align-self: center;
+
+//             // button styles
+//             button {
+//                 margin-bottom: 0;
+//             }
+//         }
+//     }
+
+//     // notebook section styles
+//     .notebook {
+//         width: 100%;
+
+//         // note styles
+//         li {
+//             min-width: calc(100% - 15px);
+//             height: 125px;
+//             p {
+//                 padding: 0 20px;
+//             }
+//         }
+//     }
+// }
+
+// // responsive styles for mobile and smaller
+// @media only screen and (max-width: 460px) {
+//     .notepad fieldset {
+//         justify-content: center;
+
+//         // radio field styles
+//         .radioField {
+//             width: 50%;
+//             justify-content: left;
+//         }
+//     }
+// }
