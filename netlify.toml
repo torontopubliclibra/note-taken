@@ -1,5 +1,5 @@
 [build]
-  publish = "dist/pigeon-pad"
+  publish = "dist/note-taken"
   command = "ng build"
 [[redirects]]
   from = "/*"
