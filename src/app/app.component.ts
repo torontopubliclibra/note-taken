@@ -41,13 +41,18 @@ export class AppComponent {
   // component class constructor
   constructor() {
    
-    // if there are local notes stored, parse the data and set the notes array
+    // if there are local notes stored, parse the data, save it to the notes array
     if (this.localNotes) {
       this.allNotes = JSON.parse(this.localNotes);
 
     // otherwise, set the notes array to empty
     } else {
       this.allNotes = [];
+    }
+
+    // if there are notes saved, set the default note color to the last one used
+    if (this.allNotes.length > 0) {
+      this.noteColor = this.allNotes[this.allNotes.length - 1].color;
     }
 
     // set the filtered notes to the notes array
@@ -154,8 +159,20 @@ export class AppComponent {
     // get the date and time info and format it
     let today = new Date();
     let day = today.getDate();
-    let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
-  "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+    let monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "June",
+      "July",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
     let month = monthNames[today.getMonth()];
     let year = String(today.getFullYear());
     let hour = "";
@@ -195,7 +212,7 @@ export class AppComponent {
     } else if (this.inputtedText === "" || this.inputtedText == "\n") {
 
       this.inputtedText = ``;
-      this.updatePlaceholder(`Note can't be empty`);
+      this.updatePlaceholder(`Note can't be blank`);
 
     // otherwise
     } else {

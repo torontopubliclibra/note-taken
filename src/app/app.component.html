@@ -9,19 +9,19 @@
   <!-- mobile nav -->
   <nav>
     <button *ngIf="allNotes.length === 0 && mobileView !== 'info'" class="mobile-nav-link" disabled>
-      <p>Notebook (0)</p>
+      <p>View notes (0)</p>
     </button>
     <button  *ngIf="allNotes.length > 0 && mobileView === 'notepad'" class="mobile-nav-link" (click)="toggleMobileView('notebook')">
-      <p>Notebook ({{allNotes.length}})</p>
+      <p>View notes ({{allNotes.length}})</p>
     </button>
     <button  *ngIf="allNotes.length > 0 && mobileView === 'notebook'" class="mobile-nav-link" (click)="toggleMobileView('notepad')">
-      <p>Notepad</p>
+      <p>Add note</p>
     </button>
     <button *ngIf="mobileView !== 'info'" class="mobile-nav-link about" (click)="toggleMobileView('info')">
-      <p>About</p>
+      <p>About the site</p>
     </button>
     <button *ngIf="mobileView === 'info'" class="mobile-nav-link about open" (click)="toggleMobileView('notepad')">
-      <p>Back to the app</p>
+      <p>Back to the site</p>
     </button>
   </nav>
 
@@ -49,11 +49,11 @@
 
       <!-- notepad save and clear buttons -->
       <div class="notepad-buttons">
-        <button *ngIf="inputtedText" (click)="saveNote($event)">Save</button>
-        <button *ngIf="!inputtedText" disabled>Save</button>
+        <button *ngIf="inputtedText" (click)="saveNote($event)">Save note</button>
+        <button *ngIf="!inputtedText" disabled>Save note</button>
 
-        <button *ngIf="inputtedText" (click)="clearText()">Clear</button>
-        <button *ngIf="!inputtedText" disabled>Clear</button>
+        <button *ngIf="inputtedText" (click)="clearText()">Clear text</button>
+        <button *ngIf="!inputtedText" disabled>Clear text</button>
       </div>
 
     </div>
@@ -124,8 +124,8 @@
           </div>
         </div>
 
-        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all'" (click)="deleteAll()">Delete all</button>
-        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all'" disabled>Delete all</button>
+        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all'" (click)="deleteAll()" class="deleteAll">Delete all notes</button>
+        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all'" class="deleteAll" disabled>Delete all notes</button>
       </div>
 
     </div>
@@ -135,7 +135,10 @@
   <!-- footer section -->
   <footer class="{{mobileView !== 'info' ? 'disabled' : ''}}">
     <p>
-      Note Taken is a client-side notes app written in Typescript and SASS using the Angular framework, built by <a href="https://danateagle.com">Dana Teagle</a> in 2023. Any user of the app can store up to 20 notes at a time (each up to 100 characters in length) in various colours. All inputted data is stored locally without being sent to a database. Unless deleted, the notes will remain in your browser until the next time you clear the cache. The notes can be sorted, filtered, edited, and deleted. See the repo for the application <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
+      Note Taken is a notes app that stores all inputted data client-side without sending it to a database. Unless deleted, your notes remain in the browser on your device until you clear the cache. You can save up to 20 notes, each up to 100 characters in length.
+    </p>
+    <p>
+      The site was written in Typescript and SASS using the Angular framework by <a href="https://danateagle.com">Dana Teagle</a>. See the source code <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
     </p>
   </footer>
 

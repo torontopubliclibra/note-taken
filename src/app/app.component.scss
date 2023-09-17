@@ -27,21 +27,19 @@ nav {
         gap: 20px;
 
         .mobile-nav-link {
-            width: 230px;
+            // width: 230px;
             height: 40px;
-            padding: 0;
-            margin: 0;
 
             p {
                 margin: 0;
             }
 
-            &.about {
-                width: 125px;
-                &.open {
-                    width: 250px;
-                }
-            }
+            // &.about {
+            //     width: 125px;
+            //     &.open {
+            //         width: 250px;
+            //     }
+            // }
         }
     }
 }
@@ -250,7 +248,7 @@ textarea {
     }
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        width: calc(100% - 40px);
+        width: calc(100% - 36px);
         min-height: 60px;
         font-size: 40px;
         padding: 18px;
@@ -363,6 +361,10 @@ button {
     &.edit {
         left: 0;
     }
+
+    &.deleteAll {
+        width: 175px;
+    }
 }
 
 .notebook {
@@ -460,6 +462,7 @@ button {
         @media only screen and (max-width: $tablet) {
             .notes-remaining, button {
                 width: 50%;
+                max-width: 250px;
             }
         }
 
@@ -481,10 +484,23 @@ button {
             p {
                 margin-top: 0;
                 margin-bottom: 5px;
+                width: 100%;
+                max-width: 250px;
             }
             select {
                 width: 100%;
+                max-width: 250px;
             }
+        }
+    }
+
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        .timeSort {
+            align-items: flex-start;
+        }
+        .colorFilter {
+            align-items: flex-end;
         }
     }
 
