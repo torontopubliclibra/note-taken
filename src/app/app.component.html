@@ -81,6 +81,12 @@
         </div>
 
       </div>
+      <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}}">
+
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Search your notes"/>
+        <i class="fa fa-search" aria-hidden="true"></i>
+
+      </div>
 
       <!-- notebook list in descending order -->
       <ul *ngIf="timeSort === 'newest'" class="notes-list">
@@ -91,11 +97,17 @@
           <button class="delete" (click)="deleteNote(i)" title="Delete note">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
-          <p>{{note.text}}</p>
+          <p class="note-text">
+            {{note.text}}
+          </p>
           <p class="metadata">
             {{note.meta.date}} @ {{note.meta.time}}
           </p>
         </li>
+        <div class="no-search" *ngIf="searchQuery && filteredNotes.length === 0">
+          <p>Sorry but your search query didn't match any notes</p>
+          <p>Try something else</p>
+        </div>
       </ul>
 
       <!-- notebook list in ascending order -->
@@ -124,8 +136,8 @@
           </div>
         </div>
 
-        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all'" (click)="deleteAll()" class="deleteAll" title="Delete all of your notes">Delete all notes</button>
-        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all'" class="deleteAll" disabled>Delete all notes</button>
+        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all' && !searchQuery" (click)="deleteAll()" class="deleteAll" title="Delete all of your notes">Delete all notes</button>
+        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all' || searchQuery" class="deleteAll" disabled>Delete all notes</button>
       </div>
 
     </div>
