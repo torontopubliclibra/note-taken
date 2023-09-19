@@ -14,7 +14,25 @@ header, footer {
     }
 }
 nav {
-    display: none;
+    display: flex;
+
+    .mobile-nav-link {
+        display: none;
+        height: 40px;
+        width: 225px;
+
+        p {
+            margin: 0;
+        }
+
+        &.info {
+        //     display: block;
+        //     position: absolute;
+        //     top: 80px;
+        //     right: calc(50vw - 580px);
+            width: 125px;
+        }
+    }
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
@@ -27,20 +45,15 @@ nav {
         gap: 20px;
 
         .mobile-nav-link {
-            // width: 230px;
-            height: 40px;
+            display: block;
 
-            p {
-                margin: 0;
+            &.info {
+                position: unset;
+                top: unset;
+                right: unset;
             }
-
-            // &.about {
-            //     width: 125px;
-            //     &.open {
-            //         width: 250px;
-            //     }
-            // }
         }
+            
     }
 }
 header {
@@ -138,12 +151,11 @@ main {
 .notepad {
     display: flex;
     flex-direction: column;
-    height: 415px;
+    height: 450px;
     min-width: 300px;
     max-width: 340px;
     margin: 0;
     border: solid $black 3px;
-    border-radius: 5px;
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
@@ -157,7 +169,6 @@ main {
         border-right: none;
         border-left: none;
         border-bottom: none;
-        border-radius: 0;
         margin: 0 auto;
     }
 
@@ -244,7 +255,6 @@ textarea {
     resize: none;
     &:focus-visible {
         outline: none;
-        border-radius: 3px;
     }
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
@@ -262,7 +272,7 @@ select {
     padding-left: 10px;
     background-color: $white;
     border: solid $black 2px;
-    border-radius: 5px;
+    border-radius: 30px;
     font-family: $sans-serif;
     text-align: center;
     text-transform: lowercase;
@@ -302,7 +312,7 @@ button {
     margin: 5px 0;
     background-color: $white;
     border: solid $black 2px;
-    border-radius: 5px;
+    border-radius: 30px;
     font-family: $sans-serif;
     text-transform: lowercase;
     font-size: 15px;
@@ -374,11 +384,10 @@ button {
     min-width: 500px;
     width: 100%;
     max-width: 850px;
-    height: 415px;
+    height: 450px;
     margin: 0;
     background-color: $white;
     border: solid $black 3px;
-    border-radius: 5px;
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
@@ -395,7 +404,6 @@ button {
         border-right: none;
         border-left: none;
         border-bottom: none;
-        border-radius: 0;
         margin: 0 auto;
     }
 
@@ -407,6 +415,7 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            width: calc(100% - 40px);
             padding: 10px 20px;
             font-size: 14px;
         }
@@ -428,7 +437,6 @@ button {
             border-bottom: none;
             flex-direction: row-reverse;
             justify-content: center;
-            padding-bottom: 0;
             order: 2;
             gap: 20px;
             height: 87px;
@@ -445,7 +453,8 @@ button {
             border-top: none;
             flex-direction: row;
             justify-content: center;
-            height: 75px;
+            height: 60px;
+            padding-top: 0;
             gap: 20px;
             order: 3;
             font-size: 16px;
@@ -512,7 +521,7 @@ button {
         justify-content: center;
         background-color: $color2;
         border: solid $black 2px;
-        border-radius: 5px;
+        border-radius: 30px;
         height: 40px;
         width: 75px;
         padding-right: 1px;
@@ -531,7 +540,7 @@ button {
     .notes-list {
         display: flex;
         min-width: 100%;
-        height: 248px;
+        height: 283px;
         overflow: scroll;
         flex-flow: row wrap;
         justify-content: center;
@@ -553,7 +562,6 @@ button {
             position: relative;
             flex-direction: column;
             border: solid $black 3px;
-            border-radius: 5px;
             color: $black;
             text-align: center;
             width: 240px;
@@ -565,7 +573,6 @@ button {
                 border-right: none;
                 border-left: none;
                 border-bottom: none;
-                border-radius: 0;
                 width: 100%;
                 max-width: 100vw;
                 margin: 0;
