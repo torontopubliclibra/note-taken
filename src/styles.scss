@@ -8,11 +8,10 @@
 body {
     background-color: $color2;
     margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100vw;
     font-family: $sans-serif;
     text-transform: lowercase;
+
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
         background-color: $color1;
