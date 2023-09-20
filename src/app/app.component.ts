@@ -158,6 +158,14 @@ export class AppComponent {
 
   }
 
+  formatInput = () => {
+
+    if (this.inputtedText) {
+      this.inputtedText = this.inputtedText.replaceAll(/\n/g, ' ')
+    }
+
+  }
+
   // filter notes by search query
   searchNotes = () => {
 
