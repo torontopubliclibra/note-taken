@@ -410,8 +410,17 @@ button {
         left: 0;
     }
 
-    &.deleteAll {
+    &.deleteAll, &.export {
         width: 175px;
+    }
+
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        &.export {
+            margin-top: 0;
+            order: 10;
+            width: calc(100% - 6px);
+        }
     }
 }
 
@@ -517,12 +526,12 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            flex-wrap: wrap;
             border-top: none;
             flex-direction: row;
             justify-content: center;
-            height: 60px;
+            height: 120px;
             padding-top: 0;
-            gap: 20px;
             order: 4;
             font-size: 16px;
             p {
@@ -536,9 +545,15 @@ button {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
-            .notes-remaining, button {
-                width: 50%;
+            .notes-remaining, .deleteAll {
+                width: calc(50% - 15px);
                 max-width: 250px;
+            }
+            .notes-remaining {
+                margin-right: 5px;
+            }
+            .deleteAll {
+                margin-left: 5px;
             }
         }
 

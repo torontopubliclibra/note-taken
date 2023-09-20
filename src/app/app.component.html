@@ -143,8 +143,8 @@
           </div>
         </div>
 
-        <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="deleteAll" title="Export your notes to a text file">Export notes</button>
-        <button *ngIf="filteredNotes.length <= 1" class="deleteAll" disabled>Export notes</button>
+        <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="export" title="Export your notes to a text file">Export notes</button>
+        <button *ngIf="filteredNotes.length <= 1" class="export" disabled>Export notes</button>
 
         <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all' && !searchQuery" (click)="deleteAll()" class="deleteAll" title="Delete all of your notes">Delete all notes</button>
         <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all' || searchQuery" class="deleteAll" disabled>Delete all notes</button>

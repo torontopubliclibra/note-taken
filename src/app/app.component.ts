@@ -380,28 +380,40 @@ export class AppComponent {
   exportNotes() {
 
     let exportedNotes = [``]
-    let title = `Note Taken Export`
+    let title = `note taken export`
     let query = ``;
     let filter = ``;
-    let date = ` - ` + this.formatDate();
+    let heading = ``;
+    let date = this.formatDate();
+    let filename = ``;
 
-    if (this.searchQuery) {
-      query =  ` | ` + this.searchQuery
+    if (this.searchQuery && this.colorFilter !== 'all') {
+      query =  this.searchQuery;
+      filter =  this.colorFilter;
+      heading = title + ` [ ` + filter + ` | "` + query + `" ] `
+      filename = `note-taken-export--${filter}--${query}--${date}.txt`
+    } else if (this.searchQuery && this.colorFilter === 'all') {
+      query =  this.searchQuery;
+      heading = title + ` [ "` + query + `" ]`
+      filename = `note-taken-export--${query.replace(/\s/g, "_")}--${date}.txt`
+    } else if (!this.searchQuery && this.colorFilter !== 'all'){
+      filter =  this.colorFilter;
+      heading = title + ` [ ` + filter + ` ]`
+      filename = `note-taken-export--${filter}--${date}.txt`
+    } else {
+      heading = title;
+      filename = `note-taken-export--${date}.txt`
     }
 
-    if (this.colorFilter !== 'all'){
-      filter =  ` | ` + this.colorFilter
-    }  
-
-    exportedNotes.push(title + filter + query + date)
+    exportedNotes.push(heading + ` - ` + date);
 
     this.filteredNotes.forEach((note) => {
-      exportedNotes.push(`\n\n[ ${note.meta.date} ${note.meta.time} (${note.color}) ] ${note.text}`)
+      exportedNotes.push(`\n\n${note.text}\n/ ${note.color} | ${note.meta.date} ${note.meta.time} /`)
     })
 
     let FileSaver = require('file-saver');
     let blob = new Blob(exportedNotes, {type: "text/plain;charset=utf-8"});
-    FileSaver.saveAs(blob, `note-taken-export` + filter + query + date + `.txt`);
+    FileSaver.saveAs(blob, filename);
 
   }
 
