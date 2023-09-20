@@ -1,6 +1,6 @@
 @use './src/partials/variables.scss' as *;
 
-p, button, select {
+p, button, select, input {
     font-weight: 600;
 }
 
@@ -165,7 +165,7 @@ main {
 .notepad {
     display: flex;
     flex-direction: column;
-    height: 450px;
+    height: 500px;
     min-width: 300px;
     max-width: 340px;
     margin: 0;
@@ -262,7 +262,7 @@ textarea {
     height: 100%;
     font-family: $handwriting;
     background: none;
-    text-transform: lowercase;
+    text-transform: none;
     font-size: 30px;
     font-weight: 400;
     text-align: center;
@@ -279,9 +279,7 @@ textarea {
     }
 }
 
-select {
-    width: 165px;
-    height: 40px;
+select, input {
     margin: 5px 0;
     padding-left: 10px;
     background-color: $white;
@@ -291,7 +289,6 @@ select {
     text-align: center;
     text-transform: lowercase;
     font-size: 15px;
-    cursor: pointer;
     transition: none;
 
     &:hover {
@@ -310,13 +307,41 @@ select {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        width: 250px;
         height: 40px;
         font-size: 16px;
         font-style: italic;
         &:hover {
             background-color: $white;
         }
+    }
+}
+
+select {
+    height: 40px;
+    width: 165px;
+    cursor: pointer;
+
+    &:disabled {
+        font-style: italic;
+    }
+
+    // responsive to tablet
+    @media only screen and (max-width: $tablet) {
+        width: 250px;
+    }
+}
+
+input {
+    height: 36px;
+    width: 275px;
+    text-align: center;
+
+    &:disabled {
+        font-style: italic;
+    }
+
+    &:hover, &:focus, &.active {
+        background-color: rgba($color1, 0.6);
     }
 }
 
@@ -339,6 +364,7 @@ button {
     &:disabled {
         color: rgba($black, 0.75);
         background-color: rgba($color2, 0.5);
+        font-style: italic;
         &:hover {
             background-color: rgba($color2, 0.5);
             cursor: default;
@@ -398,7 +424,7 @@ button {
     min-width: 500px;
     width: 100%;
     max-width: 850px;
-    height: 450px;
+    height: 500px;
     margin: 0;
     background-color: $white;
     border: solid $black 3px;
@@ -421,8 +447,7 @@ button {
         margin: 0 auto;
     }
 
-    .notebook-options, .notebook-buttons {
-        background-color: $color1;
+    .notebook-options, .notebook-search, .notebook-buttons {
         height: 55px;
         width: calc(100% - 40px);
         padding: 5px 20px;
@@ -435,15 +460,40 @@ button {
         }
     }
 
-    .notebook-options, .notebook-buttons, .notes-remaining {
+    .notebook-options, .notebook-buttons, .notes-remaining, .notebook-search {
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-direction: row;
     }
 
-    .notebook-options {
+    .notebook-options, .notebook-search {
         border-bottom: solid $black 3px;
+    }
+
+    .notebook-search {
+        background-color: $color2;
+        justify-content: flex-end;
+        gap: 15px;
+
+        &.disabled {
+            display: none;
+        }
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            justify-content: center;
+            order: 2;
+            border-bottom: none;
+            border-top: solid $black 3px;
+        }
+    }
+
+    .notebook-options, .notebook-buttons {
+        background-color: $color1;
+    }
+
+    .notebook-options {
 
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
@@ -451,13 +501,14 @@ button {
             border-bottom: none;
             flex-direction: row-reverse;
             justify-content: center;
-            order: 2;
+            order: 3;
             gap: 20px;
             height: 87px;
         }
     }
 
     .notebook-buttons {
+        height: 50px;
         border-top: solid $black 3px;
         flex-direction: row-reverse;
         gap: 15px;
@@ -470,7 +521,7 @@ button {
             height: 60px;
             padding-top: 0;
             gap: 20px;
-            order: 3;
+            order: 4;
             font-size: 16px;
             p {
                 margin: 0;
@@ -536,7 +587,7 @@ button {
         background-color: $color2;
         border: solid $black 2px;
         border-radius: 30px;
-        height: 40px;
+        height: 36px;
         width: 75px;
         padding-right: 1px;
         cursor: default;
@@ -554,7 +605,7 @@ button {
     .notes-list {
         display: flex;
         min-width: 100%;
-        height: 283px;
+        height: 330px;
         overflow-y: scroll;
         flex-flow: row wrap;
         justify-content: center;
@@ -563,8 +614,15 @@ button {
         margin: 0;
         gap: 20px;
 
+        .no-search {
+            font-size: 20px;
+            text-align: center;
+            max-width: 85%;
+        }
+
         // responsive to tablet
         @media only screen and (max-width: $tablet) {
+            background-color: $white;
             height: 100%;
             gap: 0;
             padding: 0;
@@ -607,6 +665,10 @@ button {
                 margin-bottom: 35px;
                 overflow-wrap: break-word;
 
+                &.note-text {
+                    text-transform: none;
+                }
+
                 // responsive to tablet
                 @media only screen and (max-width: $tablet) {
                     font-size: 29px;
@@ -628,6 +690,7 @@ button {
 
                 // responsive to tablet
                 @media only screen and (max-width: $tablet) {
+                    background-color: $white;
                     padding: 15px 0;
                     bottom: unset;
                     top: 0;

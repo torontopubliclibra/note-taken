@@ -11,12 +11,13 @@ export class AppComponent {
 
   // initial variables
   title: string = `note-taken`;
-  placeholder: string = `Type your note here`;
+  placeholder: string = `type your note here`;
   noteColor: string = `green`;
   colorFilter: string = `all`;
   timeSort: string = `newest`;
   noteColors: string[] = [];
   inputtedText: string = ``;
+  searchQuery: string = ``;
   mobileView: string = `notepad`;
 
   // note data objects
@@ -85,7 +86,7 @@ export class AppComponent {
 
     // after 1 second, set it back
     setTimeout(() => {
-      this.placeholder = `Type your note here`;
+      this.placeholder = `type your note here`;
     }, 1000)
   }
 
@@ -140,6 +141,28 @@ export class AppComponent {
       // filter the notes by the selected colour filter
       updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
     }
+
+    // set the filtered notes variables to the new filtered notes
+    this.filteredNotes = updatedNotes;
+
+  }
+
+  // filter notes by search query
+  searchNotes = () => {
+
+    // establish an empty array for the new filtered notes
+    let updatedNotes: {
+      text: string,
+      color: string,
+      meta: {
+        time: string,
+        date: string,
+      }
+    }[] = this.allNotes;
+
+    let query = this.searchQuery.toLowerCase();
+
+    updatedNotes = updatedNotes.filter(note => note.text.toLowerCase().includes(query));
 
     // set the filtered notes variables to the new filtered notes
     this.filteredNotes = updatedNotes;
@@ -202,17 +225,17 @@ export class AppComponent {
 
     // if there are 20 or more notes, display the limit text
     if (updateNotes.length >= 20) {
-      this.updatePlaceholder(`Storage limit reached`);
+      this.updatePlaceholder(`storage limit reached`);
 
     // if the note is already in the array, display the duplicate note text
     } else if (updateNotes.some(note => note.text === this.inputtedText)) {
-      this.updatePlaceholder(`Note already exists`);
+      this.updatePlaceholder(`note already exists`);
     
     // if the note is blank, display the empty note text
     } else if (this.inputtedText === "" || this.inputtedText == "\n") {
 
       this.inputtedText = ``;
-      this.updatePlaceholder(`Note can't be blank`);
+      this.updatePlaceholder(`note can't be blank`);
 
     // otherwise
     } else {
