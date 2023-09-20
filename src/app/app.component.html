@@ -83,8 +83,15 @@
       </div>
       <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}}">
 
-        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Search your notes" class="{{searchQuery ? 'active' : ''}}"/>
         <i class="fa fa-search" aria-hidden="true"></i>
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Search your notes" class="{{searchQuery ? 'active' : ''}}"/>
+
+        <button *ngIf="!searchQuery" class="clear-search" disabled>
+          Clear
+        </button>
+        <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-search">
+          Clear
+        </button>
 
       </div>
 

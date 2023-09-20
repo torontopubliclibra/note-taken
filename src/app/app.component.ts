@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -158,14 +159,38 @@ export class AppComponent {
         time: string,
         date: string,
       }
-    }[] = this.allNotes;
+    }[] = [];
 
-    let query = this.searchQuery.toLowerCase();
+    if (this.colorFilter) {
+      updatedNotes = this.filteredNotes;
+    } else {
+      updatedNotes = this.allNotes;
+    };
 
-    updatedNotes = updatedNotes.filter(note => note.text.toLowerCase().includes(query));
+    if (this.searchQuery) {
 
-    // set the filtered notes variables to the new filtered notes
-    this.filteredNotes = updatedNotes;
+      updatedNotes = updatedNotes.filter(note => note.text.toLowerCase().includes(this.searchQuery.toLowerCase()));
+      this.filteredNotes = updatedNotes;
+
+    } else if (this.colorFilter) {
+
+      updatedNotes = [];
+      this.filterNotesByColor();
+
+    } else {
+
+      updatedNotes = this.allNotes;
+      this.filteredNotes = updatedNotes;
+
+    }
+
+  }
+
+  // filter notes by search query
+  clearSearch = () => {
+
+    this.filterNotesByColor();
+    this.searchQuery = '';
 
   }
 
