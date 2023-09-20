@@ -391,24 +391,24 @@ export class AppComponent {
       query =  this.searchQuery;
       filter =  this.colorFilter;
       heading = title + ` [ ` + filter + ` | "` + query + `" ] `
-      filename = `note-taken-export--${filter}--${query}--${date}.txt`
+      filename = `note-taken-export--${filter}--${query}--${date.replace("/", "_")}.txt`
     } else if (this.searchQuery && this.colorFilter === 'all') {
       query =  this.searchQuery;
       heading = title + ` [ "` + query + `" ]`
-      filename = `note-taken-export--${query.replace(/\s/g, "_")}--${date}.txt`
+      filename = `note-taken-export--${query.replace(/\s/g, "_")}--${date.replace("/", "_")}.txt`
     } else if (!this.searchQuery && this.colorFilter !== 'all'){
       filter =  this.colorFilter;
       heading = title + ` [ ` + filter + ` ]`
-      filename = `note-taken-export--${filter}--${date}.txt`
+      filename = `note-taken-export--${filter}--${date.replace("/", "_")}.txt`
     } else {
       heading = title;
-      filename = `note-taken-export--${date}.txt`
+      filename = `note-taken-export--${date.replace("/", "_")}.txt`
     }
 
     exportedNotes.push(heading + ` - ` + date);
 
     this.filteredNotes.forEach((note) => {
-      exportedNotes.push(`\n\n${note.text}\n/ ${note.color} | ${note.meta.date} ${note.meta.time} /`)
+      exportedNotes.push(`\n\n${note.text}\n// ${note.meta.date} @ ${note.meta.time} | ${note.color} //`)
     })
 
     let FileSaver = require('file-saver');
