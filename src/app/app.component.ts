@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +18,7 @@ export class AppComponent {
   noteColors: string[] = [];
   inputtedText: string = ``;
   searchQuery: string = ``;
-  mobileView: string = `notepad`;
+  view: string = `notepad`;
 
   // note data objects
   localNotes: any = localStorage.getItem(`notes`);
@@ -66,15 +65,15 @@ export class AppComponent {
   }
 
   // toggle the mobile view function
-  toggleMobileView = (view: string) => {
+  toggleView = (view: string) => {
 
     // set the mobile view variable to the parameter taken by the function
     if (view === `notebook`) {
-      this.mobileView = `notebook`;
+      this.view = `notebook`;
     } else if (view === `notepad`) {
-      this.mobileView = `notepad`
+      this.view = `notepad`
     } else if (view === `info`) {
-      this.mobileView = `info`
+      this.view = `info`
     }
 
   }
@@ -126,25 +125,36 @@ export class AppComponent {
   // filter notes by colour function
   filterNotesByColor = () => {
 
-    // establish an empty array for the new filtered notes
-    let updatedNotes: {
-      text: string,
-      color: string,
-      meta: {
-        time: string,
-        date: string,
+    if (this.searchQuery) {
+
+      this.searchNotes()
+
+    } else {
+
+      // establish an empty array for the new filtered notes
+      let updatedNotes: {
+        text: string,
+        color: string,
+        meta: {
+          time: string,
+          date: string,
+        }
+      }[] = [];
+
+      updatedNotes = this.allNotes;
+
+      // if the colour filter is anything other than 'all'
+      if (this.colorFilter !== `all`) {
+
+        // filter the notes by the selected colour filter
+        updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
+
       }
-    }[] = this.allNotes;
 
-    // if the colour filter is anything other than 'all'
-    if (this.colorFilter !== `all`) {
+      // set the filtered notes variables to the new filtered notes
+      this.filteredNotes = updatedNotes;
 
-      // filter the notes by the selected colour filter
-      updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
     }
-
-    // set the filtered notes variables to the new filtered notes
-    this.filteredNotes = updatedNotes;
 
   }
 
@@ -159,38 +169,31 @@ export class AppComponent {
         time: string,
         date: string,
       }
-    }[] = [];
+    }[] = this.allNotes;
 
-    if (this.colorFilter !== 'all') {
-      updatedNotes = this.filteredNotes;
-    } else {
-      updatedNotes = this.allNotes;
-    };
-
-    if (this.searchQuery) {
+    if (this.searchQuery && this.colorFilter === 'all') {
 
       updatedNotes = updatedNotes.filter(note => note.text.toLowerCase().includes(this.searchQuery.toLowerCase()));
-      this.filteredNotes = updatedNotes;
 
-    } else if (this.colorFilter) {
+    } else if (this.searchQuery && this.colorFilter !== 'all') {
 
-      updatedNotes = [];
-      this.filterNotesByColor();
+      updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
+      updatedNotes = updatedNotes.filter(note => note.text.toLowerCase().includes(this.searchQuery.toLowerCase()));
 
-    } else {
+    } else if (!this.searchQuery && this.colorFilter !== 'all') {
 
-      updatedNotes = this.allNotes;
-      this.filteredNotes = updatedNotes;
-
+      updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
     }
+
+    this.filteredNotes = updatedNotes;
 
   }
 
   // filter notes by search query
   clearSearch = () => {
 
-    this.filterNotesByColor();
     this.searchQuery = '';
+    this.filterNotesByColor();
 
   }
 
@@ -251,8 +254,8 @@ export class AppComponent {
     }[] = this.allNotes;
     let initialPlaceholder = this.placeholder;
 
-    // if there are 20 or more notes, display the limit text
-    if (updateNotes.length >= 20) {
+    // if there are 50 or more notes, display the limit text
+    if (updateNotes.length >= 50) {
       this.updatePlaceholder(`storage limit reached`);
 
     // if the note is already in the array, display the duplicate note text
@@ -332,7 +335,7 @@ export class AppComponent {
     this.deleteNote(index);
 
     // toggle the mobile view back to the notepad
-    this.toggleMobileView("notepad");
+    this.toggleView("notepad");
 
   }
 
@@ -372,7 +375,7 @@ export class AppComponent {
 
     // if the notebook is empty, set the mobile view to the notepad
     if (this.allNotes.length === 0) {
-      this.toggleMobileView("notepad");
+      this.toggleView("notepad");
     }
 
   }
@@ -390,25 +393,25 @@ export class AppComponent {
     if (this.searchQuery && this.colorFilter !== 'all') {
       query =  this.searchQuery;
       filter =  this.colorFilter;
-      heading = title + ` [ ` + filter + ` | "` + query + `" ] `
-      filename = `note-taken-export--${filter}--${query}--${date}.txt`
+      heading = title + ` [ "` + query + `" || ` + filter + ` ] `
+      filename = `note-taken-export--${filter}--${query}--${date.replaceAll("/", "_")}.txt`
     } else if (this.searchQuery && this.colorFilter === 'all') {
       query =  this.searchQuery;
       heading = title + ` [ "` + query + `" ]`
-      filename = `note-taken-export--${query.replace(/\s/g, "_")}--${date}.txt`
+      filename = `note-taken-export--${query.replaceAll(/\s/g, "_")}--${date.replaceAll("/", "_")}.txt`
     } else if (!this.searchQuery && this.colorFilter !== 'all'){
       filter =  this.colorFilter;
       heading = title + ` [ ` + filter + ` ]`
-      filename = `note-taken-export--${filter}--${date}.txt`
+      filename = `note-taken-export--${filter}--${date.replaceAll("/", "_")}.txt`
     } else {
       heading = title;
-      filename = `note-taken-export--${date}.txt`
+      filename = `note-taken-export--${date.replaceAll("/", "_")}.txt`
     }
 
     exportedNotes.push(heading + ` - ` + date);
 
     this.filteredNotes.forEach((note) => {
-      exportedNotes.push(`\n\n${note.text}\n/ ${note.color} | ${note.meta.date} ${note.meta.time} /`)
+      exportedNotes.push(`\n\n${note.text}\n// ${note.meta.date} @ ${note.meta.time} || ${note.color} //`)
     })
 
     let FileSaver = require('file-saver');
@@ -432,7 +435,7 @@ export class AppComponent {
     localStorage.removeItem(`notes`);
 
     // toggle the mobile view to the notepad
-    this.toggleMobileView("notepad");
+    this.toggleView("notepad");
 
   }
 

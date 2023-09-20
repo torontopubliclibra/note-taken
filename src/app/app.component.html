@@ -3,24 +3,24 @@
   <!-- header section -->
   <header>
     <h1>Note Taken</h1>
-    <h2>Your friendly little local storage notes app</h2>
+    <h2>Your friendly little private notes app</h2>
   </header>
 
   <!-- mobile nav -->
   <nav>
-    <button *ngIf="allNotes.length === 0 && mobileView !== 'info'" class="mobile-nav-link" disabled>
+    <button *ngIf="allNotes.length === 0 && view !== 'info'" class="mobile-nav-link" disabled>
       <p>Notes (0)</p>
     </button>
-    <button  *ngIf="allNotes.length > 0 && mobileView === 'notepad'" class="mobile-nav-link" (click)="toggleMobileView('notebook')" title="View your notes">
+    <button  *ngIf="allNotes.length > 0 && view === 'notepad'" class="mobile-nav-link" (click)="toggleView('notebook')" title="View your notes">
       <p>Notes ({{allNotes.length}})</p>
     </button>
-    <button  *ngIf="allNotes.length > 0 && mobileView === 'notebook'" class="mobile-nav-link" (click)="toggleMobileView('notepad')" title="Add a new note">
+    <button  *ngIf="allNotes.length > 0 && view === 'notebook'" class="mobile-nav-link" (click)="toggleView('notepad')" title="Add a new note">
       <p>Add note</p>
     </button>
-    <button *ngIf="mobileView !== 'info'" class="mobile-nav-link info" (click)="toggleMobileView('info')" title="Info about the application">
+    <button *ngIf="view !== 'info'" class="mobile-nav-link info" (click)="toggleView('info')" title="Info about the application">
       <p>About</p>
     </button>
-    <button *ngIf="mobileView === 'info'" class="mobile-nav-link" (click)="toggleMobileView('notepad')" title="Go back to the application">
+    <button *ngIf="view === 'info'" class="mobile-nav-link info back" (click)="toggleView('notepad')" title="Go back to the application">
       <p>Back to app</p>
     </button>
   </nav>
@@ -29,7 +29,7 @@
   <main>
 
     <!-- notepad section -->
-    <div class="notepad" class="{{noteColor}} {{mobileView === 'notebook' || mobileView === 'info' ? 'disabled' : ''}}">
+    <div class="notepad" class="{{noteColor}} {{view === 'notebook' || view === 'info' ? 'disabled' : ''}}">
 
       <!-- notepad colour options -->
       <div class="notepad-options">
@@ -45,7 +45,7 @@
       </div>
 
       <!-- notepad text area -->
-      <textarea [(ngModel)]="inputtedText" maxlength="100" wrap="hard" placeholder={{placeholder}} (keydown.enter)="saveNote($event)"></textarea>
+      <textarea [(ngModel)]="inputtedText" maxlength="140" wrap="hard" placeholder={{placeholder}} (keydown.enter)="saveNote($event)"></textarea>
 
       <!-- notepad save and clear buttons -->
       <div class="notepad-buttons">
@@ -59,7 +59,7 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{mobileView === 'notepad' || mobileView === 'info' ? 'disabled' : ''}}">
+    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}">
 
       <!-- notebook sort and filter options -->
       <div class="notebook-options">
@@ -97,7 +97,7 @@
 
       <!-- notebook list in descending order -->
       <ul *ngIf="timeSort === 'newest'" class="notes-list">
-        <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}} {{mobileView === 'notebook' ? 'active' : ''}}">
+        <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}} {{view === 'notebook' ? 'active' : ''}}">
           <button class="edit" (click)="editNote(i)" title="Edit note">
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </button>
@@ -111,9 +111,18 @@
             {{note.meta.date}} @ {{note.meta.time}}
           </p>
         </li>
-        <div class="no-search" *ngIf="searchQuery && filteredNotes.length === 0">
-          <p>Sorry, but there aren't any notes matching that query</p>
-          <p>Wanna try something else?</p>
+        <div class="empty-notes" *ngIf="filteredNotes.length === 0 || allNotes.length === 0">
+          <span *ngIf="allNotes.length === 0" class="query">
+            <p>No notes currently in storage</p>
+          </span>
+          <span *ngIf="searchQuery && colorFilter === 'all'" class="query">
+            <p>Sorry, but there aren't any notes matching "{{searchQuery}}"</p>
+            <p>Wanna try something else?</p>
+          </span>
+          <span *ngIf="searchQuery && colorFilter !== 'all'" class="query-color">
+            <p>Sorry, but there aren't any {{colorFilter}} notes matching "{{searchQuery}}"</p>
+            <p>Wanna try something else?</p>
+          </span>
         </div>
       </ul>
 
@@ -139,12 +148,12 @@
         <div class="notes-remaining">
           <p>Notes:</p>
           <div class="counter">
-            <p>{{allNotes.length}} / 20</p>
+            <p>{{allNotes.length}} / 50</p>
           </div>
         </div>
 
-        <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="export" title="Export your notes to a text file">Export notes</button>
-        <button *ngIf="filteredNotes.length <= 1" class="export" disabled>Export notes</button>
+        <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="export" title="Open or save your notes as a .txt file">Export notes to text file</button>
+        <button *ngIf="filteredNotes.length <= 1" class="export" disabled>Export notes to text file</button>
 
         <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all' && !searchQuery" (click)="deleteAll()" class="deleteAll" title="Delete all of your notes">Delete all notes</button>
         <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all' || searchQuery" class="deleteAll" disabled>Delete all notes</button>
@@ -155,9 +164,9 @@
   </main>
 
   <!-- footer section -->
-  <footer class="{{mobileView !== 'info' ? 'disabled' : ''}}">
+  <footer class="{{view !== 'info' ? 'disabled' : ''}}">
     <p>
-      Note Taken is a notes app that stores all inputted data client-side without sending it to a database. Unless deleted, your notes remain in the browser on your device until you clear the cache. You can save up to 20 notes, each up to 100 characters in length.
+      Note Taken is a notes app that stores all inputted data client-side without sending anything to a database. Unless deleted, your notes remain in the browser on your device until you clear the cache. You can save up to 50 notes, each up to 140 characters in length. They can be sorted by time stamp, filtered by colour, searched by an inputted query, edited, deleted, and exported to a text file for offline access.
     </p>
     <p>
       The site was built by <a href="https://danateagle.com">Dana Teagle</a>, written in Typescript and SCSS using Angular. See the source code <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
