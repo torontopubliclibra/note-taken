@@ -186,6 +186,14 @@ export class AppComponent {
 
   }
 
+  // filter notes by search query
+  clearSearch = () => {
+
+    this.filterNotesByColor();
+    this.searchQuery = '';
+
+  }
+
   // save note function
   saveNote(event: any) {
 
