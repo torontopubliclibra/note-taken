@@ -161,7 +161,7 @@ export class AppComponent {
       }
     }[] = [];
 
-    if (this.colorFilter) {
+    if (this.colorFilter !== 'all') {
       updatedNotes = this.filteredNotes;
     } else {
       updatedNotes = this.allNotes;
