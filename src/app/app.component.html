@@ -83,7 +83,7 @@
       </div>
       <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}}">
 
-        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Search your notes"/>
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Search your notes" class="{{searchQuery ? 'active' : ''}}"/>
         <i class="fa fa-search" aria-hidden="true"></i>
 
       </div>
@@ -105,8 +105,8 @@
           </p>
         </li>
         <div class="no-search" *ngIf="searchQuery && filteredNotes.length === 0">
-          <p>Sorry but your search query didn't match any notes</p>
-          <p>Try something else</p>
+          <p>Sorry, but there aren't any notes matching that query</p>
+          <p>Wanna try something else?</p>
         </div>
       </ul>
 
