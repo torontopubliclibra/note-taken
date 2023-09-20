@@ -336,7 +336,7 @@ input {
     width: 250px;
     text-align: center;
 
-    &:disabled {
+    &:disabled, &:focus {
         font-style: italic;
     }
 

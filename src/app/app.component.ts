@@ -161,7 +161,7 @@ export class AppComponent {
       }
     }[] = [];
 
-    if (this.colorFilter) {
+    if (this.colorFilter !== 'all') {
       updatedNotes = this.filteredNotes;
     } else {
       updatedNotes = this.allNotes;
@@ -253,10 +253,6 @@ export class AppComponent {
       this.updatePlaceholder(`storage limit reached`);
 
     // if the note is already in the array, display the duplicate note text
-    } else if (updateNotes.some(note => note.text === this.inputtedText)) {
-      this.updatePlaceholder(`note already exists`);
-    
-    // if the note is blank, display the empty note text
     } else if (this.inputtedText === "" || this.inputtedText == "\n") {
 
       this.inputtedText = ``;
