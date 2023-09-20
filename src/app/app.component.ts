@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { filter } from 'rxjs';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-root',
@@ -194,35 +194,10 @@ export class AppComponent {
 
   }
 
-  // save note function
-  saveNote(event: any) {
+  formatTime = () => {
 
-    // if the key pressed is enter
-    if (event.keyCode == 13) {
-      
-      // prevent the default action
-      event.preventDefault();
-    }
-
-    // get the date and time info and format it
+    // get the time info and format it
     let today = new Date();
-    let day = today.getDate();
-    let monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "June",
-      "July",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
-    let month = monthNames[today.getMonth()];
-    let year = String(today.getFullYear());
     let hour = "";
     let meridiem = "AM";
     if (today.getHours() > 12) {
@@ -233,9 +208,37 @@ export class AppComponent {
     }
     let minute = String(today.getMinutes()).padStart(2, '0');
     
+    // return the time string
+    return `${hour}:${minute}${meridiem}`
+
+  }
+
+  formatDate = () => {
+
+    // get the date and time info and format it
+    let today = new Date();
+    let day = today.getDate();
+    let month = String(today.getMonth() + 1).padStart(2, '0');
+    let year = String(today.getFullYear());
+    
+    // return the date string
+    return `${day}/${month}/${year}`
+
+  }
+
+  // save note function
+  saveNote(event: any) {
+
+    // if the key pressed is enter
+    if (event.keyCode == 13) {
+      
+      // prevent the default action
+      event.preventDefault();
+    }
+    
     // compile the date and time strings
-    let noteTime: string = `${hour}:${minute} ${meridiem}`
-    let noteDate: string = `${month} ${day}, ${year}`
+    let noteTime: string = this.formatTime();
+    let noteDate: string = this.formatDate();
 
     // create a copy of the current notes and placeholder
     let updateNotes: {
@@ -295,8 +298,9 @@ export class AppComponent {
     // set the local storage notes to the stringified array
     localStorage.setItem(`notes`, JSON.stringify(updateNotes));
 
-    // clear out textbox value
-    this.inputtedText = ``;
+    // clear out textbox value and search query
+    this.clearText();
+    this.clearSearch();
 
   }
 
@@ -370,6 +374,46 @@ export class AppComponent {
     if (this.allNotes.length === 0) {
       this.toggleMobileView("notepad");
     }
+
+  }
+
+  exportNotes() {
+
+    let exportedNotes = [``]
+    let title = `note taken export`
+    let query = ``;
+    let filter = ``;
+    let heading = ``;
+    let date = this.formatDate();
+    let filename = ``;
+
+    if (this.searchQuery && this.colorFilter !== 'all') {
+      query =  this.searchQuery;
+      filter =  this.colorFilter;
+      heading = title + ` [ ` + filter + ` | "` + query + `" ] `
+      filename = `note-taken-export--${filter}--${query}--${date}.txt`
+    } else if (this.searchQuery && this.colorFilter === 'all') {
+      query =  this.searchQuery;
+      heading = title + ` [ "` + query + `" ]`
+      filename = `note-taken-export--${query.replace(/\s/g, "_")}--${date}.txt`
+    } else if (!this.searchQuery && this.colorFilter !== 'all'){
+      filter =  this.colorFilter;
+      heading = title + ` [ ` + filter + ` ]`
+      filename = `note-taken-export--${filter}--${date}.txt`
+    } else {
+      heading = title;
+      filename = `note-taken-export--${date}.txt`
+    }
+
+    exportedNotes.push(heading + ` - ` + date);
+
+    this.filteredNotes.forEach((note) => {
+      exportedNotes.push(`\n\n${note.text}\n/ ${note.color} | ${note.meta.date} ${note.meta.time} /`)
+    })
+
+    let FileSaver = require('file-saver');
+    let blob = new Blob(exportedNotes, {type: "text/plain;charset=utf-8"});
+    FileSaver.saveAs(blob, filename);
 
   }
 
