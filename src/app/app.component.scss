@@ -157,19 +157,32 @@ footer {
 
         p {
             width: calc(100% - 17px);
-            padding: 30px;
+            padding: 0 30px;
             display: flex;
             background-color: $color2;
             height: 100%;
             max-height: calc(100% - 100px);
-            border-top: solid $black 3px;
             align-items: center;
             justify-content: center;
+            overflow-y: scroll;
+
+            &:first-of-type {
+                border-top: solid $black 3px;
+                border-bottom: solid $black 3px;
+            }
 
             &:last-of-type {
                 background-color: $color1;
-                height: 50px;
+                height: 75px;
+                min-width: calc(100vw - 10px);
                 font-size: 14px;
+                padding: 30px 0;
+                overflow-y: hidden;
+                margin: 0 auto;
+            }
+
+            .credit {
+                width: calc(100% - 10px);
             }
         }
 
