@@ -160,7 +160,7 @@ export class AppComponent {
 
   formatInput = () => {
 
-    if (this.inputtedText) {
+    if (this.inputtedText.includes(`\n`)) {
       this.inputtedText = this.inputtedText.replaceAll(/\n/g, ' ')
     }
 
