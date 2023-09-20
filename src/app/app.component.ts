@@ -391,18 +391,18 @@ export class AppComponent {
       query =  this.searchQuery;
       filter =  this.colorFilter;
       heading = title + ` [ ` + filter + ` | "` + query + `" ] `
-      filename = `note-taken-export--${filter}--${query}--${date.replace("/", "_")}.txt`
+      filename = `note-taken-export--${filter}--${query}--${date.replaceAll("/", "_")}.txt`
     } else if (this.searchQuery && this.colorFilter === 'all') {
       query =  this.searchQuery;
       heading = title + ` [ "` + query + `" ]`
-      filename = `note-taken-export--${query.replace(/\s/g, "_")}--${date.replace("/", "_")}.txt`
+      filename = `note-taken-export--${query.replaceAll(/\s/g, "_")}--${date.replaceAll("/", "_")}.txt`
     } else if (!this.searchQuery && this.colorFilter !== 'all'){
       filter =  this.colorFilter;
       heading = title + ` [ ` + filter + ` ]`
-      filename = `note-taken-export--${filter}--${date.replace("/", "_")}.txt`
+      filename = `note-taken-export--${filter}--${date.replaceAll("/", "_")}.txt`
     } else {
       heading = title;
-      filename = `note-taken-export--${date.replace("/", "_")}.txt`
+      filename = `note-taken-export--${date.replaceAll("/", "_")}.txt`
     }
 
     exportedNotes.push(heading + ` - ` + date);
