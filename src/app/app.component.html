@@ -33,15 +33,24 @@
 
       <!-- notepad colour options -->
       <div class="notepad-options">
-        <p>Note colour:</p>
-        <select [(ngModel)]="noteColor" title="Select your note colour">
+        <div class="colorButtons" *ngFor="let color of initialNoteColors; index as i">
+          <button class="color-button {{color}} {{noteColor === color ? 'selected' : ''}}" (click)="updateNoteColor(color)">
+          </button>
+        </div>
+        <!-- <button class="color-button green" (click)="updateNoteColor('green')"></button>
+        <button class="color-button blue" (click)="updateNoteColor('blue')"></button>
+        <button class="color-button red" (click)="updateNoteColor('red')"></button>
+        <button class="color-button pink" (click)="updateNoteColor('pink')"></button>
+        <button class="color-button yellow" (click)="updateNoteColor('yellow')"></button>
+        <button class="color-button orange" (click)="updateNoteColor('orange')"></button> -->
+        <!-- <select [(ngModel)]="noteColor" title="Select your note colour">
           <option value="green">green</option>
           <option value="blue">blue</option>
           <option value="red">red</option>
           <option value="pink">pink</option>
           <option value="yellow">yellow</option>
           <option value="orange">orange</option>
-        </select>
+        </select> -->
       </div>
 
       <!-- notepad text area -->
@@ -59,32 +68,12 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}">
+    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}  {{notebookOptions ? 'options-active' : ''}}">
 
-      <!-- notebook sort and filter options -->
-      <div class="notebook-options">
-
-        <div class="timeSort">
-          <p>Sort order:</p>
-          <select [(ngModel)]="timeSort" disabled="{{filteredNotes.length <= 1 ? true : false}}" title="Select the sort order">
-            <option value="newest">newest first</option>
-            <option value="oldest">oldest first</option>
-          </select>
-        </div>
-
-        <div class="colorFilter">
-          <p>Filter by colour:</p>
-          <select [(ngModel)]="colorFilter" (ngModelChange)="filterNotesByColor()" disabled="{{noteColors.length <= 1 ? 'true' : 'false'}}" title="Select the colour filter">
-            <option value="all">all</option>
-            <option *ngFor="let color of noteColors; index as i" value={{color}}>{{color}}</option>
-          </select>
-        </div>
-
-      </div>
       <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}}">
 
         <i class="fa fa-search" aria-hidden="true"></i>
-        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Search your notes" class="{{searchQuery ? 'active' : ''}}"/>
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Start typing to search" class="{{searchQuery ? 'active' : ''}}"/>
 
         <button *ngIf="!searchQuery" class="clear-search" disabled>
           Clear
@@ -92,6 +81,27 @@
         <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-search">
           Clear
         </button>
+
+      </div>
+
+      <!-- notebook sort and filter options -->
+      <div class="notebook-options {{notebookOptions ? 'active' : ''}}">
+
+        <div class="timeSort">
+          <p>Sorted by:</p>
+          <select [(ngModel)]="timeSort" disabled="{{filteredNotes.length <= 1 ? true : false}}" title="Select the sort order">
+            <option value="newest">newest first</option>
+            <option value="oldest">oldest first</option>
+          </select>
+        </div>
+
+        <div class="colorFilter">
+          <p>Filtered by:</p>
+          <select [(ngModel)]="colorFilter" (ngModelChange)="filterNotesByColor()" disabled="{{noteColors.length <= 1 ? 'true' : 'false'}}" title="Select the colour filter">
+            <option value="all">all</option>
+            <option *ngFor="let color of noteColors; index as i" value={{color}}>{{color}}</option>
+          </select>
+        </div>
 
       </div>
 
@@ -143,7 +153,7 @@
       </ul>
 
       <!-- notebook delete all button and note counter -->
-      <div class="notebook-buttons">
+      <div class="notebook-buttons {{notebookOptions ? 'active' : ''}} {{allNotes.length < 3 ? 'search-disabled' : ''}}">
 
         <div class="notes-remaining">
           <p>Notes:</p>
@@ -152,11 +162,28 @@
           </div>
         </div>
 
-        <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="export" title="Open or save your notes as a .txt file">Export notes to text file</button>
-        <button *ngIf="filteredNotes.length <= 1" class="export" disabled>Export notes to text file</button>
+        <button *ngIf="!notebookOptions" class="notebook-toggle" (click)="toggleNotebookOptions()">
+          Show options
+          <i class="fa fa-chevron-up" aria-hidden="true"></i>
+        </button>
+        <button *ngIf="notebookOptions" class="notebook-toggle" (click)="toggleNotebookOptions()">
+          Hide options
+          <i class="fa fa-chevron-down" aria-hidden="true"></i>
+        </button>
 
-        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all' && !searchQuery" (click)="deleteAll()" class="deleteAll" title="Delete all of your notes">Delete all notes</button>
-        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all' || searchQuery" class="deleteAll" disabled>Delete all notes</button>
+        <div class="buttons {{notebookOptions ? 'active' : ''}}">
+          <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="export" title="Open or save your notes as a .txt file">Export notes</button>
+          <button *ngIf="filteredNotes.length <= 1" class="export" disabled>Export notes</button>
+  
+          <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all' && !searchQuery" (click)="deleteAll()" class="deleteAll" title="Delete all of your notes">Delete all notes</button>
+          <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all' || searchQuery" class="deleteAll" disabled>Delete all notes</button>
+        </div>
+
+        <!-- <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="export {{notebookOptions ? 'active' : ''}}" title="Open or save your notes as a .txt file">Export notes</button>
+        <button *ngIf="filteredNotes.length <= 1" class="export" disabled>Export notes</button>
+
+        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all' && !searchQuery" (click)="deleteAll()" class="deleteAll {{notebookOptions ? 'active' : ''}}" title="Delete all of your notes">Delete all notes</button>
+        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all' || searchQuery" class="deleteAll" disabled>Delete all notes</button> -->
       </div>
 
     </div>

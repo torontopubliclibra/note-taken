@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ElementSchemaRegistry } from '@angular/compiler';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,16 @@ export class AppComponent {
   noteColor: string = `green`;
   colorFilter: string = `all`;
   timeSort: string = `newest`;
+  initialNoteColors: string[] = [
+    'green',
+    'blue',
+    'red',
+    'pink',
+    'yellow',
+    'orange'
+  ]
   noteColors: string[] = [];
+  notebookOptions: boolean = false;
   inputtedText: string = ``;
   searchQuery: string = ``;
   view: string = `notepad`;
@@ -78,6 +88,10 @@ export class AppComponent {
 
   }
 
+  toggleNotebookOptions = () => {
+    this.notebookOptions = !this.notebookOptions;
+  }
+
   // update placeholder text function
   updatePlaceholder = (newPlaceholder: string) => {
 
@@ -88,6 +102,14 @@ export class AppComponent {
     setTimeout(() => {
       this.placeholder = `type your note here`;
     }, 1000)
+  }
+
+  updateNoteColor = (color: string) => {
+    
+    if (this.noteColor !== color) {
+      this.noteColor = color;
+    }
+
   }
 
   // update note colours function
@@ -272,6 +294,10 @@ export class AppComponent {
       this.inputtedText = ``;
       this.updatePlaceholder(`note can't be blank`);
 
+    // if the note is already in the array, display the duplicate note text
+    } else if (updateNotes.some(note => (note.text === this.inputtedText) && (note.color === this.noteColor))) {
+      this.updatePlaceholder(`note already exists`);
+
     // otherwise
     } else {
 
@@ -367,10 +393,10 @@ export class AppComponent {
     }
 
     // delete the note from the notes array
-    this.allNotes = this.allNotes.filter(note => note.text !== deletedNote.text);
+    this.allNotes = this.allNotes.filter(note => note !== deletedNote);
 
     // delete the note from the filtered notes array
-    this.filteredNotes = this.filteredNotes.filter(note => note.text !== deletedNote.text);
+    this.filteredNotes = this.filteredNotes.filter(note => note !== deletedNote);
 
     // update the note colours
     this.updateNoteColors();
