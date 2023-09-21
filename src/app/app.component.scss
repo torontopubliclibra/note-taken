@@ -369,7 +369,6 @@ textarea {
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
         width: calc(100% - 40px);
-        margin-top: 68px;
         min-height: 60px;
         font-size: 35px;
         padding: 20px;
@@ -668,9 +667,8 @@ button {
             padding-bottom: 10px;
             gap: 0;
             flex-flow: row wrap;
-            border-top: none;
+            border-top: solid $black 3px;
             justify-content: space-between;
-            min-height: 50px;
             width: 100%;
             order: 3;
             font-size: 16px;
@@ -680,20 +678,24 @@ button {
 
             .buttons {
                 justify-content: space-between;
-                border-top: solid $black 3px;
-                padding-top: 10px;
+                border-bottom: solid $black 3px;
                 padding-left: 20px;
                 padding-right: 20px;
+                padding-bottom: 15px;
             }
 
-            &.search-disabled {
-                border-top: solid $black 3px;
+            &.search-enabled {
+                border-top: none;
             }
 
             &.active {
-                border-bottom: solid $black 3px;
-                height: 190px;
+                height: 380px;
                 width: 100vw;
+                padding-bottom: 0px;
+
+                &.search-enabled {
+                    height: 800px;
+                }
             }
         }
         
