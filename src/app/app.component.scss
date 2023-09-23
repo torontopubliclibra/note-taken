@@ -11,6 +11,7 @@ header, footer {
 }
 
 .alert {
+    z-index: 100;
     text-align: center;
     padding: 25px;
     display: flex;
@@ -21,10 +22,10 @@ header, footer {
     background-color: $color2;
     border: solid $black 5px;
     position: fixed;
-    width: 500px;
+    width: 400px;
     height: 200px;
-    top: calc(100% - (60vh + 103px));
-    right: calc(100% - (50vw + 253px));
+    top: calc(100% - (50vh + 150px));
+    right: calc(100% - (50vw + 230px));
 
     p {
         font-size: 14px;
@@ -501,7 +502,6 @@ button {
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
             background-color: $white;
-            z-index: 20;
             width: 80px;
             height: 35px;
         }
