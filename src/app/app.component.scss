@@ -88,11 +88,12 @@ header {
 footer {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 20px;
 
     width: 75%;
     max-width: 1000px;
-    height: 425px;
+    height: 450px;
 
     background-color: $color1;
     border: solid $black 3px;
@@ -108,9 +109,7 @@ footer {
     @media only screen and (max-width: $tablet) {
 
         width: calc(100% - 99px);
-        max-height: 475px;
-
-        font-size: 17px;
+        max-height: 500px;
 
         a {
             font-style: italic;
@@ -128,8 +127,6 @@ footer {
         width: calc(100% - 43px);
         max-width: 100vw;
         height: calc(100vh - 210px);
-
-        font-size: 17px;
 
         a {
             font-style: italic;
@@ -162,7 +159,7 @@ main {
 .notepad {
     display: flex;
     flex-direction: column;
-    height: 475px;
+    height: 500px;
     min-width: 300px;
     max-width: 340px;
     margin: 0;
@@ -174,7 +171,7 @@ main {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        height: 475px;
+        height: 500px;
         min-width: calc(100% - 6px);
     }
 
@@ -274,13 +271,7 @@ textarea {
     margin: 0;
     width: calc(100% - 30px);
     height: 100%;
-    font-family: $handwriting;
     background: none;
-    text-transform: none;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 2;
-    text-align: center;
     resize: none;
     &:focus-visible {
         outline: none;
@@ -288,7 +279,6 @@ textarea {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-        font-size: 21px;
         max-height: 375px;
     }
     
@@ -302,16 +292,11 @@ textarea {
     }
 }
 
-select, input {
+input {
     margin: 5px 0;
     padding-left: 10px;
     background-color: $white;
     border: solid $black 2px;
-    // border-radius: 30px;
-    font-family: $monospace;
-    text-align: left;
-    text-transform: lowercase;
-    font-size: 14px;
     transition: none;
 
     &:hover {
@@ -332,26 +317,9 @@ select, input {
     // responsive to mobile
     @media only screen and (max-width: $mobile) {
         height: 40px;
-        font-size: 14px;
-        font-style: italic;
         &:hover {
             background-color: $white;
         }
-    }
-}
-
-select {
-    height: 40px;
-    width: 200px;
-    cursor: pointer;
-
-    &:disabled {
-        font-style: italic;
-    }
-
-    // responsive to mobile
-    @media only screen and (max-width: $mobile) {
-        width: 250px;
     }
 }
 
@@ -359,9 +327,7 @@ input {
     height: 36px;
     width: 100%;
     max-width: 640px;
-    text-align: left;
     padding-left: 20px;
-    font-style: italic;
 
     &:hover, &:focus {
         background-color: rgba($white, 0.75);
@@ -370,7 +336,6 @@ input {
 
     // responsive to mobile
     @media only screen and (max-width: $mobile) {
-        text-align: left;
         padding-left: 20px;
     }
 }
@@ -382,9 +347,6 @@ button {
     background-color: $white;
     border: solid $black 2px;
     box-shadow: inset 0px 0px 0.5px 0.5px rgba($black, 0.5);
-    font-family: $monospace;
-    text-transform: lowercase;
-    font-size: 14px;
     cursor: pointer;
     transition: 0.3s;
     &:hover, &:focus {
@@ -457,31 +419,8 @@ button {
     @media only screen and (max-width: $mobile) {
         width: 175px;
         height: 40px;
-        font-size: 14px;
-        font-style: italic;
         &:hover, &:disabled {
             box-shadow: inset 0px 0px 0.5px 0.5px rgba($black, 0.5);
-        }
-    }
-
-    &.delete, &.edit {
-        position: absolute;
-        top: 0;
-        font-size: 11px;
-        line-height: 1.4;
-        height: 25px;
-        margin: 5px;
-
-        &:hover {
-            box-shadow: inset 0px 0px 1px 1px rgba($black, 0.5);
-        }
-
-        // responsive to mobile
-        @media only screen and (max-width: $mobile) {
-            background-color: $white;
-            z-index: 20;
-            width: 35px;
-            height: 35px;
         }
     }
 
@@ -495,26 +434,33 @@ button {
         left: 0;
     }
 
-    &.deleteAll, &.export {
-        width: 200px;
+    &.delete, &.edit {
+        position: absolute;
+        top: 0;
+        height: 25px;
+        margin: 5px;
+
+        &:hover {
+            box-shadow: inset 0px 0px 1px 1px rgba($black, 0.5);
+        }
+
+        // responsive to mobile
+        @media only screen and (max-width: $mobile) {
+            background-color: $white;
+            z-index: 20;
+            width: 85px;
+            height: 35px;
+        }
     }
 
-    // responsive to mobile
-    @media only screen and (max-width: $mobile) {
+    &.deleteAll, &.export {
+        width: 175px;
 
-        &.active {
-            &.deleteAll {
-                display: initial;
-                margin-right: 20px;
-                margin-bottom: 15px;
-            }
-            &.export {
-                display: none;
-                display: initial;
-                margin-left: 20px;
-                margin-bottom: 15px;
-            }
+        // responsive to mobile
+        @media only screen and (max-width: $mobile) {
+            width: calc(50% - 10px);
         }
+
     }
 }
 
@@ -524,7 +470,7 @@ button {
     align-items: center;
     min-width: 500px;
     width: 100%;
-    height: 475px;
+    height: 500px;
     margin: 0;
     background-color: $color1;
     border: solid $black 3px;
@@ -536,7 +482,7 @@ button {
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
 
-        height: 475px;
+        height: 500px;
         &.disabled-2 {
             display: none;
         }
@@ -547,7 +493,7 @@ button {
 
         background-color: $color2;
         min-height: 275px;
-        height: calc(100vh - 199px);
+        height: calc(100vh - 196px);
         padding-bottom: 10px;
         min-width: 100%;
         width: 100%;
@@ -574,9 +520,13 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
-            width: calc(100% - 40px);
-            padding: 10px 20px;
-            font-size: 14px;
+            width: calc(100% - 50px);
+            padding: 10px 25px;
+
+            .color-button {
+                width: 25px;
+                height: 25px;
+            }
         }
     }
 
@@ -593,6 +543,7 @@ button {
         justify-content: flex-start;
         border-bottom: solid $black 2px;
         gap: 10px;
+        padding-bottom: 10px;
 
         p {
             min-width: 65px;
@@ -604,6 +555,11 @@ button {
 
         .clear-search {
             width: 175px;
+
+            // responsive to mobile
+            @media only screen and (max-width: $mobile) {
+                width: 150px;
+            }
         }
 
         // responsive to mobile
@@ -616,15 +572,16 @@ button {
             padding-top: 15px;
             padding-bottom: 0;
 
+            p {
+                min-width: unset;
+            }
         }
     }
 
     .notebook-filter-sort {
         width: 100%;
-        // min-height: 55px;
-        // height: 100%;
-        // max-height: 110px;
-        margin: 0 10px;
+        margin: 10px;
+        margin-bottom: 0;
         flex-flow: row wrap;
         padding: 0;
 
@@ -660,19 +617,19 @@ button {
             display: flex;
             justify-content: flex-end;
             flex-direction: row-reverse;
-            gap: 15px;
+            gap: 20px;
         }
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
             padding: 0;
-            padding-top: 10px;
-            padding-bottom: 10px;
+            padding-top: 15px;
+            padding-bottom: 14px;
             gap: 0;
             flex-flow: row wrap;
-            border-top: solid $black 2px;
+            border-top: solid $black 3px;
             align-items: first baseline;
-            justify-content: space-between;
+            justify-content: center;
             width: 100%;
             order: 3;
             p {
@@ -688,27 +645,36 @@ button {
             }
 
             &.active {
-                min-height: 125px;
+                min-height: 157px;
                 width: 100vw;
                 padding-bottom: 0px;
-
-                &.search-enabled {
-                    height: 450px;
-                }
 
                 .buttons {
                     display: flex;
                     justify-content: center;
                     width: 100vw;
-                    padding-top: 10px;
-                    padding-bottom: 10px;
+                    // padding-top: 15px;
+                    // padding-bottom: 25px;
+                    padding: 15px 25px 25px 25px;
                     border-top: solid $black 3px;
                     background-color: $color2;
+                }
+
+                &.search-enabled {
+                    height: 450px;
+
+                    .buttons {
+                        padding-bottom: 10px;
+                    }
                 }
 
                 .notebook-toggle {
                     margin-bottom: 10px;
                 }
+            }
+
+            &.active-2 {
+                min-height: 130px;
             }
         }
         
@@ -717,15 +683,15 @@ button {
 
             // responsive to mobile
             @media only screen and (max-width: $mobile) {
-                width: 55%;
-                max-width: 180px;
+                width: calc(50% - 35px);
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
                 gap: 10px;
                 margin-bottom: 15px;
-                margin-right: 20px;
+                margin-left: 10px;
+                margin-right: 25px;
             }
         }
 
@@ -737,9 +703,11 @@ button {
 
             // responsive to mobile
             @media only screen and (max-width: $mobile) {
+                width: calc(50% - 35px);
                 margin-top: 5px;
-                margin-bottom: 15px;
-                margin-left: 20px;
+                margin-bottom: 20px;
+                margin-right: 10px;
+                margin-left: 25px;
             }
         }
 
@@ -762,6 +730,31 @@ button {
         gap: 15px;
         justify-content: center;
         align-items: center;
+
+        // responsive to mobile
+        @media only screen and (max-width: $mobile) {
+            width: 100%;
+            gap: 10px;
+            justify-content: space-between;
+            margin-left: 10px;
+        }
+
+    }
+
+    .sort-buttons {
+        // responsive to mobile
+        @media only screen and (max-width: $mobile) {
+            button {
+                width: calc(50% - 10px);
+            }
+        }
+    }
+
+    .filter-buttons {
+        // responsive to mobile
+        @media only screen and (max-width: $mobile) {
+            margin-left: 35px;
+        }
     }
 
     .filter-options {
@@ -771,8 +764,8 @@ button {
             background-color: $color2;
             padding: 0;
             margin: 0;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 25px;
+            padding-right: 25px;
         }
     }
 
@@ -783,15 +776,14 @@ button {
             background-color: $color2;
             padding: 0;
             margin: 0;
+            margin-bottom: 10px;
             padding-top: 5px;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 25px;
+            padding-right: 25px;
         }
     }
 
     .notebook-buttons .counter {
-        font-size: 14px;
-        font-weight: 600;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -828,10 +820,6 @@ button {
 
         .empty-notes {
             max-width: 85%;
-            p {
-                font-style: italic;
-                font-size: 20px;
-            }
         }
 
         // responsive to mobile
@@ -875,10 +863,6 @@ button {
             }
 
             p {
-                font-family: $handwriting;
-                font-size: 15px;
-                font-weight: 400;
-                line-height: 1.5;
                 margin: 20px 10px;
                 overflow-wrap: break-word;
 
@@ -886,14 +870,8 @@ button {
                     text-transform: none;
                 }
 
-                // responsive to tablet
-                @media only screen and (max-width: $tablet) {
-                    font-size: 18px;
-                }
-
                 // responsive to mobile
                 @media only screen and (max-width: $mobile) {
-                    font-size: 22px;
                     margin: 55px 20px 0 20px;
                 }
             }
@@ -904,16 +882,8 @@ button {
                 width: 100%;
                 position: absolute;
                 bottom: 0;
-                font-family: $monospace;
-                font-size: 12px;
-                font-weight: 600;
                 margin: 0;
                 padding: 5px 0;
-
-                // responsive to tablet
-                @media only screen and (max-width: $tablet) {
-                    font-size: 14px;
-                }
 
                 // responsive to mobile
                 @media only screen and (max-width: $mobile) {

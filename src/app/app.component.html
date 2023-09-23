@@ -43,8 +43,10 @@
 
       <!-- notepad save and clear buttons -->
       <div class="notepad-buttons">
-        <button (click)="saveNote($event)" [disabled]="!inputtedText">Save note</button>
-        <button (click)="clearText()" [disabled]="!inputtedText">Clear text</button>
+        <button (click)="saveNote($event)" [disabled]="!inputtedText">Save</button>
+        <button (click)="clearText()" [disabled]="!inputtedText">
+          Clear
+        </button>
       </div>
 
     </div>
@@ -80,7 +82,7 @@
       <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}}">
 
         <p>Search:</p>
-        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Start typing here to see results" class="{{searchQuery ? 'active' : ''}}"/>
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Type to search" class="{{searchQuery ? 'active' : ''}}"/>
         <button class="clear-search" (click)="clearSearch()" [disabled]="!searchQuery">
           Clear
         </button>
@@ -112,7 +114,7 @@
       </ul>
 
       <!-- notebook buttons -->
-      <div class="notebook-buttons {{notebookOptions ? 'active' : ''}} {{allNotes.length > 2 ? 'search-enabled' : ''}}">
+      <div class="notebook-buttons {{notebookOptions ? 'active' : ''}}  {{allNotes.length > 2 && notebookOptions ? 'active-2' : ''}} {{allNotes.length > 2 ? 'search-enabled' : ''}}">
 
         <!-- note counter -->
         <div class="notes-remaining">
@@ -123,15 +125,15 @@
         </div>
 
         <!-- mobile hide/show options button -->
-        <button class="notebook-toggle" (click)="toggleNotebookOptions()">
+        <button *ngIf="allNotes.length > 1" class="notebook-toggle" (click)="toggleNotebookOptions()">
           {{notebookOptions ? 'Hide' : 'Show'}} options
           <i class="{{notebookOptions ? 'fa fa-chevron-down' : 'fa fa-chevron-up'}}" aria-hidden="true"></i>
         </button>
 
         <!-- export and delete all buttons -->
         <div class="buttons {{notebookOptions ? 'active' : ''}}">
-          <button (click)="exportNotes()" class="export" [disabled]="filteredNotes.length <= 1">Export to file</button>
-          <button (click)="deleteAll()" class="deleteAll" [disabled]="disableButton('delete-all')">Delete all notes</button>
+          <button (click)="exportNotes()" class="export" [disabled]="filteredNotes.length <= 1">Export notes</button>
+          <button (click)="deleteAll()" class="deleteAll" [disabled]="disableButton('delete-all')">Delete all</button>
         </div>
       </div>
 
