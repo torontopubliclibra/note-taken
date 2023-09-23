@@ -43,21 +43,21 @@ export class AppComponent {
   // component class constructor
   constructor() {
    
-    // if there are local notes stored, parse the data, save it to the notes array
+    // if there are local notes stored
     if (this.localNotes) {
+
+      // parse the data and save it to the notes array
       this.allNotes = JSON.parse(this.localNotes);
-    }
 
-    // if there are notes saved, set the default note color to the last one used
-    if (this.allNotes.length > 0) {
+      // update the notepad colour to the last used colour
       this.notepadColor = this.allNotes[this.allNotes.length - 1].color;
+        
+      // set the filtered notes to the all notes array
+      this.filteredNotes = this.allNotes;
+
+      // update the note colours
+      this.updateNotebookColors();
     }
-
-    // set the filtered notes to the notes array
-    this.filteredNotes = this.allNotes;
-
-    // update the note colours
-    this.updateNotebookColors();
 
   }
 

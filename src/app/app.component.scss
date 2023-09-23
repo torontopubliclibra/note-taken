@@ -427,10 +427,10 @@ button {
     }
 
     // responsive to mobile
-    @media only screen and (max-width: $mobile) {
+    @media only screen and (max-width: $tablet) {
         width: 175px;
         height: 40px;
-        &:hover, &:disabled {
+        &:hover, &:focus, &:disabled {
             box-shadow: inset 0px 0px 0.5px 0.5px rgba($black, 0.5);
         }
     }
@@ -657,7 +657,6 @@ button {
             }
 
             &.active {
-                min-height: 157px;
                 width: 100vw;
                 padding-bottom: 0px;
 
@@ -780,7 +779,6 @@ button {
             padding: 0;
             margin: 0;
             margin-bottom: 10px;
-            padding-top: 5px;
             padding-left: 25px;
             padding-right: 25px;
         }
@@ -806,6 +804,7 @@ button {
         @media only screen and (max-width: $mobile) {
             background-color: rgba($color1, 0.75);
             height: 36px;
+            width: 100%;
         }
     }
 
