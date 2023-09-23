@@ -1,7 +1,7 @@
 <div class="app">
 
   <!-- header section -->
-  <header>
+  <header *ngIf="optionsVisible === false">
     <h1>Note Taken</h1>
     <h2>Your little local notes app</h2>
   </header>
@@ -13,10 +13,10 @@
     <button *ngIf="(view !== 'info') && (view !== 'notebook')" class="nav-link" (click)="toggleView('notebook')" [disabled]="disableButton('notebook')">
       <p>Notes ({{allNotes.length}})</p>
     </button>
-    <button *ngIf="view === 'notebook'" class="nav-link" (click)="toggleView('notepad')">
+    <button *ngIf="view === 'notebook'" class="nav-link" (click)="toggleOptions(false)" (click)="toggleView('notepad')">
       <p>Add note</p>
     </button>
-    <button *ngIf="view !== 'info'" class="nav-link info" (click)="toggleView('info')">
+    <button *ngIf="view !== 'info'" class="nav-link info" (click)="toggleOptions(false)" (click)="toggleView('info')">
       <p>About the app</p>
     </button>
 
@@ -52,10 +52,10 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}  {{notebookOptions ? 'options-active' : ''}}">
+    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}  {{optionsVisible ? 'options-active' : ''}}">
 
       <!-- notebook sort and filter options -->
-      <div *ngIf="allNotes.length > 2" class="notebook-filter-sort {{notebookOptions ? 'active' : ''}}">
+      <div *ngIf="allNotes.length > 2" class="notebook-filter-sort {{optionsVisible ? 'active' : ''}}">
 
         <!-- sort by oldest or newest -->
         <div class="sort-options">
@@ -114,7 +114,7 @@
       </ul>
 
       <!-- notebook buttons -->
-      <div class="notebook-buttons {{notebookOptions ? 'active' : ''}}  {{allNotes.length > 2 && notebookOptions ? 'active-2' : ''}} {{allNotes.length > 2 ? 'search-enabled' : ''}}">
+      <div class="notebook-buttons {{optionsVisible ? 'active' : ''}}  {{allNotes.length > 2 && optionsVisible ? 'active-2' : ''}} {{allNotes.length > 2 ? 'search-enabled' : ''}}">
 
         <!-- note counter -->
         <div class="notes-remaining">
@@ -125,13 +125,13 @@
         </div>
 
         <!-- mobile hide/show options button -->
-        <button *ngIf="allNotes.length > 1" class="notebook-toggle" (click)="toggleNotebookOptions()">
-          {{notebookOptions ? 'Hide' : 'Show'}} options
-          <i class="{{notebookOptions ? 'fa fa-chevron-down' : 'fa fa-chevron-up'}}" aria-hidden="true"></i>
+        <button *ngIf="allNotes.length > 1" class="notebook-toggle" (click)="toggleOptions(!optionsVisible)">
+          {{optionsVisible ? 'Hide' : 'Show'}} options
+          <i class="{{optionsVisible ? 'fa fa-chevron-down' : 'fa fa-chevron-up'}}" aria-hidden="true"></i>
         </button>
 
         <!-- export and delete all buttons -->
-        <div class="buttons {{notebookOptions ? 'active' : ''}}">
+        <div class="buttons {{optionsVisible ? 'active' : ''}}">
           <button (click)="exportNotes()" class="export" [disabled]="filteredNotes.length <= 1">Export notes</button>
           <button (click)="deleteAll()" class="deleteAll" [disabled]="disableButton('delete-all')">Delete all</button>
         </div>

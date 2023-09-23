@@ -38,7 +38,7 @@ export class AppComponent {
   localNotes: any = localStorage.getItem(`notes`);
   filteredNotes: note[] = [];
   allNotes: note[] = [];
-  notebookOptions: boolean = false;
+  optionsVisible: boolean = false;
 
   // component class constructor
   constructor() {
@@ -108,8 +108,12 @@ export class AppComponent {
 
   }
 
-  toggleNotebookOptions = () => {
-    this.notebookOptions = !this.notebookOptions;
+  toggleOptions = (parameter: boolean) => {
+    if (parameter === true) {
+      this.optionsVisible = true;
+    } else {
+      this.optionsVisible = false;
+    }
   }
 
   // update placeholder text function

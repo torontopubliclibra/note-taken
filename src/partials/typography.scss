@@ -102,11 +102,6 @@ textarea {
         &.metadata {
             font-family: $monospace;
             font-size: 10px;
-
-            // responsive to tablet
-            @media only screen and (max-width: $tablet) {
-                font-size: 11px;
-            }
         }
     }
 }
