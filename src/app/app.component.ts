@@ -1,5 +1,6 @@
-import { ElementSchemaRegistry } from '@angular/compiler';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { note, date, time } from './app.interfaces'
 
 @Component({
   selector: 'app-root',
@@ -12,11 +13,8 @@ export class AppComponent {
 
   // initial variables
   title: string = `note-taken`;
-  placeholder: string = `type your note here`;
-  noteColor: string = `green`;
-  colorFilter: string = `all`;
-  timeSort: string = `newest`;
-  initialNoteColors: string[] = [
+  view: string = `notepad`;
+  allColors: string[] = [
     'green',
     'blue',
     'red',
@@ -24,30 +22,23 @@ export class AppComponent {
     'yellow',
     'orange'
   ]
-  noteColors: string[] = [];
-  notebookOptions: boolean = false;
+  notepadColor: string = this.allColors[0];
+  notebookColors: string[] = [];
+  filter: string = `all`;
+  placeholders: string[] = [
+    `write a note here`,
+    `storage limit reached`,
+    `note can't be blank`,
+    `note already exists`
+  ]
+  placeholder: string = this.placeholders[0];
   inputtedText: string = ``;
   searchQuery: string = ``;
-  view: string = `notepad`;
-
-  // note data objects
+  sorting: string = `newest`;
   localNotes: any = localStorage.getItem(`notes`);
-  allNotes: {
-    text: string,
-    color: string,
-    meta: {
-      time: string,
-      date: string,
-    }
-  }[] = [];
-  filteredNotes: {
-    text: string,
-    color: string,
-    meta: {
-      time: string,
-      date: string,
-    }
-  }[] = [];
+  filteredNotes: note[] = [];
+  allNotes: note[] = [];
+  notebookOptions: boolean = false;
 
   // component class constructor
   constructor() {
@@ -55,26 +46,55 @@ export class AppComponent {
     // if there are local notes stored, parse the data, save it to the notes array
     if (this.localNotes) {
       this.allNotes = JSON.parse(this.localNotes);
-
-    // otherwise, set the notes array to empty
-    } else {
-      this.allNotes = [];
     }
 
     // if there are notes saved, set the default note color to the last one used
     if (this.allNotes.length > 0) {
-      this.noteColor = this.allNotes[this.allNotes.length - 1].color;
+      this.notepadColor = this.allNotes[this.allNotes.length - 1].color;
     }
 
     // set the filtered notes to the notes array
     this.filteredNotes = this.allNotes;
 
     // update the note colours
-    this.updateNoteColors();
+    this.updateNotebookColors();
 
   }
 
-  // toggle the mobile view function
+  // button disabling function
+  disableButton = (button: string) => {
+
+    if ((button === 'notebook') && (this.allNotes.length < 1)) {
+      return true;
+    } else if ((button === 'delete-all') && (this.allNotes.length < 2 || this.filter !== 'all' || this.searchQuery)) {
+      return true;
+    } else if ((button === 'sorting-newest') && (this.filteredNotes.length < 2 || this.sorting === 'newest')) {
+      return true;
+    } else if ((button === 'sorting-oldest') && (this.filteredNotes.length < 2 || this.sorting === 'oldest')) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  // empty notebook text function
+  emptyNotebookText = () => {
+
+    let query = this.searchQuery;
+    let filter = this.filter;
+
+    if (query && filter === 'all') {
+      return `Could not find any notes matching "${query}"`
+    } else if (query && filter !== 'all') {
+      return `Could note find any ${filter} notes matching "${query}"`
+    } else {
+      return `There are no notes currently saved in this browser`
+    }
+
+  }
+
+  // view toggle function
   toggleView = (view: string) => {
 
     // set the mobile view variable to the parameter taken by the function
@@ -93,54 +113,65 @@ export class AppComponent {
   }
 
   // update placeholder text function
-  updatePlaceholder = (newPlaceholder: string) => {
+  updatePlaceholder = (index: number) => {
 
-    // set the placeholder variable to the parameter taken by the function
-    this.placeholder = newPlaceholder;
+    // set placeholder variable to index taken by function
+    this.placeholder = this.placeholders[index];
 
     // after 1 second, set it back
     setTimeout(() => {
-      this.placeholder = `type your note here`;
+      this.placeholder = this.placeholders[0];
     }, 1000)
   }
 
-  updateNoteColor = (color: string) => {
-    
-    if (this.noteColor !== color) {
-      this.noteColor = color;
+  // reverse note order function
+  reverseNoteOrder = (order: string) => {
+
+    if (this.sorting !== order) {
+      this.sorting = order;
+      this.filteredNotes = this.filteredNotes.reverse();
     }
 
   }
 
-  // update note colours function
-  updateNoteColors = () => {
+  // update note colour function
+  updateNotepadColor = (index: number) => {
+    
+    if (this.notepadColor !== this.allColors[index]) {
+      this.notepadColor = this.allColors[index];
+    }
+
+  }
+
+  // update notebook colours function
+  updateNotebookColors = () => {
 
     // establish an empty array for the new note colours
-    let newNoteColors: string[] = [];
+    let newColors: string[] = [];
 
     // for each note in the notes array
     this.allNotes.forEach((note) => {
 
       // if the colour isn't already in the note colours
-      if (!newNoteColors.includes(note.color)) {
+      if (!newColors.includes(note.color)) {
 
         // add it
-        newNoteColors.push(note.color);
+        newColors.push(note.color);
       }
     })
 
     // if the new note colours doesn't include the selected colour filter
-    if (!newNoteColors.includes(this.colorFilter)) {
+    if (!newColors.includes(this.filter)) {
 
       // reset the colour filter
-      this.colorFilter = `all`;
+      this.filter = `all`;
 
       // refilter the colours
       this.filterNotesByColor();
     }
 
     // set the note colours variable to the new note colours
-    this.noteColors = newNoteColors;
+    this.notebookColors = newColors;
 
   }
 
@@ -154,22 +185,13 @@ export class AppComponent {
     } else {
 
       // establish an empty array for the new filtered notes
-      let updatedNotes: {
-        text: string,
-        color: string,
-        meta: {
-          time: string,
-          date: string,
-        }
-      }[] = [];
-
-      updatedNotes = this.allNotes;
+      let updatedNotes: note[] = this.allNotes;
 
       // if the colour filter is anything other than 'all'
-      if (this.colorFilter !== `all`) {
+      if (this.filter !== `all`) {
 
         // filter the notes by the selected colour filter
-        updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
+        updatedNotes = updatedNotes.filter(note => note.color === this.filter);
 
       }
 
@@ -192,27 +214,20 @@ export class AppComponent {
   searchNotes = () => {
 
     // establish an empty array for the new filtered notes
-    let updatedNotes: {
-      text: string,
-      color: string,
-      meta: {
-        time: string,
-        date: string,
-      }
-    }[] = this.allNotes;
+    let updatedNotes: note[] = this.allNotes;
 
-    if (this.searchQuery && this.colorFilter === 'all') {
+    if (this.searchQuery && this.filter === 'all') {
 
       updatedNotes = updatedNotes.filter(note => note.text.toLowerCase().includes(this.searchQuery.toLowerCase()));
 
-    } else if (this.searchQuery && this.colorFilter !== 'all') {
+    } else if (this.searchQuery && this.filter !== 'all') {
 
-      updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
+      updatedNotes = updatedNotes.filter(note => note.color === this.filter);
       updatedNotes = updatedNotes.filter(note => note.text.toLowerCase().includes(this.searchQuery.toLowerCase()));
 
-    } else if (!this.searchQuery && this.colorFilter !== 'all') {
+    } else if (!this.searchQuery && this.filter !== 'all') {
 
-      updatedNotes = updatedNotes.filter(note => note.color === this.colorFilter);
+      updatedNotes = updatedNotes.filter(note => note.color === this.filter);
     }
 
     this.filteredNotes = updatedNotes;
@@ -231,18 +246,14 @@ export class AppComponent {
 
     // get the time info and format it
     let today = new Date();
-    let hour = "";
-    let meridiem = "AM";
-    if (today.getHours() > 12) {
-      hour = String(today.getHours() - 12);
-      meridiem = 'PM'
-    } else {
-      hour = String(today.getHours());
+
+    let time: time = {
+      hour: String(today.getHours()).padStart(2, '0'),
+      min: String(today.getMinutes()).padStart(2, '0'),
     }
-    let minute = String(today.getMinutes()).padStart(2, '0');
     
     // return the time string
-    return `${hour}:${minute}${meridiem}`
+    return time;
 
   }
 
@@ -250,12 +261,15 @@ export class AppComponent {
 
     // get the date and time info and format it
     let today = new Date();
-    let day = today.getDate();
-    let month = String(today.getMonth() + 1).padStart(2, '0');
-    let year = String(today.getFullYear());
+
+    let date: date = {
+      day: String(today.getDate()).padStart(2, '0'),
+      month: String(today.getMonth() + 1).padStart(2, '0'),
+      year: String(today.getFullYear()),
+    }
     
     // return the date string
-    return `${day}/${month}/${year}`
+    return date;
 
   }
 
@@ -270,33 +284,25 @@ export class AppComponent {
     }
     
     // compile the date and time strings
-    let noteTime: string = this.formatTime();
-    let noteDate: string = this.formatDate();
+    let noteTime: time = this.formatTime();
+    let noteDate: date = this.formatDate();
 
     // create a copy of the current notes and placeholder
-    let updateNotes: {
-      text: string,
-      color: string,
-      meta: {
-        time: string,
-        date: string,
-      }
-    }[] = this.allNotes;
-    let initialPlaceholder = this.placeholder;
+    let updateNotes: note[] = this.allNotes;
 
-    // if there are 50 or more notes, display the limit text
+    // if there are 50 or more notes
     if (updateNotes.length >= 50) {
-      this.updatePlaceholder(`storage limit reached`);
+      this.updatePlaceholder(1);
 
-    // if the note is already in the array, display the duplicate note text
+    // if the note is empty
     } else if (this.inputtedText === "" || this.inputtedText == "\n") {
 
       this.inputtedText = ``;
-      this.updatePlaceholder(`note can't be blank`);
+      this.updatePlaceholder(2);
 
-    // if the note is already in the array, display the duplicate note text
-    } else if (updateNotes.some(note => (note.text === this.inputtedText) && (note.color === this.noteColor))) {
-      this.updatePlaceholder(`note already exists`);
+    // if the note is already in the array
+    } else if (updateNotes.some(note => (note.text === this.inputtedText) && (note.color === this.notepadColor))) {
+      this.updatePlaceholder(3);
 
     // otherwise
     } else {
@@ -304,15 +310,22 @@ export class AppComponent {
       // push the inputted text to the updated notes
       updateNotes.push({
           text: this.inputtedText,
-          color: this.noteColor,
+          color: this.notepadColor,
           meta: {
-            time: noteTime,
-            date: noteDate,
+            time: {
+              hour: noteTime.hour,
+              min: noteTime.min,
+            },
+            date: {
+              day: noteDate.day,
+              month: noteDate.month,
+              year: noteDate.year,
+            }
           }
         });
 
       // and reset the placeholder
-      this.placeholder = initialPlaceholder;
+      this.placeholder = this.placeholders[0];
 
     }
 
@@ -320,13 +333,13 @@ export class AppComponent {
     this.allNotes = updateNotes;
 
     // update the note colours
-    this.updateNoteColors();
+    this.updateNotebookColors();
 
     // if the selected colour filter isn't the colour of the note just added
-    if (this.colorFilter !== this.noteColor) {
+    if (this.filter !== this.notepadColor) {
 
       // reset the colour filter
-      this.colorFilter = `all`;
+      this.filter = `all`;
     }
 
     // filter the notes by colour
@@ -345,25 +358,11 @@ export class AppComponent {
   editNote(index: number) {
 
     // save the note to edit as a variable
-    let editedNote = {
-      text: '',
-      color: '',
-      meta: {
-        time: '',
-        date: '',
-      }
-    };
-
-    // save the note to edit as a variable
-    if (this.timeSort === "newest") {
-      editedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
-    } else {
-      editedNote = this.filteredNotes[(index)];
-    }
+    let editedNote: note = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
 
     // set the input text and colour to that of the edited note
     this.inputtedText = editedNote.text;
-    this.noteColor = editedNote.color;
+    this.notepadColor = editedNote.color;
 
     // delete the note
     this.deleteNote(index);
@@ -376,21 +375,8 @@ export class AppComponent {
   // delete note function
   deleteNote(index: number) {
 
-    let deletedNote = {
-      text: '',
-      color: '',
-      meta: {
-        time: '',
-        date: '',
-      }
-    };
-
     // save the note to delete as a variable
-    if (this.timeSort === "newest") {
-      deletedNote = this.filteredNotes[((this.filteredNotes.length - 1) - index)];
-    } else {
-      deletedNote = this.filteredNotes[(index)];
-    }
+    let deletedNote: note = this.filteredNotes[((this.filteredNotes.length - 1) - index)]
 
     // delete the note from the notes array
     this.allNotes = this.allNotes.filter(note => note !== deletedNote);
@@ -399,7 +385,7 @@ export class AppComponent {
     this.filteredNotes = this.filteredNotes.filter(note => note !== deletedNote);
 
     // update the note colours
-    this.updateNoteColors();
+    this.updateNotebookColors();
 
     // set the local storage notes to the stringified array
     localStorage.setItem(`notes`, JSON.stringify(this.allNotes));
@@ -416,39 +402,53 @@ export class AppComponent {
 
   exportNotes() {
 
-    let exportedNotes = [``]
-    let title = `note taken export`
-    let query = ``;
-    let filter = ``;
-    let heading = ``;
-    let date = this.formatDate();
-    let filename = ``;
+    // import filesaver
+    let FileSaver = require('file-saver');
 
-    if (this.searchQuery && this.colorFilter !== 'all') {
-      query =  this.searchQuery;
-      filter =  this.colorFilter;
-      heading = title + ` [ "` + query + `" || ` + filter + ` ] `
-      filename = `note-taken-export--${filter}--${query}--${date.replaceAll("/", "_")}.txt`
-    } else if (this.searchQuery && this.colorFilter === 'all') {
-      query =  this.searchQuery;
-      heading = title + ` [ "` + query + `" ]`
-      filename = `note-taken-export--${query.replaceAll(/\s/g, "_")}--${date.replaceAll("/", "_")}.txt`
-    } else if (!this.searchQuery && this.colorFilter !== 'all'){
-      filter =  this.colorFilter;
-      heading = title + ` [ ` + filter + ` ]`
-      filename = `note-taken-export--${filter}--${date.replaceAll("/", "_")}.txt`
+    // note export variables
+    let exportedNotes: string[] = [];
+    let title: string = `note taken export`
+    let query: string = ``;
+    let filter: string = ``;
+    let date: date = this.formatDate();
+    let time: time = this.formatTime();
+    let heading: string = ``;
+    let filename: string = ``;
+
+    if (this.searchQuery && this.filter !== 'all') {
+
+      query =  this.searchQuery.replaceAll(/\s/g, "_");
+      filter =  this.filter;
+      heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min} // #${filter} // "${query}"`
+      filename = `note-taken-export--#${filter}-$${query}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+
+    } else if (this.searchQuery && this.filter === 'all') {
+
+      query =  this.searchQuery.replaceAll(/\s/g, "_");
+      heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min} // "${query}"`
+      filename = `note-taken-export--$${query}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+
+    } else if (!this.searchQuery && this.filter !== 'all'){
+
+      filter =  this.filter;
+      heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min} // #${filter}`
+      filename = `note-taken-export--#${filter}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+
     } else {
-      heading = title;
-      filename = `note-taken-export--${date.replaceAll("/", "_")}.txt`
-    }
 
-    exportedNotes.push(heading + ` - ` + date);
+      heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min}`
+      filename = `note-taken-export--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+
+    };
+
+    exportedNotes.push(heading);
 
     this.filteredNotes.forEach((note) => {
-      exportedNotes.push(`\n\n${note.text}\n// ${note.meta.date} @ ${note.meta.time} || ${note.color} //`)
-    })
+      exportedNotes.push(
+        `\n\n${note.text}\n[ ${note.meta.date.day}/${note.meta.date.month}/${note.meta.date.year} | ${note.meta.time.hour}:${note.meta.time.min} | #${note.color} ]`
+      );
+    });
 
-    let FileSaver = require('file-saver');
     let blob = new Blob(exportedNotes, {type: "text/plain;charset=utf-8"});
     FileSaver.saveAs(blob, filename);
 
@@ -463,7 +463,7 @@ export class AppComponent {
     this.localNotes = [];
     
     // update the note colours
-    this.updateNoteColors();
+    this.updateNotebookColors();
 
     // clear the local storage note
     localStorage.removeItem(`notes`);

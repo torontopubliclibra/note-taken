@@ -1,22 +1,36 @@
 // partials imports
 @use './src/partials/variables.scss' as *;
-
-// font import
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Caveat&display=swap');
+@use './src/partials/typography.scss' as *;
 
 html {
-    min-height: 100vh;
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 // global body styles
 body {
+    max-height: 1000px;
     background-color: $color2;
     margin: 0 auto;
-    font-family: $sans-serif;
+    font-family: $monospace;
+    font-size: 20px;
+    letter-spacing: 1px;
     text-transform: lowercase;
 
+    .app {
+        width: 100vw;
+    }
+
+    button, input, select {
+        letter-spacing: 1px;
+    }
+
     // responsive to tablet
-    @media only screen and (max-width: $tablet) {
+    @media only screen and (max-width: $mobile) {
         background-color: $color1;
+        max-height: 100vh;
+        overflow-y: hidden;
     }
 }

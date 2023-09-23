@@ -1,0 +1,99 @@
+@use './src/partials/variables.scss' as *;
+
+// font import
+@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap');
+
+p, button, select, input {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+h1, h2 {
+    text-align: left;
+}
+
+h1 {
+    font-family: $handwriting;
+    font-size: 45px;
+    margin: 10px 0 -20px 0;
+    padding: 0 0 0 20px;
+    cursor: default;
+}
+
+h2 {
+    font-size: 16px;
+    font-style: italic;
+    margin: 0;
+    padding: 0 0 20px 10px;
+
+    // responsive to mobile
+    @media only screen and (max-width: $mobile) {
+        padding-bottom: 0;
+    }
+}
+
+footer {
+    text-align: center;
+    line-height: 1.75;
+    
+    p {
+        font-size: 16px;
+        margin: 0 25px;
+        padding: 20px;
+        background-color: $white;
+        border: solid $black 2px;
+        &:last-of-type {
+            background-color: $color2;
+            margin: 0 50px;
+        }
+
+        // responsive to tablet
+        @media only screen and (max-width: $tablet) {
+            font-size: 14px;
+        }
+
+        // responsive to mobile
+        @media only screen and (max-width: $mobile) {
+            font-size: 13px;
+            width: calc(100% - 17px);
+            padding: 0 30px;
+            margin: 0;
+            border: none;
+            display: flex;
+            background-color: $color2;
+            height: 100%;
+            max-height: calc(100% - 75px);
+            align-items: center;
+            justify-content: center;
+            overflow-y: scroll;
+
+            &:first-of-type {
+                border-top: solid $black 3px;
+                border-bottom: solid $black 3px;
+            }
+
+            &:last-of-type {
+                background-color: $color1;
+                max-height: 90px;
+                min-width: calc(100vw - 40px);
+                padding: 20px;
+                padding-bottom: 10px;
+                overflow-y: hidden;
+                margin: 0 auto;
+            }
+        }
+    }
+    a {
+        color: $black;
+        transition: 0.3s;
+        &:hover {
+            font-style: italic;
+        }
+    }
+}
+
+nav {
+    .nav-link p {
+        margin: 0;
+    }
+}
