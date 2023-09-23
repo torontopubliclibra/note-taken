@@ -61,8 +61,8 @@
         <div class="sort-options">
           <p>Sort:</p>
           <div class="sort-buttons">
-            <button class="sorting" (click)="reverseNoteOrder('newest')" [disabled]="disableButton('sorting-newest')">newest first</button>
-            <button class="sorting" (click)="reverseNoteOrder('oldest')" [disabled]="disableButton('sorting-oldest')">oldest first</button>
+            <button class="sorting" (click)="reverseNoteOrder('newest')" [disabled]="disableButton('sorting-newest')">newest</button>
+            <button class="sorting" (click)="reverseNoteOrder('oldest')" [disabled]="disableButton('sorting-oldest')">oldest</button>
           </div>
         </div>
 
@@ -100,7 +100,7 @@
             {{note.text}}
           </p>
           <p class="metadata">
-            [ {{note.meta.date.day}}/{{note.meta.date.month}}/{{note.meta.date.year}} | {{note.meta.time.hour}}:{{note.meta.time.min}} ]
+            [ {{note.meta.time.hour}}:{{note.meta.time.min}} | {{note.meta.date.day}}/{{note.meta.date.month}}/{{note.meta.date.year}} ]
           </p>
         </li>
 

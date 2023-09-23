@@ -429,7 +429,7 @@ button {
     }
     
     &.sorting {
-        width: 150px;
+        width: 115px;
     }
 
     &.color-button {
@@ -780,7 +780,6 @@ button {
         @media only screen and (max-width: $mobile) {
             width: 100%;
             justify-content: flex-end;
-            margin-left: 10px;
         }
 
     }
@@ -798,7 +797,6 @@ button {
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
             flex-direction: row-reverse;
-            margin-left: 15px;
         }
     }
 
