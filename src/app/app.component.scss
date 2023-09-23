@@ -48,7 +48,8 @@ header, footer {
         background-color: $color1;
         height: 150px;
         width: 300px;
-        right: calc(100% - (50vw + 181px))
+        right: calc(100% - (50vw + 180px));
+        top: calc(100% - (60vh + 80px));
     }
 }
 
@@ -771,15 +772,14 @@ button {
     .filter-buttons, .sort-buttons {
         display: flex;
         flex-flow: row wrap;
-        gap: 15px;
+        gap: 20px;
         justify-content: center;
         align-items: center;
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
             width: 100%;
-            gap: 10px;
-            justify-content: space-between;
+            justify-content: flex-end;
             margin-left: 10px;
         }
 
@@ -797,6 +797,7 @@ button {
     .filter-buttons {
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
+            flex-direction: row-reverse;
             margin-left: 15px;
         }
     }
