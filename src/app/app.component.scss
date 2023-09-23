@@ -618,16 +618,21 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
-            background-color: $color2;
-            border-top: solid $black 3px;
-            justify-content: center;
-            order: 2;
-            border-bottom: none;
-            padding-top: 15px;
-            padding-bottom: 0;
+            display: none;
 
-            p {
-                min-width: unset;
+            &.active {
+                display: flex;
+                background-color: $color2;
+                border-top: solid $black 3px;
+                justify-content: center;
+                order: 4;
+                border-bottom: none;
+                padding-top: 15px;
+                padding-bottom: 0;
+    
+                p {
+                    min-width: unset;
+                }
             }
         }
     }
@@ -646,7 +651,7 @@ button {
             border: none;
             flex-flow: row-reverse nowrap;
             justify-content: center;
-            order: 4;
+            order: 5;
             gap: 20px;
             width: 100%;
 
@@ -676,9 +681,7 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
-            background-color: $color2;
             padding: 0;
-            padding-top: 15px;
             padding-bottom: 14px;
             gap: 0;
             flex-flow: row wrap;
@@ -686,13 +689,19 @@ button {
             align-items: first baseline;
             justify-content: center;
             width: 100%;
+            height: 183px;
             order: 3;
             p {
                 margin: 0;
             }
 
             .buttons {
-                display: none;
+                order: -1;
+                display: flex;
+                justify-content: center;
+                width: 100vw;
+                padding: 15px 25px 0px 25px;
+                border-top: solid $black 3px;
             }
 
             &.search-enabled {
@@ -703,18 +712,8 @@ button {
                 width: 100vw;
                 padding-bottom: 0px;
 
-                .buttons {
-                    display: flex;
-                    justify-content: center;
-                    width: 100vw;
-                    padding: 15px 25px;
-                    border-top: solid $black 3px;
-                    border-bottom: solid $black 3px;
-                    background-color: $color1;
-                }
-
                 &.search-enabled {
-                    height: 450px;
+                    height: 255px;
                 }
 
                 .notebook-toggle {
@@ -816,12 +815,13 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
-            background-color: $color2;
-            padding: 0;
-            margin: 0;
-            margin-bottom: 10px;
-            padding-left: 25px;
-            padding-right: 25px;
+            display: none;
+            // background-color: $color2;
+            // padding: 0;
+            // margin: 0;
+            // margin-bottom: 10px;
+            // padding-left: 25px;
+            // padding-right: 25px;
         }
     }
 
@@ -843,7 +843,6 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
-            background-color: rgba($color1, 0.75);
             height: 36px;
             width: 100%;
         }

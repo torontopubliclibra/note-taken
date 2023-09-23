@@ -81,7 +81,7 @@
       </div>
 
       <!-- search through the notes -->
-      <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}}">
+      <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}} {{optionsVisible ? 'active' : ''}}">
 
         <p>Search:</p>
         <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Type to search" class="{{searchQuery ? 'active' : ''}}"/>
