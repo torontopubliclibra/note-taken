@@ -39,6 +39,7 @@ export class AppComponent {
   filteredNotes: note[] = [];
   allNotes: note[] = [];
   optionsVisible: boolean = false;
+  alert: boolean = false;
 
   // component class constructor
   constructor() {
@@ -59,6 +60,14 @@ export class AppComponent {
       this.updateNotebookColors();
     }
 
+  }
+
+  openAlert = (parameter: boolean) => {
+    if (parameter === true) {
+      this.alert = true;
+    } else {
+      this.alert = false;
+    }
   }
 
   // button disabling function
@@ -472,8 +481,14 @@ export class AppComponent {
     // clear the local storage note
     localStorage.removeItem(`notes`);
 
+    // close the alert box
+    this.openAlert(false);
+
     // toggle the mobile view to the notepad
     this.toggleView("notepad");
+
+    // hide the options panel
+    this.optionsVisible = false;
 
   }
 

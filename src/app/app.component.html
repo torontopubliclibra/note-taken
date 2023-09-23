@@ -70,7 +70,7 @@
         <div class="filter-options">
           <p>Filter:</p>
           <div class="filter-buttons">
-            <button *ngFor="let color of notebookColors.reverse(); index as i" class="color-button {{color}}" (click)="this.filter = color" (click)="filterNotesByColor()" [disabled]="filter === color">
+            <button *ngFor="let color of notebookColors; index as i" class="color-button {{color}}" (click)="this.filter = color" (click)="filterNotesByColor()" [disabled]="filter === color">
             </button>
             <button class="all-filter" (click)="this.filter = 'all'" (click)="filterNotesByColor()" [disabled]="filter === 'all'">All</button>
           </div>
@@ -133,10 +133,18 @@
         <!-- export and delete all buttons -->
         <div class="buttons {{optionsVisible ? 'active' : ''}}">
           <button (click)="exportNotes()" class="export" [disabled]="filteredNotes.length <= 1">Export notes</button>
-          <button (click)="deleteAll()" class="deleteAll" [disabled]="disableButton('delete-all')">Delete all</button>
+          <button (click)="openAlert(true)" class="deleteAll" [disabled]="disableButton('delete-all')">Delete all</button>
         </div>
       </div>
 
+    </div>
+
+    <div *ngIf="alert" class="alert">
+      <p>Are you sure you want to delete all your notes?</p>
+      <div class="buttons">
+        <button (click)="openAlert(false)">Go back</button>
+        <button (click)="deleteAll()">Delete all notes</button>
+      </div>
     </div>
     
   </main>
