@@ -7,6 +7,15 @@
 $monospace: 'Martian Mono', monospace;
 $handwriting: 'Homemade Apple', cursive;
 
+.alert {
+    text-align: center;
+}
+
+.notes-list li {
+    list-style-type: none;
+    text-align: center;
+}
+
 p, button, input {
     font-family: $monospace;
     text-transform: lowercase;
@@ -19,6 +28,10 @@ button {
         line-height: 1.4;
     }
 
+    &:hover, &:focus, &:disabled {
+        font-style: italic;
+    }
+
     // responsive to mobile
     @media only screen and (max-width: $mobile) {
         font-style: italic;
@@ -28,6 +41,10 @@ button {
 input {
     text-align: left;
     font-style: italic;
+
+    &:hover, &:focus {
+        font-style: italic;
+    }
 
     // responsive to mobile
     @media only screen and (max-width: $mobile) {
@@ -156,9 +173,6 @@ footer {
     a {
         color: $black;
         transition: 0.3s;
-        &:hover {
-            font-style: italic;
-        }
     }
 }
 

@@ -1,6 +1,7 @@
 <div class="app">
 
-  <div *ngIf="alert.visibility" class="overlay"></div>
+  <!-- overlay over background when alert appears -->
+  <div class="overlay" *ngIf="alert.visibility"></div>
 
   <!-- header section -->
   <header>
@@ -10,21 +11,17 @@
 
   <!-- navigation bar -->
   <nav>
-
-    <!-- mobile only links -->
-    <button *ngIf="(view !== 'info') && (view !== 'notebook')" class="nav-link" (click)="toggleView('notebook')" [disabled]="disableButton('notebook')">
-      <p>Notes ({{allNotes.length}})</p>
+    <button class="nav-link" (click)="toggleView('notebook')"  *ngIf="hideButton('notebook')" [disabled]="disableButton('notebook')">
+      Notes ({{allNotes.length}})
     </button>
-    <button *ngIf="view === 'notebook'" class="nav-link" (click)="toggleOptions(false)" (click)="toggleView('notepad')">
-      <p>Add note</p>
+    <button class="nav-link" (click)="toggleOptions(false)" (click)="toggleView('notepad')" *ngIf="hideButton('notepad')">
+      Add note
     </button>
-    <button *ngIf="view !== 'info'" class="nav-link info" (click)="toggleOptions(false)" (click)="toggleView('info')">
-      <p>About the app</p>
+    <button class="nav-link about" (click)="toggleOptions(false)" (click)="toggleView('about')" *ngIf="hideButton('about')">
+      About the app
     </button>
-
-    <!-- desktop/mobile link -->
-    <button *ngIf="view === 'info'" class="nav-link info back" (click)="toggleView('notepad')">
-      <p>Back to the app</p>
+    <button class="nav-link about back" (click)="toggleView('notepad')" *ngIf="hideButton('back')">
+      Back to the app
     </button>
   </nav>
 
@@ -32,7 +29,7 @@
   <main>
 
     <!-- notepad section -->
-    <div class="notepad" class="{{notepadColor}} {{view === 'notebook' || view === 'info' ? 'disabled' : ''}}">
+    <div class="notepad" class="{{notepadColor}} {{view === 'notebook' || view === 'about' ? 'disabled' : ''}}">
 
       <!-- notepad colour options -->
       <div class="notepad-colours">
@@ -45,7 +42,9 @@
 
       <!-- notepad save and clear buttons -->
       <div class="notepad-buttons">
-        <button (click)="saveNote($event)" [disabled]="!inputtedText">Save</button>
+        <button (click)="saveNote($event)" [disabled]="!inputtedText">
+          Save
+        </button>
         <button (click)="clearText()" [disabled]="!inputtedText">
           Clear
         </button>
@@ -54,10 +53,10 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}">
+    <div class="notebook {{view === 'about' ? 'disabled' : ''}} {{view === 'notepad' || view === 'about' ? 'disabled-2' : ''}}">
 
       <!-- notebook sort and filter options -->
-      <div *ngIf="allNotes.length > 2" class="notebook-filter-sort {{optionsVisible ? 'active' : ''}}">
+      <div class="notebook-filter-sort {{optionsVisible ? 'active' : ''}}">
 
         <!-- sort by oldest or newest -->
         <div class="sort-options">
@@ -69,7 +68,7 @@
         </div>
 
         <!-- mobile show options button -->
-        <button *ngIf="optionsVisible" class="notebook-toggle" (click)="toggleOptions(!optionsVisible)">
+        <button class="notebook-toggle" (click)="toggleOptions(!optionsVisible)" *ngIf="optionsVisible">
           <i class="fa fa-chevron-left" aria-hidden="true"></i>
           Hide filter & search options
         </button>
@@ -103,8 +102,12 @@
 
         <!-- note item -->
         <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}} {{view === 'notebook' ? 'active' : ''}}">
-          <button class="edit" (click)="editNote(i)">Edit</button>
-          <button class="delete" (click)="deleteNote(i)">Delete</button>
+          <button class="edit" (click)="editNote(i)">
+            Edit
+          </button>
+          <button class="delete" (click)="deleteNote(i)">
+            Delete
+          </button>
           <p class="note-text">
             {{note.text}}
           </p>
@@ -135,13 +138,18 @@
 
         <!-- mobile show options button -->
         <button *ngIf="allNotes.length > 1" class="notebook-toggle" (click)="toggleOptions(!optionsVisible)">
-          Filter<i class="fa fa-chevron-right" aria-hidden="true"></i>
+          Filter
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
         </button>
 
         <!-- export and delete all buttons -->
         <div class="buttons {{optionsVisible ? 'active' : ''}}">
-          <button (click)="toggleAlert('export')" class="export" [disabled]="filteredNotes.length <= 1">Export to file</button>
-          <button (click)="toggleAlert('delete')" class="deleteAll" [disabled]="disableButton('delete-all')">Delete notes</button>
+          <button class="export" (click)="toggleAlert('export')" [disabled]="filteredNotes.length <= 1">
+            Export to file
+          </button>
+          <button class="deleteAll" (click)="toggleAlert('delete')" [disabled]="disableButton('delete-all')">
+            Delete notes
+          </button>
         </div>
       </div>
 
@@ -150,16 +158,22 @@
     <div *ngIf="alert.visibility" class="alert">
       <p>{{alert.text}}</p>
       <div class="buttons">
-        <button class="back" (click)="toggleAlert('close')">Close</button>
-        <button class="action" *ngIf="alert.action === 'delete'" (click)="deleteAll()">Permanently delete notes</button>
-        <button class="action export" *ngIf="alert.action === 'export'" (click)="exportNotes()">{{this.export.filename}}</button>
+        <button class="back" (click)="toggleAlert('close')">
+          Close
+        </button>
+        <button class="action" (click)="deleteAll()" *ngIf="alert.action === 'delete'">
+          Permanently delete notes
+        </button>
+        <button class="action export" (click)="exportNotes()" *ngIf="alert.action === 'export'">
+          {{this.export.filename}}
+        </button>
       </div>
     </div>
     
   </main>
 
   <!-- footer section -->
-  <footer class="{{view !== 'info' ? 'disabled' : ''}}">
+  <footer class="{{view !== 'about' ? 'disabled' : ''}}">
     <p>
       Note Taken is a notes app that stores all inputted data locally without sending anything to a database. Unless deleted, your notes remain secure in the browser on your device until you clear the cache. You can save up to 50 text notes of 140 characters each in various colours. They can be sorted, filtered, searched, edited, and deleted, as well as exported to a .txt file.
     </p>

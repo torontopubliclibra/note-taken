@@ -43,3 +43,22 @@ body {
         overflow-x: hidden;
     }
 }
+
+.green {
+    background-color: rgba($color: $green, $alpha: 0.7) !important;
+}
+.blue {
+    background-color: rgba($color: $blue, $alpha: 0.7) !important;
+}
+.red {
+    background-color: rgba($color: $red, $alpha: 0.7) !important;
+}
+.pink {
+    background-color: rgba($color: $pink, $alpha: 0.7) !important;
+}
+.yellow {
+    background-color: rgba($color: $yellow, $alpha: 0.7) !important;
+}
+.orange {
+    background-color: rgba($color: $orange, $alpha: 0.7) !important;
+}

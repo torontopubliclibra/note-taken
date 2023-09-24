@@ -69,11 +69,13 @@ export class AppComponent {
       // parse the data and save it to the notes array
       this.allNotes = JSON.parse(this.localNotes);
 
-      // update the notepad colour to the last used colour
-      this.notepadColor = this.allNotes[this.allNotes.length - 1].color;
-        
-      // set the filtered notes to the all notes array
-      this.filteredNotes = this.allNotes;
+      if (this.allNotes.length > 1) {
+        // update the notepad colour to the last used colour
+        this.notepadColor = this.allNotes[this.allNotes.length - 1].color;
+          
+        // set the filtered notes to the all notes array
+        this.filteredNotes = this.allNotes;
+      }
 
       // update the note colours
       this.updateNotebookColors();
@@ -117,6 +119,23 @@ export class AppComponent {
     }
   }
 
+  // button hiding function
+  hideButton = (button: string) => {
+
+    if ((button === 'notebook') && (this.view !== 'about' && this.view !== 'notebook')) {
+      return true;
+    } else if ((button === 'notepad') && this.view === 'notebook') {
+      return true;
+    } else if ((button === 'about') && this.view !== 'about') {
+      return true;
+    } else if ((button === 'back') && this.view === 'about') {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
   // button disabling function
   disableButton = (button: string) => {
 
@@ -158,8 +177,8 @@ export class AppComponent {
       this.view = `notebook`;
     } else if (view === `notepad`) {
       this.view = `notepad`
-    } else if (view === `info`) {
-      this.view = `info`
+    } else if (view === `about`) {
+      this.view = `about`
     }
 
   }
