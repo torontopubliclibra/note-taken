@@ -1,18 +1,65 @@
 // partials imports
 @use './src/partials/variables.scss' as *;
+@use './src/partials/typography.scss' as *;
 
-// font import
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Caveat&display=swap');
+html {
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 // global body styles
 body {
+    max-height: 1000px;
     background-color: $color2;
     margin: 0 auto;
-    font-family: $sans-serif;
+    font-family: $monospace;
+    letter-spacing: 1px;
     text-transform: lowercase;
 
-    // responsive to tablet
-    @media only screen and (max-width: $tablet) {
-        background-color: $color1;
+    .app {
+        width: 100vw;
+        .overlay {
+            z-index: 90;
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba($black, 0.5)
+        }
     }
+
+    button, input, select {
+        letter-spacing: 1px;
+    }
+
+    // responsive to tablet
+    @media only screen and (max-width: $mobile) {
+        background-color: $color1;
+        max-height: 100vh;
+        max-width: 100vw;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+}
+
+.green {
+    background-color: rgba($color: $green, $alpha: 0.7) !important;
+}
+.blue {
+    background-color: rgba($color: $blue, $alpha: 0.7) !important;
+}
+.red {
+    background-color: rgba($color: $red, $alpha: 0.7) !important;
+}
+.pink {
+    background-color: rgba($color: $pink, $alpha: 0.7) !important;
+}
+.yellow {
+    background-color: rgba($color: $yellow, $alpha: 0.7) !important;
+}
+.orange {
+    background-color: rgba($color: $orange, $alpha: 0.7) !important;
 }

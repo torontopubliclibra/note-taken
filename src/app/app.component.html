@@ -1,27 +1,27 @@
 <div class="app">
 
+  <!-- overlay over background when alert appears -->
+  <div class="overlay" *ngIf="alert.visibility"></div>
+
   <!-- header section -->
-  <header>
+  <header *ngIf="!optionsVisible">
     <h1>Note Taken</h1>
-    <h2>Your friendly little private notes app</h2>
+    <h2>Your little local notes app</h2>
   </header>
 
-  <!-- mobile nav -->
+  <!-- navigation bar -->
   <nav>
-    <button *ngIf="allNotes.length === 0 && view !== 'info'" class="mobile-nav-link" disabled>
-      <p>Notes (0)</p>
+    <button class="nav-link" (click)="toggleView('notebook')"  *ngIf="hideButton('notebook')" [disabled]="disableButton('notebook')">
+      Notes ({{allNotes.length}})
     </button>
-    <button  *ngIf="allNotes.length > 0 && view === 'notepad'" class="mobile-nav-link" (click)="toggleView('notebook')" title="View your notes">
-      <p>Notes ({{allNotes.length}})</p>
+    <button class="nav-link" (click)="toggleOptions(false)" (click)="toggleView('notepad')" *ngIf="hideButton('notepad')">
+      Add note
     </button>
-    <button  *ngIf="allNotes.length > 0 && view === 'notebook'" class="mobile-nav-link" (click)="toggleView('notepad')" title="Add a new note">
-      <p>Add note</p>
+    <button class="nav-link about" (click)="toggleOptions(false)" (click)="toggleView('about')" *ngIf="hideButton('about')">
+      About the app
     </button>
-    <button *ngIf="view !== 'info'" class="mobile-nav-link info" (click)="toggleView('info')" title="Info about the application">
-      <p>About</p>
-    </button>
-    <button *ngIf="view === 'info'" class="mobile-nav-link info back" (click)="toggleView('notepad')" title="Go back to the application">
-      <p>Back to app</p>
+    <button class="nav-link about back" (click)="toggleView('notepad')" *ngIf="hideButton('back')">
+      Back to the app
     </button>
   </nav>
 
@@ -29,19 +29,12 @@
   <main>
 
     <!-- notepad section -->
-    <div class="notepad" class="{{noteColor}} {{view === 'notebook' || view === 'info' ? 'disabled' : ''}}">
+    <div class="notepad" class="{{notepadColor}} {{view === 'notebook' || view === 'about' ? 'disabled' : ''}}">
 
       <!-- notepad colour options -->
-      <div class="notepad-options">
-        <p>Note colour:</p>
-        <select [(ngModel)]="noteColor" title="Select your note colour">
-          <option value="green">green</option>
-          <option value="blue">blue</option>
-          <option value="red">red</option>
-          <option value="pink">pink</option>
-          <option value="yellow">yellow</option>
-          <option value="orange">orange</option>
-        </select>
+      <div class="notepad-colours">
+        <button *ngFor="let color of allColors; index as i" class="color-button {{color}}" (click)="updateNotepadColor(i)" [disabled]="notepadColor === allColors[i]">
+        </button>
       </div>
 
       <!-- notepad text area -->
@@ -49,102 +42,93 @@
 
       <!-- notepad save and clear buttons -->
       <div class="notepad-buttons">
-        <button *ngIf="inputtedText" (click)="saveNote($event)" title="Save your note to storage">Save note</button>
-        <button *ngIf="!inputtedText" disabled>Save note</button>
-
-        <button *ngIf="inputtedText" (click)="clearText()" title="Clear the textbox">Clear text</button>
-        <button *ngIf="!inputtedText" disabled>Clear text</button>
+        <button (click)="saveNote($event)" [disabled]="!inputtedText">
+          Save
+        </button>
+        <button (click)="clearText()" [disabled]="!inputtedText">
+          Clear
+        </button>
       </div>
 
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}">
+    <div class="notebook {{view === 'about' ? 'disabled' : ''}} {{view === 'notepad' || view === 'about' ? 'disabled-2' : ''}} {{optionsVisible ? 'no-header' : ''}}">
 
       <!-- notebook sort and filter options -->
-      <div class="notebook-options">
+      <div class="notebook-filter-sort {{optionsVisible ? 'active' : ''}}">
 
-        <div class="timeSort">
-          <p>Sort order:</p>
-          <select [(ngModel)]="timeSort" disabled="{{filteredNotes.length <= 1 ? true : false}}" title="Select the sort order">
-            <option value="newest">newest first</option>
-            <option value="oldest">oldest first</option>
-          </select>
+        <!-- sort by oldest or newest -->
+        <div class="sort-options">
+          <p>Sort:</p>
+          <div class="sort-buttons">
+            <button class="sorting" (click)="reverseNoteOrder('newest')" [disabled]="disableButton('sorting-newest')">newest</button>
+            <button class="sorting" (click)="reverseNoteOrder('oldest')" [disabled]="disableButton('sorting-oldest')">oldest</button>
+          </div>
         </div>
 
-        <div class="colorFilter">
-          <p>Filter by colour:</p>
-          <select [(ngModel)]="colorFilter" (ngModelChange)="filterNotesByColor()" disabled="{{noteColors.length <= 1 ? 'true' : 'false'}}" title="Select the colour filter">
-            <option value="all">all</option>
-            <option *ngFor="let color of noteColors; index as i" value={{color}}>{{color}}</option>
-          </select>
+        <!-- mobile show options button -->
+        <button class="notebook-toggle" (click)="toggleOptions(!optionsVisible)" *ngIf="optionsVisible">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          Hide filter & search options
+        </button>
+
+        <!-- filter by colour -->
+        <div class="filter-options" *ngIf="notebookColors.length > 1">
+
+          <p>Filter:</p>
+          <div class="filter-buttons">
+            <button *ngFor="let color of notebookColors; index as i" class="color-button {{color}}" (click)="this.filter = color" (click)="filterNotesByColor()" [disabled]="filter === color">
+            </button>
+            <button class="all-filter" (click)="this.filter = 'all'" (click)="filterNotesByColor()" [disabled]="filter === 'all'">All</button>
+          </div>
         </div>
 
       </div>
-      <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}}">
 
-        <i class="fa fa-search" aria-hidden="true"></i>
-        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Search your notes" class="{{searchQuery ? 'active' : ''}}"/>
+      <!-- search through the notes -->
+      <div class="notebook-search {{allNotes.length < 3 ? 'disabled' : ''}} {{optionsVisible ? 'active' : ''}}">
 
-        <button *ngIf="!searchQuery" class="clear-search" disabled>
-          Clear
-        </button>
-        <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-search">
+        <p>Search:</p>
+        <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="searchNotes()" placeholder="Type to search" class="{{searchQuery ? 'active' : ''}}"/>
+        <button class="clear-search" (click)="clearSearch()" [disabled]="!searchQuery">
           Clear
         </button>
 
       </div>
 
-      <!-- notebook list in descending order -->
-      <ul *ngIf="timeSort === 'newest'" class="notes-list">
+      <!-- notebook list -->
+      <ul class="notes-list">
+
+        <!-- note item -->
         <li *ngFor="let note of filteredNotes.slice().reverse(); index as i" class="{{note.color}} {{view === 'notebook' ? 'active' : ''}}">
-          <button class="edit" (click)="editNote(i)" title="Edit note">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
+          <button class="edit" (click)="editNote(i)">
+            Edit
           </button>
-          <button class="delete" (click)="deleteNote(i)" title="Delete note">
-            <i class="fa fa-times" aria-hidden="true"></i>
+          <button class="delete" (click)="deleteNote(i)">
+            Delete
           </button>
           <p class="note-text">
             {{note.text}}
           </p>
           <p class="metadata">
-            {{note.meta.date}} @ {{note.meta.time}}
+            [ {{note.meta.time.hour}}:{{note.meta.time.min}} | {{note.meta.date.day}}/{{note.meta.date.month}}/{{note.meta.date.year}} ]
           </p>
         </li>
+
+        <!-- empty notebook text -->
         <div class="empty-notes" *ngIf="filteredNotes.length === 0 || allNotes.length === 0">
-          <span *ngIf="allNotes.length === 0" class="query">
-            <p>No notes currently in storage</p>
-          </span>
-          <span *ngIf="searchQuery && colorFilter === 'all'" class="query">
-            <p>Sorry, but there aren't any notes matching "{{searchQuery}}"</p>
-            <p>Wanna try something else?</p>
-          </span>
-          <span *ngIf="searchQuery && colorFilter !== 'all'" class="query-color">
-            <p>Sorry, but there aren't any {{colorFilter}} notes matching "{{searchQuery}}"</p>
-            <p>Wanna try something else?</p>
+          <span class="query">
+            <p>{{this.emptyNotebookText()}}</p>
           </span>
         </div>
+
       </ul>
 
-      <!-- notebook list in ascending order -->
-      <ul *ngIf="timeSort === 'oldest'" class="notes-list">
-        <li *ngFor="let note of filteredNotes.slice(); index as i" class="{{note.color}}">
-          <button class="edit" (click)="editNote(i)" title="Edit note">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-          </button>
-          <button class="delete" (click)="deleteNote(i)" title="Delete note">
-            <i class="fa fa-times" aria-hidden="true"></i>
-          </button>
-          <p>{{note.text}}</p>
-          <p class="metadata">
-            {{note.meta.date}} @ {{note.meta.time}}
-          </p>
-        </li>
-      </ul>
+      <!-- notebook buttons -->
+      <div class="notebook-buttons {{optionsVisible ? '' : 'active'}}  {{allNotes.length > 2 && optionsVisible ? 'active-2' : ''}} {{allNotes.length > 2 ? 'search-enabled' : ''}}">
 
-      <!-- notebook delete all button and note counter -->
-      <div class="notebook-buttons">
-
+        <!-- note counter -->
         <div class="notes-remaining">
           <p>Notes:</p>
           <div class="counter">
@@ -152,26 +136,50 @@
           </div>
         </div>
 
-        <button *ngIf="filteredNotes.length > 1" (click)="exportNotes()" class="export" title="Open or save your notes as a .txt file">Export notes to text file</button>
-        <button *ngIf="filteredNotes.length <= 1" class="export" disabled>Export notes to text file</button>
+        <!-- mobile show options button -->
+        <button *ngIf="allNotes.length > 1" class="notebook-toggle" (click)="toggleOptions(!optionsVisible)">
+          Filter
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </button>
 
-        <button *ngIf="filteredNotes.length > 0 && colorFilter === 'all' && !searchQuery" (click)="deleteAll()" class="deleteAll" title="Delete all of your notes">Delete all notes</button>
-        <button *ngIf="filteredNotes.length <= 0 || colorFilter !== 'all' || searchQuery" class="deleteAll" disabled>Delete all notes</button>
+        <!-- export and delete all buttons -->
+        <div class="buttons {{optionsVisible ? 'active' : ''}}">
+          <button class="export" (click)="toggleAlert('export')" [disabled]="filteredNotes.length <= 1">
+            Export to file
+          </button>
+          <button class="deleteAll" (click)="toggleAlert('delete')" [disabled]="disableButton('delete-all')">
+            Delete notes
+          </button>
+        </div>
       </div>
 
+    </div>
+
+    <div *ngIf="alert.visibility" class="alert">
+      <p>{{alert.text}}</p>
+      <div class="buttons">
+        <button class="back" (click)="toggleAlert('close')">
+          Close
+        </button>
+        <button class="action" (click)="deleteAll()" *ngIf="alert.action === 'delete'">
+          Permanently delete notes
+        </button>
+        <button class="action export" (click)="exportNotes()" *ngIf="alert.action === 'export'">
+          {{this.export.filename}}
+        </button>
+      </div>
     </div>
     
   </main>
 
   <!-- footer section -->
-  <footer class="{{view !== 'info' ? 'disabled' : ''}}">
+  <footer class="{{view !== 'about' ? 'disabled' : ''}}">
     <p>
-      Note Taken is an online notes app that stores all inputted data client-side without ever being sent to a database. Unless deleted, your notes remain secure in the browser on your device until you clear the cache. You can save up to 50 text notes of 140 characters each in various colours. They can be sorted by their time stamps, filtered by their colours, searched by an inputted query, edited, and deleted, as well as exported to a .txt file for offline access.
+      Note Taken is a notes app that stores all inputted data locally without sending anything to a database. Unless deleted, your notes remain secure in the browser on your device until you clear the cache. You can save up to 50 text notes of 140 characters each in various colours. They can be sorted, filtered, searched, edited, and deleted, as well as exported to a .txt file.
     </p>
-    <hr/>
     <p>
       <span class="credit">
-        The site was built by <a href="https://danateagle.com">Dana Teagle</a> using Angular, Typescript, and SCSS. See the source code <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
+        The site was built by <a href="https://danateagle.com">Dana Teagle</a> using Angular, Typescript, SCSS, and <a href="https://www.npmjs.com/package/file-saver">FileSaver.js</a>. See the source code <a href="https://github.com/torontopubliclibra/note-taken">here</a>.
       </span>
     </p>
   </footer>
