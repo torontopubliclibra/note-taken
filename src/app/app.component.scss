@@ -214,6 +214,7 @@ main {
         width: 100%;
         max-width: 100%;
         margin: 0;
+        min-height: 100vh;
 
         flex-direction: column;
     }
@@ -291,6 +292,10 @@ main {
             gap: 0;
             order: 2;
             bottom: 70px;
+
+            position: absolute;
+            bottom: 78px;
+            z-index: 50;
         }
     }
     .notepad-buttons {
@@ -314,11 +319,15 @@ main {
 
             width: calc(100% - 20px);
             padding: 10px;
-            padding-bottom: 3px;
+            padding-bottom: 23px;
 
             justify-content: center;
             gap: 20px;
             order: 3;
+
+            position: absolute;
+            bottom: -15px;
+            z-index: 50;
         }
     }
 }
@@ -666,6 +675,10 @@ button {
                 display: flex;
                 justify-content: center;
                 order: 5;
+
+                position: absolute;
+                bottom: 0;
+                z-index: 50;
     
                 p {
                     min-width: unset;
@@ -687,7 +700,7 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
-            background: none;
+            background-color: $color2;
             border: none;
 
             width: 100%;
@@ -708,6 +721,10 @@ button {
                 justify-content: center;
                 order: 5;
                 gap: 20px;
+
+                position: absolute;
+                bottom: 77px;
+                z-index: 50;
             }
 
         }
@@ -742,7 +759,7 @@ button {
 
                 width: 100%;
                 padding: 0;
-                padding-bottom: 17px;
+                padding-bottom: 22px;
 
                 display: flex;
                 flex-flow: row wrap;
