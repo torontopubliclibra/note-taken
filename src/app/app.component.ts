@@ -88,7 +88,7 @@ export class AppComponent {
     if (action === 'delete') {
       this.alert.action = action;
 
-      if (this.filter === 'all') {
+      if (this.filter === 'all' && !this.searchQuery) {
         this.alert.text = `Are you sure you want to delete all ${this.allNotes.length} of your notes?`
 
       } else if (this.filter !== 'all' && !this.searchQuery) {
