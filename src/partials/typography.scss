@@ -150,7 +150,6 @@ footer {
             display: flex;
             background-color: $color2;
             height: 100%;
-            max-height: calc(100% - 75px);
             align-items: center;
             justify-content: center;
             overflow-y: scroll;
@@ -166,7 +165,6 @@ footer {
                 max-height: 75px;
                 min-width: calc(100vw - 50px);
                 padding: 25px;
-                padding-bottom: 20px;
                 overflow-y: hidden;
                 margin: 0 auto;
             }

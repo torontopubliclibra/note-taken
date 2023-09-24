@@ -8,7 +8,7 @@ html {
     align-items: center;
     justify-content: center;
 
-    // responsive to tablet
+    // responsive to mobile
     @media only screen and (max-width: $mobile) {
         min-height: 100vh;
         display: block;
@@ -24,6 +24,11 @@ body {
     font-family: $monospace;
     letter-spacing: 1px;
     text-transform: lowercase;
+
+    // responsive to mobile
+    @media only screen and (max-width: $mobile) {
+        min-height: 100vh;
+    }
 
     .app {
         .overlay {
