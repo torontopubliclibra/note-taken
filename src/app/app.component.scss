@@ -665,7 +665,7 @@ button {
     }
 
     .notebook-buttons {
-        background-color: $color2;
+
         min-height: 60px;
         border-top: solid $black 2px;
         flex-direction: row-reverse;
@@ -689,6 +689,7 @@ button {
                 padding: 0;
                 gap: 0;
                 flex-flow: row wrap;
+                background-color: $color2;
                 border-top: solid $black 3px;
                 align-items: first baseline;
                 justify-content: center;
