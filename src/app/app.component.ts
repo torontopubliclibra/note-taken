@@ -86,7 +86,7 @@ export class AppComponent {
 
   @HostListener('window:resize', ['$event'])
   getScreenSize() {
-    this.vh = window.innerHeight * 0.01;
+    this.vh = window.innerHeight;
     document.documentElement.style.setProperty('--vh', `${this.vh}px`);
   }
 
