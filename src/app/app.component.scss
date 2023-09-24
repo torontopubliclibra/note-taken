@@ -575,7 +575,7 @@ button {
         border-bottom: none;
         
         min-height: 275px;
-        height: calc(100% - 191px);
+        height: 100%;
         min-width: 100%;
         width: 100%;
         max-width: 100%;
@@ -760,7 +760,6 @@ button {
 
                 width: 100%;
                 padding: 0;
-                padding-bottom: 22px;
 
                 display: flex;
                 flex-flow: row wrap;
@@ -769,8 +768,6 @@ button {
                 gap: 0;
                 order: 3;
 
-                position: absolute;
-                bottom: 0;
                 z-index: 50;
 
                 .buttons {
@@ -937,7 +934,8 @@ button {
         @media only screen and (max-width: $mobile) {
             min-width: 100%;
             max-width: 100%;
-            min-height: 455px;
+            max-height: 405px;
+            height: 315px;
             padding: 0;
 
             align-items: flex-start;
@@ -974,7 +972,7 @@ button {
                     margin-top: 15px;
                 }
                 &:last-of-type {
-                    margin-bottom: 25px;
+                    margin-bottom: 15px;
                 }
             }
 

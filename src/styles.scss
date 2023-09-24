@@ -24,6 +24,7 @@ body {
     font-family: $monospace;
     letter-spacing: 1px;
     text-transform: lowercase;
+    overflow-y: hidden;
 
     .app {
         overflow-y: hidden;
@@ -48,7 +49,7 @@ body {
 
         .app {
             height: 100vh;
-            max-height: 700px;
+            max-height: 750px;
             overflow-x: hidden;
             overflow-y: hidden;
             position: relative;
