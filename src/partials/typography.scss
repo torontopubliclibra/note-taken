@@ -144,26 +144,28 @@ footer {
         @media only screen and (max-width: $mobile) {
             font-size: 13px;
             width: calc(100% - 17px);
-            padding: 0 30px;
+            padding: 60px 30px;
             margin: 0;
             border: none;
             display: flex;
             background-color: $white;
+            border-top: solid $black 3px;
             height: 100%;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             overflow-y: scroll;
 
             &:first-of-type {
-                border-top: solid $black 3px;
-                border-bottom: solid $black 3px;
+                min-height: 105px;
             }
 
             &:last-of-type {
+                position: absolute;
+                bottom: 0;
                 font-size: 11.5px;
                 background-color: $color2;
                 max-height: 75px;
-                min-width: calc(100vw - 50px);
+                width: 90vw;
                 padding: 25px;
                 overflow-y: hidden;
                 margin: 0 auto;
