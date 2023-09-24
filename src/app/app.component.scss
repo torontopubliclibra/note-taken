@@ -287,7 +287,7 @@ main {
             border: none;
             justify-content: center;
             padding: 10px;
-            padding-bottom: 0;
+            padding-bottom: 3px;
             gap: 20px;
             order: 3;
         }
@@ -490,6 +490,7 @@ button {
     }
 
     &.delete, &.edit {
+        z-index: 20;
         position: absolute;
         top: 0;
         height: 25px;
@@ -556,16 +557,16 @@ button {
         border-left: none;
         border-bottom: none;
         margin: 0 auto;
-
-        &.options-active {
-            min-height: calc(100vh - 70px);
-            background-color: $color2;
-        }
     }
 
     .notebook-filter-sort, .notebook-search, .notebook-buttons {
         width: calc(100% - 40px);
         padding: 5px 20px;
+
+        .notebook-toggle {
+            width: calc(100% - 50px);
+            margin: 10px 25px 15px 25px;
+        }
 
         .color-button {
             width: 20px;
@@ -597,7 +598,7 @@ button {
         justify-content: flex-start;
         border-bottom: solid $black 2px;
         gap: 10px;
-        padding-bottom: 10px;
+        padding-bottom: 6px;
 
         p {
             min-width: 65px;
@@ -623,12 +624,10 @@ button {
             &.active {
                 display: flex;
                 background-color: $color2;
-                border-top: solid $black 3px;
                 justify-content: center;
-                order: 4;
+                order: 5;
                 border-bottom: none;
-                padding-top: 15px;
-                padding-bottom: 0;
+                padding: 0px 25px 27px 25px;
     
                 p {
                     min-width: unset;
@@ -654,17 +653,19 @@ button {
             order: 5;
             gap: 20px;
             width: 100%;
+            margin: 0;
 
             &.active {
                 display: initial;
-                margin-bottom: 20px;
+                border-top: solid $black 3px;
+                padding-top: 13px;
             }
 
         }
     }
 
     .notebook-buttons {
-        background-color: $color1;
+        background-color: $color2;
         min-height: 60px;
         border-top: solid $black 2px;
         flex-direction: row-reverse;
@@ -681,39 +682,29 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
-            padding: 0;
-            padding-bottom: 14px;
-            gap: 0;
-            flex-flow: row wrap;
-            border-top: solid $black 3px;
-            align-items: first baseline;
-            justify-content: center;
-            width: 100%;
-            height: 183px;
-            order: 3;
-            p {
-                margin: 0;
-            }
-
-            .buttons {
-                order: -1;
-                display: flex;
-                justify-content: center;
-                width: 100vw;
-                padding: 15px 25px 0px 25px;
-                border-top: solid $black 3px;
-            }
-
-            &.search-enabled {
-                border-top: none;
-            }
+            display: none;
 
             &.active {
-                width: 100vw;
-                padding-bottom: 0px;
+                display: flex;
+                padding: 0;
+                gap: 0;
+                flex-flow: row wrap;
+                border-top: solid $black 3px;
+                align-items: first baseline;
+                justify-content: center;
+                width: 100%;
+                height: 233px;
+                order: 3;
 
-                &.search-enabled {
-                    height: 255px;
+                .buttons {
+                    display: flex;
+                    justify-content: center;
+                    width: 100vw;
+                    padding: 0px 25px 20px 25px;
+                }
+
+                p {
+                    margin: 0;
                 }
 
                 .notebook-toggle {
@@ -748,8 +739,8 @@ button {
             // responsive to mobile
             @media only screen and (max-width: $mobile) {
                 width: calc(50% - 35px);
-                margin-top: 5px;
-                margin-bottom: 20px;
+                margin-top: 20px;
+                margin-bottom: 0;
                 margin-right: 10px;
                 margin-left: 25px;
             }
@@ -808,6 +799,7 @@ button {
             margin: 0;
             padding-left: 25px;
             padding-right: 25px;
+            margin-bottom: 10px;
         }
     }
 
@@ -843,6 +835,7 @@ button {
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
+            background-color: rgba($color1, 0.5);
             height: 36px;
             width: 100%;
         }

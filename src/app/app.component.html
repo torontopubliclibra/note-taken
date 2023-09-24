@@ -3,7 +3,7 @@
   <div *ngIf="alert" class="overlay"></div>
 
   <!-- header section -->
-  <header *ngIf="optionsVisible === false">
+  <header>
     <h1>Note Taken</h1>
     <h2>Your little local notes app</h2>
   </header>
@@ -54,7 +54,7 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}  {{optionsVisible ? 'options-active' : ''}}">
+    <div class="notebook {{view === 'info' ? 'disabled' : ''}} {{view === 'notepad' || view === 'info' ? 'disabled-2' : ''}}">
 
       <!-- notebook sort and filter options -->
       <div *ngIf="allNotes.length > 2" class="notebook-filter-sort {{optionsVisible ? 'active' : ''}}">
@@ -68,8 +68,15 @@
           </div>
         </div>
 
+        <!-- mobile show options button -->
+        <button *ngIf="optionsVisible" class="notebook-toggle" (click)="toggleOptions(!optionsVisible)">
+          <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          Hide sort/filter options
+        </button>
+
         <!-- filter by colour -->
-        <div class="filter-options">
+        <div class="filter-options" *ngIf="notebookColors.length > 1">
+
           <p>Filter:</p>
           <div class="filter-buttons">
             <button *ngFor="let color of notebookColors; index as i" class="color-button {{color}}" (click)="this.filter = color" (click)="filterNotesByColor()" [disabled]="filter === color">
@@ -116,7 +123,7 @@
       </ul>
 
       <!-- notebook buttons -->
-      <div class="notebook-buttons {{optionsVisible ? 'active' : ''}}  {{allNotes.length > 2 && optionsVisible ? 'active-2' : ''}} {{allNotes.length > 2 ? 'search-enabled' : ''}}">
+      <div class="notebook-buttons {{optionsVisible ? '' : 'active'}}  {{allNotes.length > 2 && optionsVisible ? 'active-2' : ''}} {{allNotes.length > 2 ? 'search-enabled' : ''}}">
 
         <!-- note counter -->
         <div class="notes-remaining">
@@ -126,10 +133,9 @@
           </div>
         </div>
 
-        <!-- mobile hide/show options button -->
+        <!-- mobile show options button -->
         <button *ngIf="allNotes.length > 1" class="notebook-toggle" (click)="toggleOptions(!optionsVisible)">
-          {{optionsVisible ? 'Hide' : 'Show'}} options
-          <i class="{{optionsVisible ? 'fa fa-chevron-down' : 'fa fa-chevron-up'}}" aria-hidden="true"></i>
+          Search/filter<i class="fa fa-chevron-right" aria-hidden="true"></i>
         </button>
 
         <!-- export and delete all buttons -->
