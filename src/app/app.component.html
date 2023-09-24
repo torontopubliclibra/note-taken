@@ -1,4 +1,4 @@
-<div class="app">
+<div class="app {{view === 'notepad' ? 'scroll-y' : ''}}">
 
   <!-- overlay over background when alert appears -->
   <div class="overlay" *ngIf="alert.visibility"></div>
