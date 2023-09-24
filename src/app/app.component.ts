@@ -109,7 +109,7 @@ export class AppComponent {
 
       this.prepareExport();
 
-      this.alert.text = `Click below to download`;
+      this.alert.text = `Click button to download`;
 
       this.alert.visibility = true;
 

@@ -23,7 +23,6 @@
     p {
         line-height: 2;
         margin-bottom: -5px;
-        margin-top: 25px;
     }
 
     .buttons {
@@ -55,11 +54,12 @@
     @media only screen and (max-width: $mobile) {
         background-color: $color1;
 
-        height: 150px;
-        width: 300px;
+        height: 140px;
+        width: 280px;
+        padding-top: 50px;
 
-        right: calc(100% - (50vw + 180px));
-        top: calc(100% - (60vh + 80px));
+        right: calc(100% - (50vw + 170px));
+        top: calc(100% - (60vh + 100px));
     }
 }
 
