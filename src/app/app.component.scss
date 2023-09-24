@@ -586,7 +586,7 @@ button {
             height: calc(100% - 68px);
 
             .notes-list {
-                height: calc(100% - 160px);
+                min-height: 527px;
             }
         }
 
@@ -594,7 +594,7 @@ button {
             height: calc(100% - 68px);
 
             .notes-list {
-                height: calc(100% - 225px);
+                min-height: 462px;
             }
         }
     }
