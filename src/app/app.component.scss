@@ -11,6 +11,7 @@ header, footer {
 }
 
 .alert {
+    position: relative;
     z-index: 100;
     text-align: center;
     padding: 25px;
@@ -22,13 +23,15 @@ header, footer {
     background-color: $color2;
     border: solid $black 5px;
     position: fixed;
-    width: 400px;
-    height: 200px;
-    top: calc(100% - (50vh + 150px));
-    right: calc(100% - (50vw + 230px));
+    width: 575px;
+    height: 175px;
+    top: 175px;
+    right: calc(50% - 295px);
 
     p {
-        font-size: 14px;
+        line-height: 2;
+        margin-bottom: -5px;
+        margin-top: 25px;
     }
 
     .buttons {
@@ -36,11 +39,20 @@ header, footer {
         justify-content: center;
         gap: 15px;
 
-        button:first-of-type {
-            width: 100px;
+        .back {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 80px;
+            height: 30px;
         }
-        button:last-of-type {
-            width: 200px;
+        
+        .action {
+            width: 325px;
+
+            &.export {
+                height: 75px;
+            }
         }
     }
 
@@ -341,7 +353,10 @@ textarea {
 }
 
 input {
+    height: 40px;
     margin: 5px 0;
+    padding-top: 0;
+    padding-bottom: 0;
     padding-left: 10px;
     background-color: $white;
     border: solid $black 2px;
@@ -509,7 +524,7 @@ button {
     }
 
     &.deleteAll, &.export {
-        width: 175px;
+        min-width: 165px;
 
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
@@ -564,7 +579,8 @@ button {
         padding: 5px 20px;
 
         .notebook-toggle {
-            width: calc(100% - 50px);
+            width: calc(100% - 40px);
+            min-width: 165px;
             margin: 10px 25px 15px 25px;
         }
 
@@ -627,7 +643,8 @@ button {
                 justify-content: center;
                 order: 5;
                 border-bottom: none;
-                padding: 0px 25px 27px 25px;
+                padding: 0px 25px 3px 25px;
+                margin-bottom: 25px;
     
                 p {
                     min-width: unset;
@@ -686,6 +703,9 @@ button {
 
             &.active {
                 display: flex;
+                position: absolute;
+                z-index: 50;
+                bottom: 0;
                 padding: 0;
                 gap: 0;
                 flex-flow: row wrap;
@@ -694,14 +714,14 @@ button {
                 align-items: first baseline;
                 justify-content: center;
                 width: 100%;
-                height: 233px;
+                padding-bottom: 17px;
                 order: 3;
 
                 .buttons {
                     display: flex;
                     justify-content: center;
                     width: 100vw;
-                    padding: 0px 25px 20px 25px;
+                    padding: 0px 25px 5px 25px;
                 }
 
                 p {
@@ -733,7 +753,6 @@ button {
 
         .notes-remaining {
             gap: 15px;
-            width: 160px;
             justify-content: space-between;
             letter-spacing: 0.5px;
 
@@ -787,6 +806,7 @@ button {
     .filter-buttons {
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
+            gap: 15px;
             flex-direction: row-reverse;
         }
     }
@@ -837,8 +857,9 @@ button {
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
             background-color: rgba($color1, 0.5);
-            height: 36px;
             width: 100%;
+            min-width: 75px;
+            height: 36px;
         }
     }
 

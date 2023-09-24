@@ -38,11 +38,30 @@ export class AppComponent {
   localNotes: any = localStorage.getItem(`notes`);
   filteredNotes: note[] = [];
   allNotes: note[] = [];
+  export: {
+    blob: any,
+    filename: string,
+  };
   optionsVisible: boolean = false;
-  alert: boolean = false;
+  alert: {
+    action: string;
+    visibility: boolean;
+    text: string;
+  };
 
   // component class constructor
   constructor() {
+
+    this.alert = {
+      action: ``,
+      visibility: false,
+      text: ``,
+    };
+
+    this.export = {
+      blob: null,
+      filename: '',
+    }
    
     // if there are local notes stored
     if (this.localNotes) {
@@ -62,11 +81,39 @@ export class AppComponent {
 
   }
 
-  openAlert = (parameter: boolean) => {
-    if (parameter === true) {
-      this.alert = true;
-    } else {
-      this.alert = false;
+  toggleAlert = (action: string) => {
+
+    if (action === 'delete') {
+      this.alert.action = action;
+
+      if (this.filter === 'all') {
+        this.alert.text = `Are you sure you want to delete all ${this.allNotes.length} of your notes?`
+
+      } else if (this.filter !== 'all' && !this.searchQuery) {
+        this.alert.text = `Are you sure you want to delete all ${this.filteredNotes.length} of your ${this.filter} notes?`
+
+      } else if (this.filter !== 'all' && this.searchQuery) {
+        this.alert.text = `Are you sure you want to delete all ${this.filteredNotes.length} of your ${this.filter} notes containing "${this.searchQuery}"?`
+
+      } else {
+        this.alert.text = `Are you sure you want to delete all ${this.filteredNotes.length} of your notes containing "${this.searchQuery}"?`
+      }
+
+      this.alert.visibility = true;
+
+    } else if (action === 'export') {
+
+      this.alert.action = action;
+
+      this.prepareExport();
+
+      this.alert.text = `Click below to download`;
+
+      this.alert.visibility = true;
+
+    } else if (action === 'close') {
+      this.alert.visibility = false;
+
     }
   }
 
@@ -75,7 +122,7 @@ export class AppComponent {
 
     if ((button === 'notebook') && (this.allNotes.length < 1)) {
       return true;
-    } else if ((button === 'delete-all') && (this.allNotes.length < 2 || this.filter !== 'all' || this.searchQuery)) {
+    } else if ((button === 'delete-all') && (this.filteredNotes.length < 2)) {
       return true;
     } else if ((button === 'sorting-newest') && (this.filteredNotes.length < 2 || this.sorting === 'newest')) {
       return true;
@@ -121,6 +168,9 @@ export class AppComponent {
     if (parameter === true) {
       this.optionsVisible = true;
     } else {
+      this.filter = 'all';
+      this.searchQuery = '';
+      this.filteredNotes = this.allNotes;
       this.optionsVisible = false;
     }
   }
@@ -413,10 +463,7 @@ export class AppComponent {
 
   }
 
-  exportNotes() {
-
-    // import filesaver
-    let FileSaver = require('file-saver');
+  prepareExport() {
 
     // note export variables
     let exportedNotes: string[] = [];
@@ -426,31 +473,30 @@ export class AppComponent {
     let date: date = this.formatDate();
     let time: time = this.formatTime();
     let heading: string = ``;
-    let filename: string = ``;
 
     if (this.searchQuery && this.filter !== 'all') {
 
       query =  this.searchQuery.replaceAll(/\s/g, "_");
       filter =  this.filter;
       heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min} // #${filter} // "${query}"`
-      filename = `note-taken-export--#${filter}-$${query}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+      this.export.filename = `note-taken-export--#${filter}-$${query}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
 
     } else if (this.searchQuery && this.filter === 'all') {
 
       query =  this.searchQuery.replaceAll(/\s/g, "_");
       heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min} // "${query}"`
-      filename = `note-taken-export--$${query}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+      this.export.filename = `note-taken-export--$${query}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
 
     } else if (!this.searchQuery && this.filter !== 'all'){
 
       filter =  this.filter;
       heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min} // #${filter}`
-      filename = `note-taken-export--#${filter}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+      this.export.filename = `note-taken-export--#${filter}--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
 
     } else {
 
       heading = `${title} // ${date.day}/${date.month}/${date.year} ${time.hour}:${time.min}`
-      filename = `note-taken-export--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
+      this.export.filename = `note-taken-export--${date.year}_${date.month}_${date.day}-${time.hour}${time.min}.txt`
 
     };
 
@@ -462,30 +508,60 @@ export class AppComponent {
       );
     });
 
-    let blob = new Blob(exportedNotes, {type: "text/plain;charset=utf-8"});
-    FileSaver.saveAs(blob, filename);
+    this.export.blob = new Blob(exportedNotes, {type: "text/plain;charset=utf-8"});
+
+  }
+
+  exportNotes() {
+
+    // import filesaver
+    let FileSaver = require('file-saver');
+
+    FileSaver.saveAs(this.export.blob, this.export.filename);
 
   }
 
   // delete all notes function
   deleteAll() {
 
-    // empty all the notes arrays
-    this.allNotes = [];
-    this.filteredNotes = [];
-    this.localNotes = [];
+    if (this.filter !== 'all' || this.searchQuery) {
+
+      let updatedNotes = this.allNotes;
+
+      this.filteredNotes.forEach((note) => {
+
+        // delete the note from the notes array
+        let deletedNote = note;
+        updatedNotes = updatedNotes.filter(note => note !== deletedNote);
+      })
+
+      this.allNotes = updatedNotes;
+      this.filteredNotes = [];
+
+      if (updatedNotes.length > 0) {
+        
+        // toggle the mobile view to the notepad
+        this.toggleView("notepad");
+      }
+
+    } else {
+
+      // empty all the notes arrays
+      this.allNotes = [];
+      this.localNotes = [];
+      
+      // clear the local storage note
+      localStorage.removeItem(`notes`);
+
+      // toggle the mobile view to the notepad
+      this.toggleView("notepad");
+    }
     
     // update the note colours
     this.updateNotebookColors();
 
-    // clear the local storage note
-    localStorage.removeItem(`notes`);
-
     // close the alert box
-    this.openAlert(false);
-
-    // toggle the mobile view to the notepad
-    this.toggleView("notepad");
+    this.toggleAlert('close');
 
     // hide the options panel
     this.optionsVisible = false;
