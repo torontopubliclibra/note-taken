@@ -1,4 +1,4 @@
-<div class="app">
+<div class="app {{view === 'notepad' ? 'scroll-y' : ''}}">
 
   <!-- overlay over background when alert appears -->
   <div class="overlay" *ngIf="alert.visibility"></div>
@@ -53,7 +53,7 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{view === 'about' ? 'disabled' : ''}} {{view === 'notepad' || view === 'about' ? 'disabled-2' : ''}} {{optionsVisible ? 'no-header' : ''}}">
+    <div class="notebook {{view === 'about' ? 'disabled' : ''}} {{view === 'notepad' || view === 'about' ? 'disabled-2' : ''}} {{optionsVisible && notebookColors.length < 2 ? 'no-header-1' : ''}} {{optionsVisible && notebookColors.length > 1 ? 'no-header-2' : ''}}">
 
       <!-- notebook sort and filter options -->
       <div class="notebook-filter-sort {{optionsVisible ? 'active' : ''}}">
