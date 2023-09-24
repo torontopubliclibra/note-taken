@@ -572,7 +572,15 @@ button {
         padding-bottom: 10px;
         margin: 0 auto;
 
-        &.no-header {
+        &.no-header-1 {
+            height: calc(100vh - 68px);
+
+            .notes-list {
+                height: calc(100% - 150px);
+            }
+        }
+
+        &.no-header-2 {
             height: calc(100vh - 68px);
 
             .notes-list {

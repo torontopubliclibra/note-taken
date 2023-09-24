@@ -58,6 +58,7 @@ h1, h2 {
     // responsive to mobile
     @media only screen and (max-width: $mobile) {
         text-align: center;
+        padding: 0;
     }
 }
 
@@ -163,7 +164,7 @@ footer {
                 font-size: 11.5px;
                 background-color: $color1;
                 max-height: 75px;
-                min-width: calc(100vw - 40px);
+                min-width: calc(100vw - 50px);
                 padding: 25px;
                 padding-bottom: 20px;
                 overflow-y: hidden;
