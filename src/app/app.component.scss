@@ -61,7 +61,7 @@
 
         right: calc(100% - (50vw + 170px));
         top: calc(100% - (60vh + 100px));
-        top: calc(100% - (calc(var(--vh) * 0.6) + 100px));
+        top: calc(100% - (calc($vh * 0.6) + 100px));
     }
 }
 
@@ -129,7 +129,7 @@ footer {
         width: calc(100% - 43px);
         max-width: 100vw;
         min-height: calc(100vh - 194px);
-        min-height: calc(var(--vh) - 194px);
+        min-height: calc($vh - 194px);
     }
 }
 
@@ -252,7 +252,7 @@ main {
         border-bottom: none;
 
         height: calc(100vh - 195px);
-        height: calc(var(--vh) - 195px);
+        height: calc($vh - 195px);
         width: 100%;
         max-width: 100%;
         margin: 0 auto;
@@ -579,7 +579,7 @@ button {
         
         min-height: 275px;
         height: calc(100vh - 191px);
-        height: calc((var(--vh)) - 191px);
+        height: calc(($vh) - 191px);
         min-width: 100%;
         width: 100%;
         max-width: 100%;
@@ -588,7 +588,7 @@ button {
 
         &.no-header-1 {
             height: calc(100vh - 68px);
-            height: calc((var(--vh)) - 68px);
+            height: calc(($vh) - 68px);
 
             .notes-list {
                 height: calc(100% - 150px);
@@ -597,7 +597,7 @@ button {
 
         &.no-header-2 {
             height: calc(100vh - 68px);
-            height: calc((var(--vh)) - 68px);
+            height: calc(($vh) - 68px);
 
             .notes-list {
                 height: calc(100% - 200px);
