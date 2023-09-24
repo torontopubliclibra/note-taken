@@ -4,7 +4,7 @@
   <div class="overlay" *ngIf="alert.visibility"></div>
 
   <!-- header section -->
-  <header>
+  <header *ngIf="!optionsVisible">
     <h1>Note Taken</h1>
     <h2>Your little local notes app</h2>
   </header>
@@ -53,7 +53,7 @@
     </div>
 
     <!-- notebook section -->
-    <div class="notebook {{view === 'about' ? 'disabled' : ''}} {{view === 'notepad' || view === 'about' ? 'disabled-2' : ''}}">
+    <div class="notebook {{view === 'about' ? 'disabled' : ''}} {{view === 'notepad' || view === 'about' ? 'disabled-2' : ''}} {{optionsVisible ? 'no-header' : ''}}">
 
       <!-- notebook sort and filter options -->
       <div class="notebook-filter-sort {{optionsVisible ? 'active' : ''}}">

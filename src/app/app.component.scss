@@ -571,6 +571,14 @@ button {
         max-width: 100%;
         padding-bottom: 10px;
         margin: 0 auto;
+
+        &.no-header {
+            height: calc(100vh - 68px);
+
+            .notes-list {
+                height: calc(100% - 200px);
+            }
+        }
     }
 
     .notebook-filter-sort, .notebook-search, .notebook-buttons {
@@ -644,7 +652,7 @@ button {
                 background-color: $color2;
                 border-bottom: none;
 
-                padding: 0px 25px 2px 25px;
+                padding: 0px 25px 0px 25px;
                 padding-bottom: 27px;
 
                 display: flex;
@@ -843,7 +851,7 @@ button {
             padding-left: 25px;
             padding-right: 25px;
             margin: 0;
-            margin-bottom: 35px;
+            margin-bottom: 10px;
         }
         .sort-options {
             display: none;
