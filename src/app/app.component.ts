@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { HostListener } from "@angular/core";
 import { note, date, time } from './app.interfaces'
 
 @Component({
@@ -13,6 +13,7 @@ export class AppComponent {
 
   // initial variables
   title: string = `note-taken`;
+  vh: number = 100;
   view: string = `notepad`;
   allColors: string[] = [
     'green',
@@ -81,6 +82,12 @@ export class AppComponent {
       this.updateNotebookColors();
     }
 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize() {
+    this.vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${this.vh}px`);
   }
 
   toggleAlert = (action: string) => {
