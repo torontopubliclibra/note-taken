@@ -96,7 +96,7 @@ footer {
 
     width: 75%;
     max-width: 1000px;
-    height: 450px;
+    height: 500px;
 
     background-color: $color1;
     border: solid $black 3px;
@@ -110,9 +110,7 @@ footer {
 
     // responsive to tablet
     @media only screen and (max-width: $tablet) {
-
-        width: calc(100% - 99px);
-        max-height: 500px;
+        width: calc(95% - 12px);
     }
 
     // responsive to mobile
@@ -127,7 +125,7 @@ footer {
 
         height: 550px;
         max-height: unset;
-        width: calc(100% - 43px);
+        width: 100%;
         max-width: 100vw;
     }
 }
@@ -178,9 +176,10 @@ nav {
     @media only screen and (max-width: $mobile) {
         background-color: $color1;
 
-        height: 50px;
-        width: calc(100% - 20px);
-        margin: 0 auto;
+        height: 65px;
+        width: 100%;
+        margin: 0;
+        padding: 10px 25px;
 
         display: flex;
         justify-content: center;
@@ -267,7 +266,7 @@ main {
         background-color: $color1;
         border-bottom: solid $black 2px;
 
-        min-height: 55px;
+        min-height: 67px;
 
         flex-flow: row wrap;
         justify-content: space-between;
@@ -284,8 +283,8 @@ main {
         @media only screen and (max-width: $mobile) {
             border-top: solid $black 3px;
 
-            width: calc(100% - 60px);
-            max-height: 45px;
+            width: 100%;
+            max-height: 75px;
             min-height: unset;
             padding: 15px 30px;
 
@@ -293,7 +292,7 @@ main {
             order: 2;
 
             position: absolute;
-            bottom: 93px;
+            bottom: 101px;
             z-index: 50;
         }
     }
@@ -301,8 +300,8 @@ main {
         background-color: $color1;
         border-top: solid $black 2px;
 
-        width: calc(100% - 40px);
-        min-height: 60px;
+        width: 100%;
+        min-height: 65px;
 
         flex-direction: row-reverse;
         justify-content: space-between;
@@ -317,16 +316,16 @@ main {
             background-color: $color2;
             border: none;
 
-            width: calc(100% - 20px);
-            padding: 10px;
-            padding-bottom: 23px;
+            width: 100%;
+            padding: 10px 25px;
+            padding-bottom: 25px;
 
             justify-content: center;
             gap: 20px;
             order: 3;
 
             position: absolute;
-            bottom: 0;
+            bottom: 16px;
             z-index: 50;
         }
     }
@@ -336,7 +335,7 @@ textarea {
     background: none;
     border: none;
 
-    width: calc(100% - 30px);
+    width: 100%;
     height: 100%;
     padding: 15px;
     margin: 0;
@@ -355,7 +354,7 @@ textarea {
     
     // responsive to mobile
     @media only screen and (max-width: $mobile) {
-        width: calc(100% - 50px);
+        width: 100%;
         min-height: 410px;
         max-height: unset;
         height: unset;
@@ -368,11 +367,11 @@ input {
     background-color: $white;
     border: solid $black 2px;
 
-    height: 40px;
+    min-height: 40px;
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 10px;
-    margin: 5px 0;
+    margin: 0;
 
     transition: none;
 
@@ -586,7 +585,7 @@ button {
             height: calc(100% - 68px);
 
             .notes-list {
-                min-height: 527px;
+                min-height: 430px;
             }
         }
 
@@ -594,19 +593,19 @@ button {
             height: calc(100% - 68px);
 
             .notes-list {
-                min-height: 462px;
+                min-height: 370px;
             }
         }
     }
 
     .notebook-filter-sort, .notebook-search, .notebook-buttons {
-        width: calc(100% - 40px);
+        width: 100%;
         padding: 5px 20px;
 
         .notebook-toggle {
             width: calc(100% - 40px);
             min-width: 165px;
-            margin: 7px 25px 10px 25px;
+            margin: 7px 25px 25px 25px;
         }
 
         .color-button {
@@ -638,8 +637,8 @@ button {
         border-bottom: solid $black 2px;
 
         min-height: 50px;
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding-top: 15px;
+        padding-bottom: 15px;
 
         justify-content: flex-start;
         gap: 10px;
@@ -670,8 +669,8 @@ button {
                 background-color: $color2;
                 border-bottom: none;
 
-                padding: 0px 25px 0px 25px;
-                padding-bottom: 27px;
+                padding: 0;
+                padding-bottom: 40px;
 
                 display: flex;
                 justify-content: center;
@@ -735,7 +734,7 @@ button {
 
         border-top: solid $black 2px;
 
-        min-height: 60px;
+        min-height: 65px;
 
         flex-direction: row-reverse;
         flex-wrap: wrap;
@@ -871,10 +870,11 @@ button {
             background-color: $color2;
     
             padding: 0;
+            margin: 0;
+            margin-top: -10px;
             padding-left: 25px;
             padding-right: 25px;
-            margin: 0;
-            margin-bottom: 10px;
+            padding-bottom: 20px;
         }
         .sort-options {
             display: none;
@@ -913,7 +913,7 @@ button {
     .notes-list {
         background-color: $white;
 
-        min-width: calc(100% - 40px);
+        min-width: 100%;
         height: 400px;
         padding: 20px;
         margin: 0;
@@ -947,7 +947,7 @@ button {
 
             // responsive to mobile height
             @media only screen and (min-height: 750px) {
-                height: 405px;
+                height: 455px;
             }
         }
 
