@@ -11,3 +11,8 @@ I originally developed the site in Feb 2023 as Pigeon Pad, and then relaunched i
 - [Martian Mono typeface from Google Fonts](https://fonts.google.com/specimen/Martian+Mono)
 - [Homemade Apple typeface from Google Fonts](https://fonts.google.com/specimen/Homemade+Apple)
 - [Font Awesome v4.7.0](https://fontawesome.com/v4/icons/)
+
+## Setup
+### Build commands
+- ng serve
+- ng build
