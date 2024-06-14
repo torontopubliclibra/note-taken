@@ -535,6 +535,7 @@ button {
         // responsive to mobile
         @media only screen and (max-width: $mobile) {
             width: calc(50% - 10px);
+            margin: 0;
         }
 
     }
